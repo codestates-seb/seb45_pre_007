@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
+title: "[ / ] "
 labels: ''
 assignees: ''
 
@@ -17,6 +17,3 @@ ex) Todo 생성 기능
 
 ### 예상 작업 시간
 ex) 3h
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
