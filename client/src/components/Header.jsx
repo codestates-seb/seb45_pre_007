@@ -4,6 +4,7 @@ import search from '../assert/search.png';
 import logo1 from '../assert/logo1.png';
 import logo2 from '../assert/logo2.png';
 import hamburger from '../assert/hamburger.png';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   return (
@@ -33,7 +34,7 @@ export const Header = () => {
         </SearchInputBox>
         <AuthBox>
           <AuthItem>
-            <Login>Log in</Login>
+            <Login to="/login">Log in</Login>
             <SignUp>Sign up</SignUp>
           </AuthItem>
         </AuthBox>
@@ -180,7 +181,7 @@ const AuthItem = styled.div`
   gap: 5px;
 `;
 
-const Login = styled.div`
+const Login = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
