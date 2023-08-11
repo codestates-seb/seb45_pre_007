@@ -21,7 +21,6 @@ public class QuestionController {
     public String patchQuestion() {
         return "질문이 수정되었습니다.";
     }
-
     @DeleteMapping("/{question-id}")
     public String deleteQuestion() {
         return "질문이 삭제되었습니다.";
