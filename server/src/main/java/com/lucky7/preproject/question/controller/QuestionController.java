@@ -3,6 +3,7 @@ package com.lucky7.preproject.question.controller;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/questions")
+@CrossOrigin
 public class QuestionController {
     @PostMapping
     public String postQuestion() {
