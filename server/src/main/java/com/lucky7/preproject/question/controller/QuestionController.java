@@ -1,6 +1,5 @@
 package com.lucky7.preproject.question.controller;
 
-import com.lucky7.preproject.question.dto.responseDto.QuestionResponseDto;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/questions")
