@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { isMobile, isPC } from './utils/mediaQueryUtils';
 
 const App = () => {
-  const [data, setData] = useState('');
-  const url = process.env.REACT_APP_API_URL;
+  const PC = isPC();
 
-  useEffect(() => {
-    axios
-      .get(`${url}/questions`)
-      .then((response) => setData(response.data))
-      .catch((err) => console.log(err));
-  }, []);
+  const Mobile = isMobile();
 
-  return <>{data}</>;
+  return (
+    <>
+      <div>{Mobile && <p>Mobile</p>}</div>
+      <div>{PC && <p>PC</p>}</div>
+    </>
+  );
 };
 
 export default App;
