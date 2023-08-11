@@ -1,16 +1,18 @@
+import Main from './pages/Main.jsx';
 import React from 'react';
-import { useMediaQuery } from 'react-responsive';
-import { isMobile, isPC } from './utils/mediaQueryUtils';
+import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
-  const PC = isPC();
-
-  const Mobile = isMobile();
+  function handleEvent() {
+    console.log('hello');
+  }
 
   return (
     <>
-      <div>{Mobile && <p>Mobile</p>}</div>
-      <div>{PC && <p>PC</p>}</div>
+      <Routes>
+        <Route path="/" element={<Main />}></Route>
+      </Routes>
+      <div onClick={handleEvent()}></div>
     </>
   );
 };
