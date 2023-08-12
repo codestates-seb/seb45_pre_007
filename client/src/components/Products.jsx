@@ -44,7 +44,7 @@ const Products = () => {
   ];
 
   return (
-    <Wrapper>
+    <ProductsBox>
       <DropdownContainer>
         <ProductsButton
           isSelected={isSelected}
@@ -67,13 +67,13 @@ const Products = () => {
           </Ul>
         </Menu>
       </DropdownContainer>
-    </Wrapper>
+    </ProductsBox>
   );
 };
 
 export default Products;
 
-const Wrapper = styled.div`
+const ProductsBox = styled.div`
   display: flex;
   align-items: center;
 `;

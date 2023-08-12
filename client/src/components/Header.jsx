@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import logo1 from '../assert/logo1.png';
 import logo2 from '../assert/logo2.png';
-import hamburger from '../assert/hamburger.png';
 import { Link } from 'react-router-dom';
 import Products from './Products.jsx';
 import Search from './Search.jsx';
+import Hamburger from './Hamburger.jsx';
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
     <HeaderBox>
       <HeaderList>
         <HeaderLeftBox>
-          <HeaderHamburgerBox>
-            <HeaderHamburger />
+          <HeaderHamburgerBox onClick={() => setIsOpen(!isOpen)}>
+            <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
           <HeaderLogoBox>
             <HeaderLogoItem>
@@ -81,18 +83,6 @@ const HeaderHamburgerBox = styled.div`
   }
 `;
 
-const HeaderHamburger = styled.img.attrs({
-  src: `${hamburger}`,
-})`
-  cursor: pointer;
-  width: 21px;
-  height: 20px;
-
-  &:hover {
-    background-color: #e4e6e8;
-  }
-`;
-
 // logo
 const HeaderLogoBox = styled.div`
   display: flex;
@@ -126,6 +116,10 @@ const HeaderLogo2 = styled.img.attrs({
   height: 15px;
 
   margin: 2px 0 0 0;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
 
 // button
@@ -139,6 +133,10 @@ const ButtonItem = styled.div`
 
   width: 250px;
   height: 100%;
+
+  @media (max-width: 816px) {
+    width: 85px;
+  }
 `;
 
 const Button = styled.div`
@@ -157,10 +155,13 @@ const Button = styled.div`
   &:hover {
     background-color: #e4e6e8;
   }
+
+  @media (max-width: 816px) {
+    display: none;
+  }
 `;
 
 const About = styled(Button)``;
-
 const ForTeams = styled(Button)`
   margin: 0 5px 0 0;
 `;

@@ -45,10 +45,12 @@ const Search = () => {
   ];
 
   return (
-    <Wrapper>
+    <SearchBox>
       <DropdownContainer>
         <SearchInputBox>
-          <HeaderSearch />
+          <SearchArea onClick={handleOnPress} ref={ref}>
+            <HeaderSearch />
+          </SearchArea>
           <SearchInput
             placeholder="Search..."
             isSelected={isSelected}
@@ -85,17 +87,21 @@ const Search = () => {
           </SearchBottom>
         </Menu>
       </DropdownContainer>
-    </Wrapper>
+    </SearchBox>
   );
 };
 
 export default Search;
 
-const Wrapper = styled.div`
+const SearchBox = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
   max-width: 656.55px;
+
+  @media (max-width: 640px) {
+    max-width: 100%;
+  }
 `;
 
 const DropdownContainer = styled.div`
@@ -108,7 +114,7 @@ const DropdownContainer = styled.div`
 const Menu = styled.div`
   background: white;
   position: absolute;
-  top: 43px;
+  top: 55px;
   left: 69%;
   width: 646px;
 
@@ -146,6 +152,11 @@ const Menu = styled.div`
       visibility: visible;
       transform: translate(-70%, 0);
     `};
+
+  @media (max-width: 640px) {
+    /* left: 95%; */
+    width: 100%;
+  }
 `;
 
 const Ul = styled.ul`
@@ -159,6 +170,10 @@ const Ul = styled.ul`
   }
 
   list-style-type: none;
+
+  @media (max-width: 640px) {
+    width: 100%;
+  }
 `;
 
 const ListItem = styled.div`
@@ -209,20 +224,47 @@ const Li = styled.li`
 `;
 
 // search input
-const HeaderSearch = styled.img.attrs({
-  src: `${search}`,
-})`
-  position: absolute;
-  margin-left: 10px;
-  cursor: pointer;
-  width: 19px;
-  height: 19px;
-`;
-
 const SearchInputBox = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  height: 56px;
+
+  @media (max-width: 640px) {
+    display: flex;
+    justify-content: flex-end;
+  }
+`;
+
+const SearchArea = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 640px) {
+    cursor: pointer;
+    padding: 15px;
+    height: 52px;
+
+    &:hover {
+      background-color: #e4e6e8;
+    }
+  }
+`;
+
+const HeaderSearch = styled.img.attrs({
+  src: `${search}`,
+})`
+  position: absolute;
+  margin-left: 40px;
+  cursor: pointer;
+  width: 19px;
+  height: 19px;
+
+  @media (max-width: 640px) {
+    margin: 0;
+    position: unset;
+  }
 `;
 
 const SearchInput = styled.input.attrs((props) => ({
@@ -242,12 +284,20 @@ const SearchInput = styled.input.attrs((props) => ({
     border: 1.3px solid #6cbbf7;
     box-shadow: 0px 0px 0px 3px #dcebf8;
   }
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
 
 const SearchTop = styled.div`
   display: flex;
   width: 100%;
   padding: 3px 0 0 3px;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
 `;
 
 const SearchBottom = styled.div`
