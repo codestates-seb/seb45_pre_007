@@ -1,10 +1,11 @@
 import React from 'react';
-import { styled, css } from 'styled-components';
-import search from '../assert/search.png';
+import { styled } from 'styled-components';
 import logo1 from '../assert/logo1.png';
 import logo2 from '../assert/logo2.png';
 import hamburger from '../assert/hamburger.png';
 import { Link } from 'react-router-dom';
+import Products from './Products.jsx';
+import Search from './Search.jsx';
 
 export const Header = () => {
   return (
@@ -23,15 +24,12 @@ export const Header = () => {
           <ButtonBox>
             <ButtonItem>
               <About>About</About>
-              <Products>Products</Products>
+              <Products />
               <ForTeams>For Teams</ForTeams>
             </ButtonItem>
           </ButtonBox>
         </HeaderLeftBox>
-        <SearchInputBox>
-          <HeaderSearch />
-          <SearchInput placeholder="Search..." />
-        </SearchInputBox>
+        <Search />
         <AuthBox>
           <AuthItem>
             <Login to="/login">Log in</Login>
@@ -48,16 +46,17 @@ const HeaderBox = styled.div`
   align-items: center;
   justify-content: center;
 
-  border-top: 3.5px solid #f48026;
-  border-bottom: 1.5px solid hsl(210, 8%, 85%);
-  height: 52px;
+  border-top: 3px solid #f48026;
+  border-bottom: 1px solid hsl(210, 8%, 85%);
+  height: 56px;
 `;
 
 const HeaderList = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 75%;
+  justify-content: center;
+  // 큰화면으로 갔을때 줄어들 수 있게 구현하기
+  width: 98%;
   height: 100%;
 `;
 
@@ -133,10 +132,12 @@ const HeaderLogo2 = styled.img.attrs({
 const ButtonBox = styled.div``;
 
 const ButtonItem = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 255px;
+
+  width: 250px;
   height: 100%;
 `;
 
@@ -159,7 +160,7 @@ const Button = styled.div`
 `;
 
 const About = styled(Button)``;
-const Products = styled(Button)``;
+
 const ForTeams = styled(Button)`
   margin: 0 5px 0 0;
 `;
@@ -170,7 +171,6 @@ const AuthBox = styled.div`
   align-items: center;
   justify-content: center;
 
-  width: 200px;
   margin: 0 10px 0 0;
 `;
 
@@ -215,34 +215,4 @@ const SignUp = styled.div`
   &:hover {
     background-color: #0174cd;
   }
-`;
-
-// search input
-const HeaderSearch = styled.img.attrs({
-  src: `${search}`,
-})`
-  position: absolute;
-  margin-left: 10px;
-  cursor: pointer;
-  width: 19px;
-  height: 19px;
-`;
-
-const SearchInputBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-`;
-
-const SearchInput = styled.input.attrs((props) => ({
-  type: 'text',
-}))`
-  border: 1.3px solid #bbc0c4;
-  border-radius: 5px;
-
-  margin: 0 10px 0 0;
-  padding: 0 0 0 35px;
-
-  width: 100%;
-  height: 32px;
 `;
