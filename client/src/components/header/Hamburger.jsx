@@ -1,83 +1,68 @@
 import React from 'react';
-import { css, styled } from 'styled-components';
+import { styled } from 'styled-components';
 
 const Hamburger = ({ isOpen }) => {
   return (
-    <HamburgerBox>
-      <HamburgerItem isOpen={isOpen}>
-        <HamburgerLine isOpen={isOpen} />
-        <HamburgerLine isOpen={isOpen} />
-        <HamburgerLine isOpen={isOpen} />
-      </HamburgerItem>
-      <XBox isOpen={isOpen}>
-        <XLine1 isOpen={isOpen} />
-        <XLine2 isOpen={isOpen} />
-      </XBox>
-    </HamburgerBox>
+    <div>
+      <HamburgerBox trans={isOpen}>
+        <HamburgerLine1 trans={isOpen} />
+        <HamburgerLine2 trans={isOpen} />
+        <HamburgerLine3 trans={isOpen} />
+      </HamburgerBox>
+    </div>
   );
 };
 
 export default Hamburger;
 
-const HamburgerBox = styled.div``;
+const HamburgerBox = styled.div`
+  position: relative;
+  width: 15px;
+  height: 15px;
 
-const HamburgerItem = styled.div`
-  ${({ isOpen }) =>
-    !isOpen &&
-    css`
-      position: relative;
-      height: 35%;
-      transition: all 0.4s ease;
-    `};
+  ${(props) =>
+    props.trans &&
+    `
+    padding-top: 5px;
+  `}
 `;
 
-const HamburgerLine = styled.div`
-  ${({ isOpen }) =>
-    !isOpen &&
-    css`
-      width: 16px;
-      height: 2px;
-      background-color: #525960;
-      margin: 3px 0;
-      transition: all 0.2s ease;
-    `};
-`;
+const HamburgerLine1 = styled.div`
+  width: 16px;
+  height: 2px;
+  background-color: #525960;
+  margin: 3px 0;
+  transition: all 0.1s ease;
 
-const XBox = styled.div`
-  ${({ isOpen }) =>
-    isOpen &&
-    css`
-      position: relative;
-      padding: 13.5px 15px 0 0;
-      height: 30px;
-      transition: all 0.4s ease;
-    `};
-`;
-
-const XLine1 = styled.div`
-  ${({ isOpen }) =>
-    isOpen &&
-    css`
+  ${(props) =>
+    props.trans &&
+    `
       position: absolute;
-      width: 16px;
-      height: 2px;
-      background-color: #525960;
-      transition: all 0.2s ease;
       transform-origin: center;
       transform: rotate(-45deg);
-    `};
-`;
 
-const XLine2 = styled(XLine1)`
-  ${({ isOpen }) =>
-    isOpen &&
-    css`
-      position: absolute;
       width: 16px;
       height: 2px;
-      background-color: #525960;
-      transition: all 0.2s ease;
+  `}
+`;
+
+const HamburgerLine2 = styled(HamburgerLine1)`
+  ${(props) =>
+    props.trans &&
+    `
+      display:none
+  `}
+`;
+
+const HamburgerLine3 = styled(HamburgerLine1)`
+  ${(props) =>
+    props.trans &&
+    `
+      position: absolute;
       transform-origin: center;
       transform: rotate(45deg);
-    `};
+
+      width: 16px;
+      height: 2px;
+  `}
 `;
