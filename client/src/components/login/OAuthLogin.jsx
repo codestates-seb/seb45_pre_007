@@ -31,6 +31,7 @@ const OAuthLoginBox = styled.div`
 
 // google
 const GoogleBox = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,13 +46,17 @@ const GoogleBox = styled.div`
 
   margin: 8px 0;
   padding: 10.4px;
+
+  &:hover {
+    background-color: hsl(210, 8%, 97.5%);
+  }
 `;
 
 const GoogleIcon = styled.img.attrs({
   src: `${google}`,
 })`
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 `;
 
 const GoogleText = styled.div`
@@ -60,28 +65,19 @@ const GoogleText = styled.div`
 `;
 
 // github
-const GithubBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  gap: 3px;
-  border: 1px solid hsl(210, 8%, 85%);
-  border-radius: 6px;
+const GithubBox = styled(GoogleBox)`
   background-color: #2f3337;
 
-  width: 288px;
-  height: 38px;
-
-  margin: 8px 0;
-  padding: 10.4px;
+  &:hover {
+    background-color: hsl(210, 8%, 15%);
+  }
 `;
 
 const GithubIcon = styled.img.attrs({
   src: `${github}`,
 })`
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 `;
 
 const GithubText = styled.div`
@@ -90,27 +86,20 @@ const GithubText = styled.div`
 `;
 
 // facebook
-const FacebookBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  gap: 3px;
-  border-radius: 6px;
+const FacebookBox = styled(GoogleBox)`
+  border: none;
   background-color: #395499;
 
-  width: 288px;
-  height: 38px;
-
-  margin: 8px 0;
-  padding: 10.4px;
+  &:hover {
+    background-color: #314a86;
+  }
 `;
 
 const FacebookIcon = styled.img.attrs({
   src: `${facebook}`,
 })`
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 `;
 
 const FacebookText = styled.div`
