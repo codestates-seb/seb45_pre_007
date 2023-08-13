@@ -50,6 +50,10 @@ const GoogleBox = styled.div`
   &:hover {
     background-color: hsl(210, 8%, 97.5%);
   }
+
+  @media (max-width: 640px) {
+    width: 266px;
+  }
 `;
 
 const GoogleIcon = styled.img.attrs({

@@ -69,6 +69,7 @@ const HeaderLeftBox = styled.div`
 `;
 
 const HeaderHamburgerBox = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,8 +86,8 @@ const HeaderHamburgerBox = styled.div`
 
 // logo
 const HeaderLogoBox = styled.div`
+  cursor: pointer;
   display: flex;
-
   padding: 0 8px;
 
   &:hover {
@@ -201,6 +202,7 @@ const Login = styled(Link)`
 `;
 
 const SignUp = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -43,13 +43,23 @@ const LoginFormBox = styled.div`
     0 10px 24px hsla(0, 0%, 0%, 0.05),
     0 20px 48px hsla(0, 0%, 0%, 0.05),
     0 1px 4px hsla(0, 0%, 0%, 0.1);
+
+  @media (max-width: 640px) {
+    width: 266px;
+  }
 `;
-const LoginFormItem = styled.div``;
+
+const LoginFormItem = styled.div`
+  @media (max-width: 640px) {
+    width: 266px;
+  }
+`;
 
 // email
 const EmailFormbox = styled.div`
   margin: 5px 6px 6px 6px;
 `;
+
 const EmailText = styled.div`
   font-size: 15px;
   font-weight: 600;
@@ -57,6 +67,7 @@ const EmailText = styled.div`
   margin: 5px 0px;
   padding: 0px 2px;
 `;
+
 const EmailInput = styled.input.attrs((props) => ({
   type: 'text',
 }))`
@@ -72,6 +83,10 @@ const EmailInput = styled.input.attrs((props) => ({
     border: 1.3px solid #6cbbf7;
     box-shadow: 0px 0px 0px 3px #dcebf8;
   }
+
+  @media (max-width: 640px) {
+    width: 219px;
+  }
 `;
 
 // password
@@ -83,6 +98,10 @@ const PasswordTextBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 640px) {
+    width: 219px;
+  }
 `;
 
 const PasswordText = styled.div`
@@ -92,6 +111,7 @@ const PasswordText = styled.div`
 `;
 
 const PasswordFind = styled.div`
+  cursor: pointer;
   font-size: 12px;
   color: #0074cc;
 
@@ -115,6 +135,10 @@ const PasswordInput = styled.input.attrs((props) => ({
     border: 1.3px solid #6cbbf7;
     box-shadow: 0px 0px 0px 3px #dcebf8;
   }
+
+  @media (max-width: 640px) {
+    width: 219px;
+  }
 `;
 
 const LoginSubmitBox = styled.div`
@@ -122,6 +146,7 @@ const LoginSubmitBox = styled.div`
 `;
 
 const LoginSubmit = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,5 +163,9 @@ const LoginSubmit = styled.div`
 
   &:hover {
     background-color: #0174cd;
+  }
+
+  @media (max-width: 640px) {
+    width: 219px;
   }
 `;

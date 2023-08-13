@@ -116,7 +116,7 @@ const Menu = styled.div`
   position: absolute;
   top: 55px;
   left: 69%;
-  width: 646px;
+  width: 642px;
 
   display: flex;
   flex-direction: column;
