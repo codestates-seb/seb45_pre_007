@@ -1,7 +1,7 @@
 import Main from './pages/Main.jsx';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Header } from './components/Header.jsx';
+import { Header } from './components/header/Header.jsx';
 import { Login } from './pages/Login.jsx';
 
 const App = () => {

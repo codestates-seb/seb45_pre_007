@@ -1,8 +1,8 @@
 import React from 'react';
 import { styled, css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import useDetectClose from '../hooks/useDetectClose';
-import search from '../assert/search.png';
+import useDetectClose from '../../hooks/useDetectClose';
+import search from '../../assert/search.png';
 
 const Search = () => {
   const { handleOnPress, isSelected, ref } = useDetectClose(false);

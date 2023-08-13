@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import logo1 from '../assert/logo1.png';
-import logo2 from '../assert/logo2.png';
+import logo1 from '../../assert/logo1.png';
+import logo2 from '../../assert/logo2.png';
 import { Link } from 'react-router-dom';
 import Products from './Products.jsx';
 import Search from './Search.jsx';
@@ -145,7 +145,7 @@ const Button = styled.div`
   justify-content: center;
 
   color: hsl(210, 8%, 35%);
-  font-size: 13.5px;
+  font-size: 13px;
 
   /* height: 29px; */
 
