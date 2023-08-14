@@ -1,0 +1,7 @@
+package com.lucky7.preproject.comment.repository;
+
+import com.lucky7.preproject.comment.entity.QuestionComment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface QuestionCommentRepository extends JpaRepository<QuestionComment,Long> {
+}
