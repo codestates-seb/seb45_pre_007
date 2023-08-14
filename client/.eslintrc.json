@@ -23,7 +23,13 @@
       "react/jsx-uses-react": 0,
       "no-unused-vars": "off",
       "jsx-a11y/no-static-element-interactions": "off",
+<<<<<<< HEAD
       "jsx-a11y/click-events-have-key-events": "off",
       "import/no-unresolved": "off"
+=======
+      "jsx-a11y/click-events-have-key-events": "off" ,
+      "react/prop-types": "off"
+    
+>>>>>>> feb4d4a2185fcd893886588770ec18752028f918
     }
   }
