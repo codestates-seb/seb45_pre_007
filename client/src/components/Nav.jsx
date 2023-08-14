@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,9 +9,19 @@ import {
   faBriefcase,
 } from '@fortawesome/free-solid-svg-icons';
 
-export const DivContainer = styled.div`
+export const DivBox = styled.div`
+  position: absolute;
+  z-index: 999;
+  top: 56px;
+  left: 13px;
+
   width: 200px;
   border-right: 1px solid #e1e2e5;
+  background-color: #ffffff;
+  box-shadow:
+    0 1px 2px hsla(0, 0%, 0%, 0.05),
+    0 1px 4px hsla(0, 0%, 0%, 0.05),
+    0 2px 8px hsla(0, 0%, 0%, 0.05);
   li {
     list-style: none;
   }
@@ -42,7 +52,7 @@ export const ListChild = styled.li`
     color: #525960;
     padding: 4px 4px 4px 14px;
     height: 30px;
-
+    cursor: pointer;
     :hover {
       color: #0c0d0e;
     }
@@ -81,7 +91,13 @@ export const FontAwesomeDiv = styled.div`
 `;
 export const HoverDiv = styled.div`
   height: 30px;
-
+  color: ${({ isSelected }) => (isSelected ? '#0c0d0e' : '#000000')};
+  background-color: ${({ isSelected }) => (isSelected ? '#f2f2f3' : 'white')};
+  border-right: ${({ isSelected }) =>
+    isSelected ? '3px solid #f48424' : 'none'};
+  font-weight: ${({ isSelected }) => (isSelected ? '500' : 'normal')};
+  line-height: ${({ isSelected }) => (isSelected ? 'normal' : 'none')};
+  cursor: pointer;
   :hover {
     background-color: #f9f9f9;
     border-right: 3px solid #f48424;
@@ -141,42 +157,61 @@ export const NavOl = styled.ol`
   }
 `;
 
-export const ActiveStyle = styled.div`
-  color: #0c0d0e;
-  background-color: #f2f2f3;
-  border-right: 3px solid #f48424;
-  font-weight: 500;
-  line-height: 26px;
+export const ActiveHomeStyleDiv = styled.div`
+  color: ${({ isSelected }) => (isSelected ? '#0c0d0e' : '#000000')};
+  background-color: ${({ isSelected }) => (isSelected ? '#f2f2f3' : 'white')};
+  border-right: ${({ isSelected }) =>
+    isSelected ? '3px solid #f48424' : 'none'};
+  font-weight: ${({ isSelected }) => (isSelected ? '500' : 'normal')};
+  line-height: ${({ isSelected }) => (isSelected ? 'normal' : 'none')};
+  padding: ${({ isSelected }) => (isSelected ? '6px 0 0 0' : '8 6 8 8')};
+
+  width: 191.2px;
+  height: 30px;
+  // padding-top: 6px;
+  cursor: pointer;
 `;
 
 const Nav = () => {
   const navigate = useNavigate();
 
-  // question 페이지 생성 후 경로 변경 예정
+  // question 페이지 생성 후 경로 변경 예정입니다.
   const navigateTo = () => {
-    navigate('/QuestionPage');
+    navigate('/login');
+    setHome(false);
+    setQuestions(true);
   };
   const navigateFor = () => {
     navigate('/');
+    setHome(true);
+    setQuestions(false);
   };
 
+  const [home, setHome] = useState(true);
+  const [questions, setQuestions] = useState(false);
+
   return (
-    <DivContainer>
+    <DivBox>
       <div>
         <nav>
           <NavOl>
             <li>
-              <HoverDiv onClick={() => navigateFor}>Home</HoverDiv>
+              <HoverDiv isSelected={home} onClick={navigateFor}>
+                Home
+              </HoverDiv>
             </li>
 
             <ListChild>
               <ol>
                 <li>PUBLIC</li>
                 <li>
-                  <div>
+                  <ActiveHomeStyleDiv
+                    isSelected={questions}
+                    onClick={navigateTo}
+                  >
                     <FontAwesomeIcon icon={faEarthAmericas} />
-                    <span onClick={() => navigateTo}>Questions</span>
-                  </div>
+                    <span>Questions</span>
+                  </ActiveHomeStyleDiv>
                 </li>
                 <li>
                   <div>
@@ -223,7 +258,7 @@ const Nav = () => {
           </NavOl>
         </nav>
       </div>
-    </DivContainer>
+    </DivBox>
   );
 };
 
