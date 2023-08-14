@@ -4,11 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
 
 @Entity(name = "users") // DB에서 “user”는 예약어로 지정되어 있는 경우가 있음
 @Getter
@@ -32,4 +30,10 @@ public class User {
 
     @Column(nullable = false)
     private LocalDateTime lastModifiedAt = LocalDateTime.now();
+
+    //List, Set 같은 컬렉션 타입의 필드는
+    // @ElementCollection 애너테이션을 추가하면
+    // User 권한 정보와 관련된 별도의 엔티티 클래스를 생성하지 않아도 간단하게 매핑 처리가 가능
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<String> roles = new ArrayList<>();
 }
