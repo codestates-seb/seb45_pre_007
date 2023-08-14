@@ -31,14 +31,22 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	testImplementation 'org.springframework.security:spring-security-test'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'// security 로그인 페이지 구현 기능
+//	testImplementation 'org.springframework.security:spring-security-test'// security 작업을 위해 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-validation'//유효성 검사 위해 추가
+	implementation 'com.google.code.gson:gson:2.8.8' // gson 의존성 추가
+	implementation 'org.modelmapper:modelmapper:2.4.2' // mapper 의존성 주입
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	//JWT 기능을 위한 jjwt 라이브러리
+//	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+//	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+//	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('test') {
