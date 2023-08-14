@@ -1,8 +1,8 @@
 import React from 'react';
 import { styled, css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import useDetectClose from '../hooks/useDetectClose';
-import search from '../assert/search.png';
+import useDetectClose from '../../hooks/useDetectClose';
+import search from '../../assert/search.png';
 
 const Search = () => {
   const { handleOnPress, isSelected, ref } = useDetectClose(false);
@@ -82,7 +82,7 @@ const Search = () => {
             </Ul>
           </SearchTop>
           <SearchBottom>
-            <AskQuestion>Ask a question</AskQuestion>
+            <AskQuestion to="/ask">Ask a question</AskQuestion>
             <SearchHelp>Search help</SearchHelp>
           </SearchBottom>
         </Menu>
@@ -116,7 +116,7 @@ const Menu = styled.div`
   position: absolute;
   top: 55px;
   left: 69%;
-  width: 646px;
+  width: 642px;
 
   display: flex;
   flex-direction: column;

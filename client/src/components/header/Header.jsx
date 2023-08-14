@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import logo1 from '../assert/logo1.png';
-import logo2 from '../assert/logo2.png';
+import logo1 from '../../assert/logo1.png';
+import logo2 from '../../assert/logo2.png';
 import { Link } from 'react-router-dom';
 import Products from './Products.jsx';
 import Search from './Search.jsx';
 import Hamburger from './Hamburger.jsx';
+import Nav from '../Nav.jsx';
 
 export const Header = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  // 수정했습니다~
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <HeaderBox>
@@ -17,7 +19,8 @@ export const Header = () => {
           <HeaderHamburgerBox onClick={() => setIsOpen(!isOpen)}>
             <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
-          <HeaderLogoBox>
+          {isOpen ? <Nav /> : null}
+          <HeaderLogoBox to="/">
             <HeaderLogoItem>
               <HeaderLogo1 />
               <HeaderLogo2 />
@@ -69,6 +72,7 @@ const HeaderLeftBox = styled.div`
 `;
 
 const HeaderHamburgerBox = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,9 +88,9 @@ const HeaderHamburgerBox = styled.div`
 `;
 
 // logo
-const HeaderLogoBox = styled.div`
+const HeaderLogoBox = styled(Link)`
+  cursor: pointer;
   display: flex;
-
   padding: 0 8px;
 
   &:hover {
@@ -145,7 +149,7 @@ const Button = styled.div`
   justify-content: center;
 
   color: hsl(210, 8%, 35%);
-  font-size: 13.5px;
+  font-size: 13px;
 
   /* height: 29px; */
 
@@ -201,6 +205,7 @@ const Login = styled(Link)`
 `;
 
 const SignUp = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;

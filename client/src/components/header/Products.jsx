@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled, css } from 'styled-components';
-import useDetectClose from '../hooks/useDetectClose';
+import useDetectClose from '../../hooks/useDetectClose';
 
 const Products = () => {
   const { handleOnPress, isSelected, ref } = useDetectClose(false);
@@ -89,7 +89,7 @@ const Button = styled.div`
   justify-content: center;
 
   color: hsl(210, 8%, 35%);
-  font-size: 13.5px;
+  font-size: 13px;
 
   /* height: 29px; */
 
