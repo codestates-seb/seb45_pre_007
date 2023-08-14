@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor //의존성 제거
 public class UserPatchDto {
         private long userId;
         private String userEmail;
