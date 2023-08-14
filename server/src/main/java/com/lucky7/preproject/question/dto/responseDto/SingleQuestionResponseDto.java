@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class SingleQuestionResponseDto {
-    private int questionId;
+    private long questionId;
     private String questionTitle;
     private String questionContent;
     private String questionUser;

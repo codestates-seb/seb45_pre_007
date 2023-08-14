@@ -43,8 +43,8 @@ public class QuestionController {
         questions.add(question1);
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
-    @GetMapping("/{question-id}")
-    public ResponseEntity<?> getQuestion(@PathVariable("question-id") int questionId) {
+    @GetMapping("/{questionId}")
+    public ResponseEntity<?> getQuestion(@PathVariable long questionId) {
         SingleQuestionResponseDto singleQuestionResponseDto = new SingleQuestionResponseDto();
         singleQuestionResponseDto.setQuestionId(questionId);
         singleQuestionResponseDto.setQuestionTitle("질문 제목");
@@ -59,7 +59,6 @@ public class QuestionController {
         commentDto.setCommentUser("작성자");
         commentDto.setCommentContent("댓글 내용");
         commentDto.setCreatedAt("댓글 작성 날짜");
-        commentDto.setAvatarImg("url");
 
         List<CommentDto> questionComments = new ArrayList<>();
         questionComments.add(commentDto);
@@ -69,8 +68,8 @@ public class QuestionController {
 
         return new ResponseEntity<>(singleQuestionResponseDto, HttpStatus.OK);
     }
-    @PatchMapping("/{question-id}")
-    public ResponseEntity<?> patchQuestion(@PathVariable("question-id") int questionId,
+    @PatchMapping("/{questionId}")
+    public ResponseEntity<?> patchQuestion(@PathVariable long questionId,
                                 @RequestBody QuestionPatchDto questionPatchDto) {
         QuestionResponseDto responseDto = new QuestionResponseDto();
         responseDto.setQuestionId(questionId);
@@ -80,8 +79,8 @@ public class QuestionController {
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
-    @DeleteMapping("/{question-id}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable("question-id") int questionId) {
+    @DeleteMapping("/{questionId}")
+    public ResponseEntity<?> deleteQuestion(@PathVariable long questionId) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

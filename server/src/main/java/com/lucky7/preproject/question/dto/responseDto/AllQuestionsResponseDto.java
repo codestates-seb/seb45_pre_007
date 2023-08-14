@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AllQuestionsResponseDto {
-    private int questionId;
+    private long questionId;
     private String questionTitle;
     private String questionContent;
     private String questionUser;

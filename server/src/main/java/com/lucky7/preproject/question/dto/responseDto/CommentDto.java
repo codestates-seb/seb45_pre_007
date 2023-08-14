@@ -11,5 +11,5 @@ public class CommentDto {
     private String commentUser;
     private String commentContent;
     private String createdAt;
-    private String avatarImg;
+//    private String avatarImg; // 추후에 추가할 예정
 }

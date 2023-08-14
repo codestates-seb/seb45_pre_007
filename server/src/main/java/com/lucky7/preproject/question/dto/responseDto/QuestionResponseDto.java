@@ -9,7 +9,7 @@ import org.springframework.lang.Nullable;
 @Getter
 @Setter
 public class QuestionResponseDto {
-    private int questionId;
+    private long questionId;
     private String questionTitle;
     private String questionContent;
     @JsonIgnore
