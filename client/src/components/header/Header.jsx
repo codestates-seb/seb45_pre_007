@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Products from './Products.jsx';
 import Search from './Search.jsx';
 import Hamburger from './Hamburger.jsx';
+import Nav from '../Nav.jsx';
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -17,7 +18,8 @@ export const Header = () => {
           <HeaderHamburgerBox onClick={() => setIsOpen(!isOpen)}>
             <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
-          <HeaderLogoBox>
+          {isOpen ? <Nav /> : null}
+          <HeaderLogoBox to="/">
             <HeaderLogoItem>
               <HeaderLogo1 />
               <HeaderLogo2 />
@@ -85,7 +87,7 @@ const HeaderHamburgerBox = styled.div`
 `;
 
 // logo
-const HeaderLogoBox = styled.div`
+const HeaderLogoBox = styled(Link)`
   cursor: pointer;
   display: flex;
   padding: 0 8px;

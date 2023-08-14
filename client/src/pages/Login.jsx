@@ -9,7 +9,7 @@ import logo1 from '../assert/logo1.png';
 export const Login = () => {
   return (
     <LoginBox>
-      <Logo>
+      <Logo to="/">
         <img src={logo1} alt="logo" />
       </Logo>
       <OAuthLogin />

@@ -8,10 +8,22 @@ import {
   faStar,
   faBriefcase,
 } from '@fortawesome/free-solid-svg-icons';
+import useDetectClose from '../hooks/useDetectClose';
 
 export const DivContainer = styled.div`
+  position: absolute;
+  z-index: 999;
+  top: 56px;
+  left: 13px;
+
   width: 200px;
   border-right: 1px solid #e1e2e5;
+  background-color: #ffffff;
+  box-shadow:
+    0 1px 2px hsla(0, 0%, 0%, 0.05),
+    0 1px 4px hsla(0, 0%, 0%, 0.05),
+    0 2px 8px hsla(0, 0%, 0%, 0.05);
+
   li {
     list-style: none;
   }
@@ -51,7 +63,7 @@ export const ListChild = styled.li`
     padding: 4px 4px 4px 0px;
   }
 
-  //Collectives
+  // Collectives
   li:nth-last-child(2) {
     margin: 16px 0px 10px 0px;
     font-size: 11px;
@@ -59,7 +71,7 @@ export const ListChild = styled.li`
     color: #6a737c;
   }
 
-  //star icon
+  // star icon
   > ol > li:last-child {
     > svg {
       color: #f48424;
