@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
-@Setter //추가
+@Setter
 public class AnswerComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

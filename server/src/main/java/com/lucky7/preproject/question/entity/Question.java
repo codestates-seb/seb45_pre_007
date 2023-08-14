@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
-@Setter //추가
+@Setter
 public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // strategy 공부
     @Id //springframework.data.id와 @Document는 비관계형 데이터베이스를 사용할 때 쓰인다.

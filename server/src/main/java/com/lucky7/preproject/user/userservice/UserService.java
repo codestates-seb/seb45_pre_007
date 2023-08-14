@@ -23,7 +23,7 @@ public class UserService {
         return null;
     }
 
-    public User findUser(long UserId) { //메서드명 변경
+    public User findUser(long UserId) { //메서드명 수정
 
         return null;
     }

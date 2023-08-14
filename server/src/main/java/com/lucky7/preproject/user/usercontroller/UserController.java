@@ -34,7 +34,7 @@ public class UserController {
                 HttpStatus.CREATED);
     }
 
-    @PatchMapping("/users{userId}")
+    @PatchMapping("/users{userId}") //URL, 의존성 제거
     private ResponseEntity patchUser(@PathVariable
                                      @Positive long userId,
                                      @RequestBody UserPatchDto userPatchDto){
@@ -46,14 +46,14 @@ public class UserController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/users/{userId}") // URL 제거
+    @GetMapping("/users/{userId}") //URL, 의존성 제거
     private ResponseEntity getUser(@PathVariable @Positive long userId){
-        User response = userService.findUser(userId);
+        User response = userService.findUser(userId);//메서드명 수정
 
         return new ResponseEntity<>(mapper.userToUserResponseDto(response), HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{userId}")
+    @DeleteMapping("/users/{userId}") //URL, 의존성 제거
     private ResponseEntity deleteUser(@PathVariable @Positive long userId){
         userService.deleteUser(userId);
 
