@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import StackOverFlowLogo from '../assert/Logo.png';
 //git PR테스트 4
 const spaceBetweenItems = '20px'; // 아이템 간격을 상수로 선언
