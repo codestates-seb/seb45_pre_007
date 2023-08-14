@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-//implementation 'org.modelmapper:modelmapper:2.4.2' mapper 의존성 주입
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     User userPostToUser(UserPostDto requestBody);
