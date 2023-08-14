@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 public class UserResponseDto {
-
     private long userId;
     private String userName;
     private String userEmail;
