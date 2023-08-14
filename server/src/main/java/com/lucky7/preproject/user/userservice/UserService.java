@@ -23,12 +23,12 @@ public class UserService {
         return null;
     }
 
-    public User findMember(long userId) {
+    public User findMember(long UserId) {
 
         return null;
     }
 
-    public User deleteUser(long userId){
+    public User deleteUser(long UserId){
 
         return null;
     }

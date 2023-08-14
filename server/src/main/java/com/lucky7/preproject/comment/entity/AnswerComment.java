@@ -2,6 +2,9 @@ package com.lucky7.preproject.comment.entity;
 
 import com.lucky7.preproject.answer.entity.Answer;
 import com.lucky7.preproject.user.entity.User;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Getter
+@Setter
 public class AnswerComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

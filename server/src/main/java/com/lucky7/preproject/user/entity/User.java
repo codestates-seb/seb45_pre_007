@@ -12,7 +12,7 @@ import javax.persistence.Id;
 
 @Entity(name = "users") // DB에서 “user”는 예약어로 지정되어 있는 경우가 있음
 @Getter
-@Setter
+@Setter //추가
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
