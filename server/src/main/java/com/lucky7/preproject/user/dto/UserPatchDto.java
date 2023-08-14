@@ -7,15 +7,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@Setter
+@Setter //NoArgsConstructor 제거
 public class UserPatchDto {
         private long userId;
-
-        @NotBlank
-        @Email
         private String userEmail;
-
-        @NotBlank(message = "이름은 공백이 아니어야 합니다.")
         private String userName;
 }
 
