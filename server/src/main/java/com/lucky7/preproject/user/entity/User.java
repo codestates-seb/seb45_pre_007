@@ -1,5 +1,8 @@
 package com.lucky7.preproject.user.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "users") // DB에서 “user”는 예약어로 지정되어 있는 경우가 있음
+@Getter
+@Setter //추가
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
