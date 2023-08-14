@@ -9,7 +9,7 @@ import Hamburger from './Hamburger.jsx';
 import Nav from '../Nav.jsx';
 
 export const Header = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <HeaderBox>
