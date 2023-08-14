@@ -10,7 +10,7 @@ import Nav from '../Nav.jsx';
 
 export const Header = () => {
   // 수정했습니다~
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <HeaderBox>
