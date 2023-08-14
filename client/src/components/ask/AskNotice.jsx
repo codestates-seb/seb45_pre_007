@@ -25,13 +25,13 @@ const AskNotice = () => {
         <AskNoticeItem>
           <AskNoticeTitle>Writing a good question</AskNoticeTitle>
           <AskNoticeTextUp>
-            You’re ready to <span>ask</span> a
-            <span>programming-related question</span> and this form will help
-            guide you through the process.
+            You’re ready to&nbsp;<span>ask</span>&nbsp;a&nbsp;
+            <span>programming-related question</span>&nbsp;and this form will
+            help guide you through the process.
           </AskNoticeTextUp>
           <AskNoticeTextDown>
-            Looking to ask a non-programming question? See
-            <span>the topics here</span> to find a relevant site.
+            Looking to ask a non-programming question? See&nbsp;
+            <span>the topics here</span>&nbsp;to find a relevant site.
           </AskNoticeTextDown>
           <AskNoticeStep>Steps</AskNoticeStep>
           <AskNoticeUl>
@@ -84,7 +84,6 @@ const AskNoticeTextUp = styled.p`
 
   span {
     color: #0074cc;
-    padding: 0 0 0 2.5px;
   }
 `;
 

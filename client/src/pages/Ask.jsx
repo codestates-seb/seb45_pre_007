@@ -2,19 +2,29 @@ import React from 'react';
 import { styled } from 'styled-components';
 import AskNotice from '../components/ask/AskNotice.jsx';
 import ask from '../assert/ask.png';
+import AskTitle from '../components/ask/AskTitle.jsx';
+import AskTag from '../components/ask/AskTag.jsx';
+import AskDuplicate from '../components/ask/AskDuplication.jsx';
 
 const Ask = () => {
   return (
     <AskBox>
       <AskItems>
-        <AskItemBox>
+        <AskNoticeBox>
           <AskItem>
             <AskTitleBox>
-              <AskTitle>Ask a public question</AskTitle>
+              <AskTitleText>Ask a public question</AskTitleText>
             </AskTitleBox>
             <AskNotice />
           </AskItem>
-        </AskItemBox>
+        </AskNoticeBox>
+        <AskFormBox>
+          <AskMainBox>
+            <AskTitle />
+            <AskTag />
+            <AskDuplicate />
+          </AskMainBox>
+        </AskFormBox>
       </AskItems>
     </AskBox>
   );
@@ -41,7 +51,7 @@ const AskItems = styled.div`
   padding: 0 24px;
 `;
 
-const AskItemBox = styled.div`
+const AskNoticeBox = styled.div`
   width: 100%;
 `;
 
@@ -65,8 +75,17 @@ const AskTitleBox = styled.div`
   }
 `;
 
-const AskTitle = styled.h1`
+const AskTitleText = styled.h1`
   font-size: 27px;
   font-weight: 600;
   color: #232629;
+`;
+
+const AskFormBox = styled.div`
+  width: 100%;
+  margin: 0 0 48px 0;
+`;
+
+const AskMainBox = styled.div`
+  width: 100%;
 `;
