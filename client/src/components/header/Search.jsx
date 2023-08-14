@@ -82,7 +82,7 @@ const Search = () => {
             </Ul>
           </SearchTop>
           <SearchBottom>
-            <AskQuestion>Ask a question</AskQuestion>
+            <AskQuestion to="/ask">Ask a question</AskQuestion>
             <SearchHelp>Search help</SearchHelp>
           </SearchBottom>
         </Menu>
