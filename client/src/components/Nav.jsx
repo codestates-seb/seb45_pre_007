@@ -61,7 +61,7 @@ export const ListChild = styled.li`
     padding: 4px 4px 4px 0px;
   }
 
-  //Collectives
+  // Collectives
   li:nth-last-child(2) {
     margin: 16px 0px 10px 0px;
     font-size: 11px;
@@ -69,7 +69,7 @@ export const ListChild = styled.li`
     color: #6a737c;
   }
 
-  //star icon
+  // star icon
   > ol > li:last-child {
     > svg {
       color: #f48424;
