@@ -4,10 +4,6 @@ import StackOverFlowLogo from '../assert/Logo.png';
 
 const spaceBetweenItems = '20px'; // 아이템 간격을 상수로 선언
 
-const styles = {
-  whiteSpace: 'pre-line',
-};
-
 const FooterContainer = styled.footer`
   display: flex;
   background-color: #232629;
@@ -19,7 +15,9 @@ const FooterContainer = styled.footer`
 
 const FooterLogo = styled.div`
   margin-right: 20px;
-  margin-left: 100px;
+  margin-left: 50px;
+  flex-grow: 2.5;
+  text-align: right;
 `;
 
 const Nav = styled.nav`
@@ -59,7 +57,7 @@ const ListItem = styled.li`
 const FlexDiv = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex-grow: 2.5;
   margin-right: ${spaceBetweenItems}; // 상수로 지정한 간격 사용
 `;
 
@@ -214,7 +212,7 @@ const Footer = () => {
         </FlexUl>
         <Ptag>
           Site design / logo © 2023 Stack Exchange Inc user contributions
-          licensed under
+          <br /> licensed under
           <Svnrev>
             <FooterLink>CC BY-SA</FooterLink>
           </Svnrev>

@@ -217,4 +217,3 @@ const SignUp = styled.div`
     background-color: #0174cd;
   }
 `;
-
