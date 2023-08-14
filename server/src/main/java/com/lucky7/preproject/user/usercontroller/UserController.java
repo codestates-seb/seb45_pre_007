@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity postUser(@Valid @RequestBody UserPostDto userPostDto){
+    public ResponseEntity postUser(@RequestBody UserPostDto userPostDto){
         User user = mapper.userPostToUser(userPostDto);
 
         User response = userService.createUser(user);
@@ -35,9 +35,8 @@ public class UserController {
     }
 
     @PatchMapping("/users{userId}")
-    private ResponseEntity patchUser(@PathVariable("userId")
-                                     @Positive long userId,
-                                     @Valid @RequestBody UserPatchDto userPatchDto){
+    private ResponseEntity patchUser(@PathVariable long userId,
+                                     @RequestBody UserPatchDto userPatchDto){
         userPatchDto.setUserId(userId);
 
         User response = userService.updateUser(mapper.userPatchToUser(userPatchDto));
@@ -47,14 +46,14 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    private ResponseEntity getUser(@PathVariable("userId") @Positive long userId){
+    private ResponseEntity getUser(@PathVariable long userId){
         User response = userService.findMember(userId);
 
         return new ResponseEntity<>(mapper.userToUserResponseDto(response), HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{userId}")
-    private ResponseEntity deleteUser(@PathVariable("userId") @Positive long userId){
+    private ResponseEntity deleteUser(@PathVariable long userId){
         userService.deleteUser(userId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
