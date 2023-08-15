@@ -21,7 +21,7 @@ const FooterLogo = styled.div`
   text-align: right;
 
   img {
-    width: 33px;
+    width: 32px;
     height: 37px;
   }
 `;
