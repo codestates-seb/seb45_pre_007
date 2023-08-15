@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import logo1 from '../../assert/logo1.png';
 import logo2 from '../../assert/logo2.png';
@@ -7,32 +7,54 @@ import Products from './Products.jsx';
 import Search from './Search.jsx';
 import Hamburger from './Hamburger.jsx';
 import Nav from '../Nav.jsx';
-import useDetectClose from '../../hooks/useDetectClose';
 
 export const Header = () => {
-  const { handleOnPress, isSelected, ref } = useDetectClose(false);
+  // 수정했습니다~
   const [isOpen, setIsOpen] = useState(false);
+
+  const containerRef = useRef(null);
+
+  const handleOutsideClick = (event) => {
+    if (containerRef.current && !containerRef.current.contains(event.target)) {
+      setIsOpen(false);
+      // setIsOpen(!isOpen);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleOutsideClick);
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   return (
     <HeaderBox>
       <HeaderList>
         <HeaderLeftBox>
           <HeaderHamburgerBox
-            onClick={() => {
-              // 중괄호로 묶어주면 여러 함수 호출 가능
-              setIsOpen(!isOpen);
-              handleOnPress();
-            }}
+            ref={containerRef}
+            onClick={() => setIsOpen(!isOpen)}
           >
             <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
-          <Nav isNavSelected={isOpen} />
+
+          {isOpen ? (
+            <div
+              style={{ position: 'relative' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Nav />
+            </div>
+          ) : null}
+
           <HeaderLogoBox to="/">
             <HeaderLogoItem>
               <HeaderLogo1 />
               <HeaderLogo2 />
             </HeaderLogoItem>
           </HeaderLogoBox>
+
           <ButtonBox>
             <ButtonItem>
               <About>About</About>
@@ -41,7 +63,9 @@ export const Header = () => {
             </ButtonItem>
           </ButtonBox>
         </HeaderLeftBox>
+
         <Search />
+
         <AuthBox>
           <AuthItem>
             <Login to="/login">Log in</Login>
@@ -55,17 +79,17 @@ export const Header = () => {
 
 const HeaderBox = styled.div`
   position: fixed;
+  width: 100%;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  z-index: 9999;
-
-  background-color: #ffffff;
   border-top: 3px solid #f48026;
   border-bottom: 1px solid hsl(210, 8%, 85%);
   height: 56px;
+
+  z-index: 9999;
 `;
 
 const HeaderList = styled.div`

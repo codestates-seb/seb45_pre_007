@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { css, styled } from 'styled-components';
+import { styled } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEarthAmericas,
@@ -8,21 +8,14 @@ import {
   faStar,
   faBriefcase,
 } from '@fortawesome/free-solid-svg-icons';
-import useDetectClose from '../hooks/useDetectClose';
 
 export const DivBox = styled.div`
-  ${({ isNavSelected }) =>
-    !isNavSelected &&
-    css`
-      display: none;
-    `}
-
   position: absolute;
   z-index: 999;
-  top: 56px;
-  left: 13px;
+  top: 52px;
+  left: -48px;
 
-  width: 200px;
+  width: 240px;
   border-right: 1px solid #e1e2e5;
   background-color: #ffffff;
   box-shadow:
@@ -33,14 +26,13 @@ export const DivBox = styled.div`
     list-style: none;
   }
   > div {
-    padding: 4px 0px 4px 8px;
+    padding: 24px 0 0 0;
   }
 `;
 
 export const ListChild = styled.li`
   > ol {
     margin-bottom: 12px;
-    padding: 0px;
   }
 
   //PUBLIC
@@ -57,7 +49,7 @@ export const ListChild = styled.li`
     font-size: 13px;
     line-height: 26px;
     color: #525960;
-    padding: 4px 4px 4px 14px;
+    /* padding: 4px 4px 0 14px; */
     height: 30px;
     cursor: pointer;
     :hover {
@@ -65,7 +57,7 @@ export const ListChild = styled.li`
     }
   }
   > ol > li:nth-last-child(6) {
-    padding: 4px 4px 4px 0px;
+    /* padding: 4px 4px 0 0px; */
   }
 
   // Collectives
@@ -97,6 +89,9 @@ export const FontAwesomeDiv = styled.div`
   }
 `;
 export const HoverDiv = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
   height: 30px;
   color: ${({ isSelected }) => (isSelected ? '#0c0d0e' : '#000000')};
   background-color: ${({ isSelected }) => (isSelected ? '#f2f2f3' : 'white')};
@@ -113,9 +108,15 @@ export const HoverDiv = styled.div`
 
 export const NavOl = styled.ol`
   padding: 0;
+
+  > li {
+    padding-left: 8px;
+  }
+
   //Home
   > li:first-child {
     font-size: 13px;
+    padding-left: 0;
     div {
       cursor: pointer;
     }
@@ -145,6 +146,9 @@ export const NavOl = styled.ol`
     }
   }
 
+  > li:last-child {
+    padding-bottom: 8px;
+  }
   // Looking for your Teams?
   button {
     font-size: 13px;
@@ -171,18 +175,14 @@ export const ActiveHomeStyleDiv = styled.div`
     isSelected ? '3px solid #f48424' : 'none'};
   font-weight: ${({ isSelected }) => (isSelected ? '500' : 'normal')};
   line-height: ${({ isSelected }) => (isSelected ? 'normal' : 'none')};
-  padding: ${({ isSelected }) => (isSelected ? '6px 0 0 0' : '8 6 8 8')};
+  padding: ${({ isSelected }) => (isSelected ? '6px 0 6px 0' : '8 6 8 8')};
 
-  width: 191.2px;
+  width: 100%;
   height: 30px;
-  // padding-top: 6px;
   cursor: pointer;
 `;
 
-const Nav = ({ isNavSelected }) => {
-  const { ref } = useDetectClose(isNavSelected);
-  console.log(ref);
-  console.log(isNavSelected);
+const Nav = () => {
   const navigate = useNavigate();
 
   // question 페이지 생성 후 경로 변경 예정입니다.
@@ -201,7 +201,7 @@ const Nav = ({ isNavSelected }) => {
   const [questions, setQuestions] = useState(false);
 
   return (
-    <DivBox isNavSelected={isNavSelected} ref={ref}>
+    <DivBox>
       <div>
         <nav>
           <NavOl>
