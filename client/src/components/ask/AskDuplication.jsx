@@ -1,87 +1,110 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import Collapse from '@kunukn/react-collapse';
+import AskAside from '../ask/askAside/AskAside.jsx';
 
-const AskDuplicate = () => {
+const AskDuplicate = ({ isFocus, setIsFocus }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <AskDuplicateLayout>
-      <AskDuplicateBox>
-        <AskDuplicateList>
-          <AskDuplicateItem>
-            <AskDuplicateTextBox>
-              <AskDuplicateText>
-                Review questions already on Stack Overflow to see if your
-                question is a duplicate.
-              </AskDuplicateText>
-              <AskDuplicateDescription>
-                Clicking on these questions will open them in a new tab for you
-                to review. Your progress here will be saved so you can come back
-                and continue.
-              </AskDuplicateDescription>
-            </AskDuplicateTextBox>
-            <AskDuplicateDropdownBox>
-              <DropdownBoxUp onClick={() => setIsOpen(!isOpen)}>
-                <DropdownDescription>
-                  <div>Do any of these posts answer your question?</div>
-                  <div>
-                    {isOpen ? (
-                      <div className="up">
-                        <svg
-                          aria-hidden="true"
-                          className="fc-light svg-icon iconArrowUpAlt"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                        >
-                          <path d="m16.01 10.62-1.4 1.4L9 6.45l-5.59 5.59-1.4-1.41 7-7 7 7Z"></path>
-                        </svg>
-                      </div>
-                    ) : (
-                      <div className="down">
-                        <svg
-                          aria-hidden="true"
-                          className="fc-light svg-icon iconArrowDownAlt"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                        >
-                          <path d="m16.01 7.43-1.4-1.41L9 11.6 3.42 6l-1.4 1.42 7 7 7-7Z"></path>
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                </DropdownDescription>
-              </DropdownBoxUp>
-              <Collapse isOpen={isOpen}>
-                <DropdownBoxDown>
-                  <DropdownSimilar>
-                    <DropdownSimilarText>
-                      No duplicate questions found.
-                    </DropdownSimilarText>
-                  </DropdownSimilar>
-                </DropdownBoxDown>
-              </Collapse>
-            </AskDuplicateDropdownBox>
-          </AskDuplicateItem>
-        </AskDuplicateList>
-      </AskDuplicateBox>
-    </AskDuplicateLayout>
+    <DuplicateLayout>
+      <AskDuplicateLayout>
+        <AskDuplicateBox>
+          <AskDuplicateList>
+            <AskDuplicateItem>
+              <AskDuplicateTextBox>
+                <AskDuplicateText>
+                  Review questions already on Stack Overflow to see if your
+                  question is a duplicate.
+                </AskDuplicateText>
+                <AskDuplicateDescription>
+                  Clicking on these questions will open them in a new tab for
+                  you to review. Your progress here will be saved so you can
+                  come back and continue.
+                </AskDuplicateDescription>
+              </AskDuplicateTextBox>
+              <AskDuplicateDropdownBox>
+                <DropdownBoxUp
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                    setIsFocus(4);
+                  }}
+                >
+                  <DropdownDescription>
+                    <div>Do any of these posts answer your question?</div>
+                    <div>
+                      {isOpen ? (
+                        <div className="up">
+                          <svg
+                            aria-hidden="true"
+                            className="fc-light svg-icon iconArrowUpAlt"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 18 18"
+                          >
+                            <path d="m16.01 10.62-1.4 1.4L9 6.45l-5.59 5.59-1.4-1.41 7-7 7 7Z"></path>
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="down">
+                          <svg
+                            aria-hidden="true"
+                            className="fc-light svg-icon iconArrowDownAlt"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 18 18"
+                          >
+                            <path d="m16.01 7.43-1.4-1.41L9 11.6 3.42 6l-1.4 1.42 7 7 7-7Z"></path>
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  </DropdownDescription>
+                </DropdownBoxUp>
+                <Collapse isOpen={isOpen}>
+                  <DropdownBoxDown>
+                    <DropdownSimilar>
+                      <DropdownSimilarText>
+                        No duplicate questions found.
+                      </DropdownSimilarText>
+                    </DropdownSimilar>
+                  </DropdownBoxDown>
+                  <AskSubmitBox>
+                    <AskSubmitButton>Review your question</AskSubmitButton>
+                  </AskSubmitBox>
+                </Collapse>
+              </AskDuplicateDropdownBox>
+            </AskDuplicateItem>
+          </AskDuplicateList>
+        </AskDuplicateBox>
+      </AskDuplicateLayout>
+      <AsideBox>
+        <AskAside isFocus={isFocus} index={4} />
+      </AsideBox>
+    </DuplicateLayout>
   );
 };
 
 export default AskDuplicate;
 
+const DuplicateLayout = styled.div`
+  display: flex;
+  gap: 16px;
+`;
+
 const AskDuplicateLayout = styled.div`
   display: flex;
   align-items: flex-start;
   width: 70%;
-  margin: 12px 0 0 0;
+  /* margin: 12px 0 0 0; */
 
   border: 1px solid hsl(210, 8%, 85%);
   border-radius: 4px;
   background-color: #ffffff;
+`;
+
+const AsideBox = styled.div`
+  position: relative;
 `;
 
 const AskDuplicateBox = styled.div`
@@ -188,3 +211,25 @@ const DropdownSimilar = styled.div`
 `;
 
 const DropdownSimilarText = styled.div``;
+
+const AskSubmitBox = styled.div``;
+
+const AskSubmitButton = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 13px;
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(206, 100%, 52%);
+  border-radius: 6px;
+
+  width: 151px;
+  margin: 16px 0 0 0;
+  padding: 10.4px;
+
+  &:hover {
+    background-color: #0174cd;
+  }
+`;

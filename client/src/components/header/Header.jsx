@@ -7,19 +7,26 @@ import Products from './Products.jsx';
 import Search from './Search.jsx';
 import Hamburger from './Hamburger.jsx';
 import Nav from '../Nav.jsx';
+import useDetectClose from '../../hooks/useDetectClose';
 
 export const Header = () => {
-  // 수정했습니다~
+  const { handleOnPress, isSelected, ref } = useDetectClose(false);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <HeaderBox>
       <HeaderList>
         <HeaderLeftBox>
-          <HeaderHamburgerBox onClick={() => setIsOpen(!isOpen)}>
+          <HeaderHamburgerBox
+            onClick={() => {
+              // 중괄호로 묶어주면 여러 함수 호출 가능
+              setIsOpen(!isOpen);
+              handleOnPress();
+            }}
+          >
             <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
-          {isOpen ? <Nav /> : null}
+          <Nav isNavSelected={isOpen} />
           <HeaderLogoBox to="/">
             <HeaderLogoItem>
               <HeaderLogo1 />
@@ -47,10 +54,15 @@ export const Header = () => {
 };
 
 const HeaderBox = styled.div`
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
 
+  width: 100%;
+  z-index: 9999;
+
+  background-color: #ffffff;
   border-top: 3px solid #f48026;
   border-bottom: 1px solid hsl(210, 8%, 85%);
   height: 56px;

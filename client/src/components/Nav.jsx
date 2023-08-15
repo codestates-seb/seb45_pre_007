@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEarthAmericas,
@@ -8,8 +8,15 @@ import {
   faStar,
   faBriefcase,
 } from '@fortawesome/free-solid-svg-icons';
+import useDetectClose from '../hooks/useDetectClose';
 
 export const DivBox = styled.div`
+  ${({ isNavSelected }) =>
+    !isNavSelected &&
+    css`
+      display: none;
+    `}
+
   position: absolute;
   z-index: 999;
   top: 56px;
@@ -172,7 +179,10 @@ export const ActiveHomeStyleDiv = styled.div`
   cursor: pointer;
 `;
 
-const Nav = () => {
+const Nav = ({ isNavSelected }) => {
+  const { ref } = useDetectClose(isNavSelected);
+  console.log(ref);
+  console.log(isNavSelected);
   const navigate = useNavigate();
 
   // question 페이지 생성 후 경로 변경 예정입니다.
@@ -191,7 +201,7 @@ const Nav = () => {
   const [questions, setQuestions] = useState(false);
 
   return (
-    <DivBox>
+    <DivBox isNavSelected={isNavSelected} ref={ref}>
       <div>
         <nav>
           <NavOl>

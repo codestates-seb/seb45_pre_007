@@ -1,43 +1,59 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import AskAside from '../ask/askAside/AskAside.jsx';
 
-const AskTag = () => {
+const AskTag = ({ isFocus, setIsFocus }) => {
   return (
-    <AskTagLayout>
-      <AskTagBox>
-        <AskTagList>
-          <AskTagItem>
-            <AskTagTextBox>
-              <AskTagText>Tags</AskTagText>
-              <AskTagDescription>
-                Add up to 5 tags to describe what your question is about. Start
-                typing to see suggestions.
-              </AskTagDescription>
-            </AskTagTextBox>
-            <AskTagInputBox>
-              <AskTagInput
-                placeholder="e.g. (mysql json typescript)"
-                readonly="readonly"
-              />
-            </AskTagInputBox>
-          </AskTagItem>
-        </AskTagList>
-      </AskTagBox>
-    </AskTagLayout>
+    <TagLayout>
+      <AskTagLayout>
+        <AskTagBox>
+          <AskTagList>
+            <AskTagItem>
+              <AskTagTextBox>
+                <AskTagText>Tags</AskTagText>
+                <AskTagDescription>
+                  Add up to 5 tags to describe what your question is about.
+                  Start typing to see suggestions.
+                </AskTagDescription>
+              </AskTagTextBox>
+              <AskTagInputBox>
+                <AskTagInput
+                  placeholder="e.g. (mysql json typescript)"
+                  readonly="readonly"
+                  onClick={() => setIsFocus(3)}
+                />
+              </AskTagInputBox>
+            </AskTagItem>
+          </AskTagList>
+        </AskTagBox>
+      </AskTagLayout>
+      <AsideBox>
+        <AskAside isFocus={isFocus} index={3} />
+      </AsideBox>
+    </TagLayout>
   );
 };
 
 export default AskTag;
 
+const TagLayout = styled.div`
+  display: flex;
+  gap: 16px;
+`;
+
 const AskTagLayout = styled.div`
   display: flex;
   align-items: flex-start;
   width: 70%;
-  margin: 12px 0 0 0;
+  /* margin: 12px 0 0 0; */
 
   border: 1px solid hsl(210, 8%, 85%);
   border-radius: 4px;
   background-color: #ffffff;
+`;
+
+const AsideBox = styled.div`
+  position: relative;
 `;
 
 const AskTagBox = styled.div`

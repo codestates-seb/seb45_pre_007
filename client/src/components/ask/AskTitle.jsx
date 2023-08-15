@@ -1,26 +1,35 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import AskAside from '../ask/askAside/AskAside.jsx';
 
-const AskTitle = () => {
+const AskTitle = ({ isFocus, setIsFocus }) => {
   return (
-    <AskTitleLayout>
-      <AskTitleBox>
-        <AskTitleList>
-          <AskTitleItem>
-            <AskTitleTextBox>
-              <AskTitleText>Title</AskTitleText>
-              <AskTitleDescription>
-                Be specific and imagine you’re asking a question to another
-                person.
-              </AskTitleDescription>
-            </AskTitleTextBox>
-            <AskTitleInputBox>
-              <AskTitleInput placeholder="e.g. Is there an R function for finding the index of an element in a vector?" />
-            </AskTitleInputBox>
-          </AskTitleItem>
-        </AskTitleList>
-      </AskTitleBox>
-    </AskTitleLayout>
+    <TitleLayout>
+      <AskTitleLayout>
+        <AskTitleBox>
+          <AskTitleList>
+            <AskTitleItem>
+              <AskTitleTextBox>
+                <AskTitleText>Title</AskTitleText>
+                <AskTitleDescription>
+                  Be specific and imagine you’re asking a question to another
+                  person.
+                </AskTitleDescription>
+              </AskTitleTextBox>
+              <AskTitleInputBox>
+                <AskTitleInput
+                  placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                  onClick={() => setIsFocus(0)}
+                />
+              </AskTitleInputBox>
+            </AskTitleItem>
+          </AskTitleList>
+        </AskTitleBox>
+      </AskTitleLayout>
+      <AsideBox>
+        <AskAside isFocus={isFocus} index={0} />
+      </AsideBox>
+    </TitleLayout>
   );
 };
 
@@ -33,6 +42,15 @@ const AskTitleLayout = styled.div`
   border: 1px solid hsl(210, 8%, 85%);
   border-radius: 4px;
   background-color: #ffffff;
+`;
+
+const TitleLayout = styled.div`
+  display: flex;
+  gap: 16px;
+`;
+
+const AsideBox = styled.div`
+  position: relative;
 `;
 
 const AskTitleBox = styled.div`
