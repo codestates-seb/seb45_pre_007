@@ -1,14 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
-import StackOverFlowLogo from '../assert/Logo.png';
-//git PR테스트 4
-const spaceBetweenItems = '20px'; // 아이템 간격을 상수로 선언
+import { styled } from 'styled-components';
+import StackOverFlowLogo from '../assert/logo1.png';
+import { navData, socialLinks } from '../utils/footerDataUtils.js';
 
-const FooterContainer = styled.footer`
+const spaceBetweenItems = '20px';
+
+const FooterBox = styled.footer`
+  // FooterContainer -> FooterBox로 이름 변경 및 마진 제거
   display: flex;
   background-color: #232629;
   color: #babfc4;
-  margin: 15px 0; /* 바깥 여백을 margin으로 조절 */
   padding: 20px 0;
   flex-grow: 1;
 `;
@@ -18,6 +19,11 @@ const FooterLogo = styled.div`
   margin-left: 50px;
   flex-grow: 2.5;
   text-align: right;
+
+  img {
+    width: 32px;
+    height: 37px;
+  }
 `;
 
 const Nav = styled.nav`
@@ -80,135 +86,43 @@ const Svnrev = styled.span`
   text-decoration: underline;
 `;
 
-// Footer 컴포넌트 정의
+const NavSection = ({ title, links }) => (
+  <FooterItemDiv>
+    <Title>
+      <FooterLink>{title}</FooterLink>
+    </Title>
+    <FlexUl>
+      {links.map((link) => (
+        <ListItem key={link}>
+          <FooterLink>{link}</FooterLink>
+        </ListItem>
+      ))}
+    </FlexUl>
+  </FooterItemDiv>
+);
+
 const Footer = () => {
   return (
-    <FooterContainer>
+    <FooterBox>
       <FooterLogo>
         <img src={StackOverFlowLogo} alt="로고 이미지" />
       </FooterLogo>
       <Nav>
-        <FooterItemDiv>
-          <Title>
-            <FooterLink>STACK OVERFLOW</FooterLink>
-          </Title>
-          <FlexUl>
-            <ListItem>
-              <FooterLink>Questions</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Help</FooterLink>
-            </ListItem>
-          </FlexUl>
-        </FooterItemDiv>
-        <FooterItemDiv>
-          <Title>
-            <FooterLink>
-              <FooterLink>PRODUCTS</FooterLink>
-            </FooterLink>
-          </Title>
-          <FlexUl>
-            <ListItem>
-              <FooterLink>Teams</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Advertising</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Collectives</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Talent</FooterLink>
-            </ListItem>
-          </FlexUl>
-        </FooterItemDiv>
-        <FooterItemDiv>
-          <Title>
-            <FooterLink>
-              <FooterLink>COMPANY</FooterLink>
-            </FooterLink>
-          </Title>
-          <FlexUl>
-            <ListItem>
-              <FooterLink>About</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Press</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Work Here</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Legal</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Privacy Policy</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Terms of Service</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Contact Us</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Cookie Settings</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Cookie Policy</FooterLink>
-            </ListItem>
-          </FlexUl>
-        </FooterItemDiv>
-        <FooterItemDiv>
-          <Title>
-            <FooterLink>
-              <FooterLink>STACK EXCHANGE NETWORK</FooterLink>
-            </FooterLink>
-          </Title>
-          <FlexUl>
-            <ListItem>
-              <FooterLink>Technology</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Culture & recreation</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Life & arts</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Science</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Professional</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Business</FooterLink>
-            </ListItem>
-            <ListItem marginTop="10px">
-              <FooterLink>API</FooterLink>
-            </ListItem>
-            <ListItem>
-              <FooterLink>Data</FooterLink>
-            </ListItem>
-          </FlexUl>
-        </FooterItemDiv>
+        {navData.map((section) => (
+          <NavSection
+            key={section.title}
+            title={section.title}
+            links={section.links}
+          />
+        ))}
       </Nav>
       <FlexDiv marginRight="100px">
         <FlexUl direction="row">
-          <ListItem marginRight="10px">
-            <FooterLink>Blog</FooterLink>
-          </ListItem>
-          <ListItem marginRight="10px">
-            <FooterLink>Facebook</FooterLink>
-          </ListItem>
-          <ListItem marginRight="10px">
-            <FooterLink>Twitter</FooterLink>
-          </ListItem>
-          <ListItem marginRight="10px">
-            <FooterLink>LinkedIn</FooterLink>
-          </ListItem>
-          <ListItem marginRight="10px">
-            <FooterLink>Instagram</FooterLink>
-          </ListItem>
+          {socialLinks.map((link) => (
+            <ListItem key={link} marginRight="10px">
+              <FooterLink>{link}</FooterLink>
+            </ListItem>
+          ))}
         </FlexUl>
         <Ptag>
           Site design / logo © 2023 Stack Exchange Inc user contributions
@@ -219,7 +133,7 @@ const Footer = () => {
           . rev 2023.8.10.43574
         </Ptag>
       </FlexDiv>
-    </FooterContainer>
+    </FooterBox>
   );
 };
 

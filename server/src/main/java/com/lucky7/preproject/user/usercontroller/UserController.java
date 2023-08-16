@@ -34,7 +34,7 @@ public class UserController {
                 HttpStatus.CREATED);
     }
 
-    @PatchMapping("/users{userId}")
+    @PatchMapping("{userId}")
     private ResponseEntity patchUser(@PathVariable long userId, @RequestBody UserPatchDto userPatchDto){
         userPatchDto.setUserId(userId);
 
@@ -44,14 +44,14 @@ public class UserController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("{userId}")
     private ResponseEntity getUser(@PathVariable long userId){
         User response = userService.findUser(userId);
 
         return new ResponseEntity<>(mapper.userToUserResponseDto(response), HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{userId}")
+    @DeleteMapping("{userId}")
     private ResponseEntity deleteUser(@PathVariable long userId){
         userService.deleteUser(userId);
 

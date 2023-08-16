@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 //JWJWT에 대해 검증 작업을 수행하는 JwtVerificationFilter
-public class JwtVerificationFilter extends OncePerRequestFilter {  // (1)
+public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 

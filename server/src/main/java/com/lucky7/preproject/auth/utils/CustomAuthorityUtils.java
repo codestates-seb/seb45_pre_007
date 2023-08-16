@@ -16,15 +16,15 @@ public class CustomAuthorityUtils {
     private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
     private final List<String> USER_ROLES_STRING = List.of("USER");
 
+    public List<String> createRoles(String UserEmail) {
+
+        return USER_ROLES_STRING;
+    }
+
     public List<GrantedAuthority> createAuthorities(List<String> roles) {
         List<GrantedAuthority> authorities = roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
         return authorities;
-    }
-
-    public List<String> createRoles(String email) {
-
-        return USER_ROLES_STRING;
     }
 }

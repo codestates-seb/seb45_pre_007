@@ -12,6 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -40,24 +41,29 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable() //CSRF 공격에 대한 설정
                 .cors(withDefaults()) // CORS 설정을 추가
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)를 통해서 세션을 생성하지 않도록 설정
+                .and()
                 .formLogin().disable() // JSON 포맷 전달 방식 사용을 위해 비활성화
                 .httpBasic().disable() // request 전송마다 로그인 정보를 받지 않을 것임으로 비활성화
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers("/users/login").permitAll() // 로그인은 모든 사용자에게 허용
-                        .antMatchers("/users/oauth/**").permitAll() // OAuth 토큰 요청은 모든 사용자에게 허용
-                        .antMatchers(HttpMethod.GET, "/*/questions").permitAll() //질문 목록을 보는건 모든 사용자에게 허용
-                        .antMatchers(HttpMethod.POST, "/*/questions").hasRole("USER") // 질문을 생성하는건 인증된 사용자에게만 혀용
-                        .antMatchers(HttpMethod.GET, "/*/questions/{questionId}").hasRole("USER") //질문을 선택해 조회하는 기능은 인증된 사용자에게만 혀용
+                       // .antMatchers("/users/oauth/**").permitAll() // OAuth 토큰 요청은 모든 사용자에게 허용
+                        .antMatchers(HttpMethod.GET, "/questions").permitAll() //질문 목록을 보는건 모든 사용자에게 허용
+                        .antMatchers(HttpMethod.POST, "/questions").hasRole("USER") // 질문을 생성하는건 인증된 사용자에게만 혀용
+                        .antMatchers(HttpMethod.GET, "/questions/{questionId}").hasRole("USER") //질문을 선택해 조회하는 기능은 인증된 사용자에게만 혀용
                         .antMatchers(HttpMethod.GET, "/questions/{questionId}/answers").hasRole("USER") //특정  답변을 선택해 조회하는 기능은 인증된 사용자에게만 혀용
                         .antMatchers(HttpMethod.POST,"/questions/{questionId}/answers/**").hasRole("USER") // 답변과 관련된 경로는 인증된 사용자에게만 허용
                         .antMatchers(HttpMethod.POST,"/questions/{questionId}/comments/**").hasRole("USER") // 댓글과 관련된 경로는 인증된 사용자에게만 허용
+                        .anyRequest().permitAll()
                 );
 
 
         return httpSecurity.build();
     }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
