@@ -1,24 +1,23 @@
 package com.lucky7.preproject.user.entity;
 
-<<<<<<< HEAD
-=======
+import javax.persistence.EntityListeners;
 import lombok.Getter;
 import lombok.Setter;
 
->>>>>>> a160d9b3253fafb939f789d97f8922c173c8dc9b
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity(name = "users") // DB에서 “user”는 예약어로 지정되어 있는 경우가 있음
-<<<<<<< HEAD
-=======
 @Getter
 @Setter //추가
->>>>>>> a160d9b3253fafb939f789d97f8922c173c8dc9b
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -34,8 +33,10 @@ public class User {
     private String hashedUserPassword;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime lastModifiedAt = LocalDateTime.now();
+    @LastModifiedDate
+    private LocalDateTime lastModifiedAt;
 }

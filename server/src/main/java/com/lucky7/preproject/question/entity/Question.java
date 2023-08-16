@@ -1,6 +1,7 @@
 package com.lucky7.preproject.question.entity;
 
 import com.lucky7.preproject.user.entity.User;
+import javax.persistence.EntityListeners;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @Setter
@@ -33,8 +38,10 @@ public class Question {
     private User user;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime lastModifiedAt = LocalDateTime.now();
+    @LastModifiedDate
+    private LocalDateTime lastModifiedAt;
 }

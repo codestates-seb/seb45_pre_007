@@ -2,12 +2,11 @@ package com.lucky7.preproject.comment.entity;
 
 import com.lucky7.preproject.answer.entity.Answer;
 import com.lucky7.preproject.user.entity.User;
-<<<<<<< HEAD
-=======
+
+import javax.persistence.EntityListeners;
 import lombok.Getter;
 import lombok.Setter;
 
->>>>>>> a160d9b3253fafb939f789d97f8922c173c8dc9b
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @Setter
@@ -38,8 +41,10 @@ public class AnswerComment {
     private Answer answer;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime lastModifiedAt = LocalDateTime.now();
+    @LastModifiedDate
+    private LocalDateTime lastModifiedAt;
 }
