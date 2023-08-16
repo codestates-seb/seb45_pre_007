@@ -3,19 +3,15 @@ package com.lucky7.preproject.question.controller;
 import com.lucky7.preproject.question.dto.requestDto.QuestionPatchDto;
 import com.lucky7.preproject.question.dto.requestDto.QuestionPostDto;
 import com.lucky7.preproject.question.dto.responseDto.AllQuestionsResponseDto;
-import com.lucky7.preproject.question.dto.responseDto.CommentDto;
 import com.lucky7.preproject.question.dto.responseDto.SingleQuestionResponseDto;
 import com.lucky7.preproject.question.entity.Question;
-import com.lucky7.preproject.question.mapstruct.mapper.QuestionMapper;
+import com.lucky7.preproject.question.mapper.QuestionMapper;
 import com.lucky7.preproject.question.service.QuestionService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

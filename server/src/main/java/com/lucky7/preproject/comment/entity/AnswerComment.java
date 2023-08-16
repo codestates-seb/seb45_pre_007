@@ -2,8 +2,10 @@ package com.lucky7.preproject.comment.entity;
 
 import com.lucky7.preproject.answer.entity.Answer;
 import com.lucky7.preproject.user.entity.User;
+
 import lombok.Getter;
 import lombok.Setter;
+
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Getter
@@ -34,8 +38,10 @@ public class AnswerComment {
     private Answer answer;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime lastModifiedAt = LocalDateTime.now();
+    @LastModifiedDate
+    private LocalDateTime lastModifiedAt;
 }

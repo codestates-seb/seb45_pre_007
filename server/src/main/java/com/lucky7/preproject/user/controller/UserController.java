@@ -1,16 +1,13 @@
-package com.lucky7.preproject.user.usercontroller;
+package com.lucky7.preproject.user.controller;
 
 import com.lucky7.preproject.user.dto.UserPatchDto;
 import com.lucky7.preproject.user.dto.UserPostDto;
 import com.lucky7.preproject.user.entity.User;
 import com.lucky7.preproject.user.mapper.UserMapper;
-import com.lucky7.preproject.user.userservice.UserService;
+import com.lucky7.preproject.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/users")

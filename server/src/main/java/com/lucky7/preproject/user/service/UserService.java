@@ -1,4 +1,4 @@
-package com.lucky7.preproject.user.userservice;
+package com.lucky7.preproject.user.service;
 
 import com.lucky7.preproject.auth.utils.CustomAuthorityUtils;
 import com.lucky7.preproject.user.entity.User;
