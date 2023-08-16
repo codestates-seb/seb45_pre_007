@@ -108,7 +108,7 @@ const AskNoticeUl = styled.ul`
 const AskNoticeList = styled.li`
   font-size: 13px;
   color: #3b4045;
-  list-style: none; /* 먼저 리스트 스타일을 제거합니다 */
+  list-style: none;
   position: relative;
 
   li {
