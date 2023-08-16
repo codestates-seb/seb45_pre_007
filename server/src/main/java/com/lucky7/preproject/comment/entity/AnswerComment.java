@@ -2,12 +2,10 @@ package com.lucky7.preproject.comment.entity;
 
 import com.lucky7.preproject.answer.entity.Answer;
 import com.lucky7.preproject.user.entity.User;
-<<<<<<< HEAD
-=======
+
 import lombok.Getter;
 import lombok.Setter;
 
->>>>>>> a160d9b3253fafb939f789d97f8922c173c8dc9b
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
