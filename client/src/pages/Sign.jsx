@@ -3,10 +3,11 @@ import { styled } from 'styled-components';
 import OAuthSign from '../components/Sign/OAuthSign.jsx';
 // PR 테스트 및 코드수정
 const SignLayout = styled.div`
+  background-color: #f1f2f3;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   padding: 15px;
 `;
 
@@ -49,6 +50,17 @@ const SignH1 = styled.h1`
   margin-bottom: 32px;
 `;
 
+const SignSpan = styled.span`
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Adjusted',
+    'Segoe UI', 'Liberation Sans', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+  color: #232629;
+  margin-bottom: 4px;
+`;
+
 const SignParagraph = styled.p`
   font-size: 12px;
   margin: 4px 0;
@@ -57,10 +69,11 @@ const SignParagraph = styled.p`
 const SignLabel = styled.label`
   font-size: 12px;
 `;
+
 const SignUpForm = styled.form`
-  display: flex; /* Flex 형태로 변경 */
-  flex-direction: column; /* 세로 방향으로 아이템 배치 */
-  align-items: center; /* 가운데 정렬 */
+  display: flex;
+  flex-direction: column;
+  align-items: left;
   width: 300px;
   padding: 20px;
   border: 1px solid #ccc;
@@ -174,11 +187,11 @@ const SignUp = () => {
         <SignRightBox>
           <OAuthSign />
           <SignUpForm onSubmit={handleSubmit}>
-            <span>Display name</span>
+            <SignSpan>Display name</SignSpan>
             <InputField type="text" placeholder="Username" />
-            <span>Email</span>
+            <SignSpan>Email</SignSpan>
             <InputField type="email" placeholder="Email" />
-            <span>Password</span>
+            <SignSpan>Password</SignSpan>
             <InputField type="password" placeholder="Password" />
             <SignParagraph>
               Passwords must contain at least eight characters, including at
