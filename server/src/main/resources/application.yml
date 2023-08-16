@@ -9,7 +9,10 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+<<<<<<< HEAD
+=======
 jwt:
   key: ${JWT_SECRET_KEY}               # 민감한 정보는 시스템 환경 변수에서 로드한다.
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
+>>>>>>> a160d9b3253fafb939f789d97f8922c173c8dc9b
