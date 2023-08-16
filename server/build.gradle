@@ -36,7 +36,7 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //	implementation 'org.springframework.boot:spring-boot-starter-security'// security 로그인 페이지 구현 기능
 //	testImplementation 'org.springframework.security:spring-security-test'// security 작업을 위해 의존성 추가
 	implementation 'org.springframework.boot:spring-boot-starter-validation'//유효성 검사 위해 추가
@@ -47,6 +47,7 @@ dependencies {
 //	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 //	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 //	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
+//	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
