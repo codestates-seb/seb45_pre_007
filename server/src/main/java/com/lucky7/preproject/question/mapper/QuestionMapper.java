@@ -1,4 +1,4 @@
-package com.lucky7.preproject.question.mapstruct.mapper;
+package com.lucky7.preproject.question.mapper;
 
 import com.lucky7.preproject.question.dto.requestDto.QuestionPatchDto;
 import com.lucky7.preproject.question.dto.requestDto.QuestionPostDto;

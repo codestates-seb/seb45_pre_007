@@ -1,4 +1,4 @@
-package com.lucky7.preproject.user.userservice;
+package com.lucky7.preproject.user.service;
 
 import com.lucky7.preproject.user.entity.User;
 import com.lucky7.preproject.user.repository.UserRepository;
@@ -23,7 +23,7 @@ public class UserService {
         return null;
     }
 
-    public User findMember(long userId) {
+    public User findUser(long userId) {
 
         return null;
     }
