@@ -1,7 +1,6 @@
 package com.lucky7.preproject.question.controller;
 
-import com.lucky7.preproject.question.dto.requestDto.QuestionPatchDto;
-import com.lucky7.preproject.question.dto.requestDto.QuestionPostDto;
+import com.lucky7.preproject.question.dto.requestDto.QuestionDto;
 import com.lucky7.preproject.question.dto.responseDto.AllQuestionsResponseDto;
 import com.lucky7.preproject.question.dto.responseDto.SingleQuestionResponseDto;
 import com.lucky7.preproject.question.entity.Question;
@@ -24,9 +23,9 @@ public class QuestionController {
     private final QuestionMapper mapper;
 
     @PostMapping
-    public ResponseEntity<SingleQuestionResponseDto> postQuestion(@RequestBody QuestionPostDto questionPostDto) {
+    public ResponseEntity<SingleQuestionResponseDto> postQuestion(@RequestBody QuestionDto questionDto) {
         // DTO에서 Entity로 변환
-        Question questionToCreate = mapper.questionPostDtoToQuestion(questionPostDto);
+        Question questionToCreate = mapper.questionPostDtoToQuestion(questionDto);
         // 서비스에서 엔티티를 생성
         Question createdQuestion = questionService.createQuestion(questionToCreate);
         SingleQuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(createdQuestion);
@@ -52,10 +51,10 @@ public class QuestionController {
     }
     @PatchMapping("/{questionId}")
     public ResponseEntity<SingleQuestionResponseDto> patchQuestion(@PathVariable long questionId,
-                                @RequestBody QuestionPatchDto questionPatchDto) {
+                                @RequestBody QuestionDto questionDto) {
 
         // 업데이트할 데이터를 DTO 에서 new Entity 로 변환
-       Question questionToUpdate = mapper.questionPatchDtoToQuestion(questionPatchDto);
+       Question questionToUpdate = mapper.questionPatchDtoToQuestion(questionDto);
        // QuestionService 를 사용해서 업데이트된 Entity 를 new Entity 에 저장
         Question updatedQuestion = questionService.updateQuestion(questionId, questionToUpdate);
        // 업데이트된 Entity 를 다시 DTO 로 변환
