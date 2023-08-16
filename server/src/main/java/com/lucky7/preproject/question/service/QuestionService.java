@@ -2,24 +2,17 @@ package com.lucky7.preproject.question.service;
 
 import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.question.repository.QuestionRepository;
-import com.lucky7.preproject.user.entity.User;
 import com.lucky7.preproject.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
-//import org.springframework.beans.factory.support.SecurityContextProvider;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContext;
-//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
-    private final UserRepository userRepository;
 
     /**
      *     서비스에서의 목적은 비즈니스 로직을 처리하는 것 입니다.
@@ -31,13 +24,6 @@ public class QuestionService {
      */
     public Question createQuestion(Question question) {
 
-        //로그인된 사용자 정보를 service 에서 찾아서 사용하느냐, controller 에서 찾아서 사용하느냐,
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String userName = authentication.getName();
-//        User user = userRepository.findByUserName(userName).get();
-//
-//        question.setUser(user);
-//
         return questionRepository.save(question); // 트랜잭션 구현하면 save 안해도 됨
     }
 
@@ -52,15 +38,15 @@ public class QuestionService {
         return questionRepository.findById(questionId).orElse(defaultQuestion);
     }
 
-    public Question updateQuestion(long questionId, Question questionDataToUpdate) {
+    public Question updateQuestion(long questionId, Question questionToUpdate) {
         //todo : 수정할 권한이 있는지 확인
         Question existingQuestion = getQuestion(questionId);
 
-        if(questionDataToUpdate.getQuestionTitle() != null) {
-            existingQuestion.setQuestionTitle(questionDataToUpdate.getQuestionTitle());
+        if(questionToUpdate.getQuestionTitle() != null) {
+            existingQuestion.setQuestionTitle(questionToUpdate.getQuestionTitle());
         }
-        if (questionDataToUpdate.getQuestionContent() != null) {
-            existingQuestion.setQuestionContent(questionDataToUpdate.getQuestionContent());
+        if (questionToUpdate.getQuestionContent() != null) {
+            existingQuestion.setQuestionContent(questionToUpdate.getQuestionContent());
         }
 
 //        return existingQuestion; 트랜잭션을 구현하면 이걸로 사용

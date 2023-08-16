@@ -11,7 +11,7 @@ public class AllQuestionsResponseDto {
     private long questionId;
     private String questionTitle;
     private String questionContent;
-    private String userName; // user의 userName 과 매핑해야 합니다.
+    private String questionUser; // user의 userName 과 매핑해야 합니다.
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 }
