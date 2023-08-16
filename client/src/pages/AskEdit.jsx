@@ -5,6 +5,7 @@ import AskEditTItle from '../components/askEdit/AskEditTItle.jsx';
 import AskEditBody from '../components/askEdit/AskEditBody.jsx';
 import AskEditTag from '../components/askEdit/AskEditTag.jsx';
 import AskEditSummary from '../components/askEdit/AskEditSummary.jsx';
+import AskRevision from '../components/askEdit/AskRevision.jsx';
 
 const AskEdit = () => {
   const [isFocus, setIsFocus] = useState(0);
@@ -59,7 +60,6 @@ const AskEdit = () => {
           },
           { background: [] },
         ],
-        ['image', 'video'],
         ['clean'],
       ],
     },
@@ -74,6 +74,7 @@ const AskEdit = () => {
         <AskEditItems>
           <AskEditFormBox>
             <AskEditFormItem>
+              <AskRevision />
               <AskEditTItle isFocus={isFocus} setIsFocus={setIsFocus} />
               <AskEditBody
                 modules={modules}

@@ -95,4 +95,14 @@ const AskProblemInputBox = styled.div`
   height: 256px;
   max-height: 256px;
   min-height: 81px;
+
+  .ql-toolbar {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  .ql-container {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
 `;
