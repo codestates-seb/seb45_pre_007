@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity(name = "users") // DB에서 “user”는 예약어로 지정되어 있는 경우가 있음
 @Getter
@@ -28,8 +30,10 @@ public class User {
     private String hashedUserPassword;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime lastModifiedAt = LocalDateTime.now();
+    @LastModifiedDate
+    private LocalDateTime lastModifiedAt;
 }
