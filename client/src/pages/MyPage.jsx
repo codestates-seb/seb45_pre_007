@@ -7,7 +7,7 @@ import logo from '../assert/logo1.png';
 import logo2 from '../assert/posts.jpg';
 import LoginNav from '../components/LoginNav.jsx';
 import facebook from '../assert/facebook.png';
-// facebook 사진 테스트용입니다.
+// facebook 사진 테스트용
 
 const MypageLayout = styled.section`
   display: flex;
