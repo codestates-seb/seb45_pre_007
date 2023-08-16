@@ -1,5 +1,6 @@
 package com.lucky7.preproject.user.entity;
 
+import javax.persistence.EntityListeners;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity(name = "users") // DB에서 “user”는 예약어로 지정되어 있는 경우가 있음
 @Getter
 @Setter //추가
