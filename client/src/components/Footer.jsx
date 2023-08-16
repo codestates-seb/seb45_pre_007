@@ -5,11 +5,11 @@ import { navData, socialLinks } from '../utils/footerDataUtils.js';
 
 const spaceBetweenItems = '20px';
 
-const FooterContainer = styled.footer`
+const FooterBox = styled.footer`
+  // FooterContainer -> FooterBox로 이름 변경 및 마진 제거
   display: flex;
   background-color: #232629;
   color: #babfc4;
-  margin: 15px 0; /* 바깥 여백을 margin으로 조절 */
   padding: 20px 0;
   flex-grow: 1;
 `;
@@ -103,7 +103,7 @@ const NavSection = ({ title, links }) => (
 
 const Footer = () => {
   return (
-    <FooterContainer>
+    <FooterBox>
       <FooterLogo>
         <img src={StackOverFlowLogo} alt="로고 이미지" />
       </FooterLogo>
@@ -133,7 +133,7 @@ const Footer = () => {
           . rev 2023.8.10.43574
         </Ptag>
       </FlexDiv>
-    </FooterContainer>
+    </FooterBox>
   );
 };
 
