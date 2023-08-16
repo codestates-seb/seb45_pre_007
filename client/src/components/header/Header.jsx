@@ -38,7 +38,7 @@ export const Header = () => {
         <AuthBox>
           <AuthItem>
             <Login to="/login">Log in</Login>
-            <SignUp>Sign up</SignUp>
+            <SignUp to="/signup">Sign up</SignUp>
           </AuthItem>
         </AuthBox>
       </HeaderList>
@@ -204,7 +204,7 @@ const Login = styled(Link)`
   }
 `;
 
-const SignUp = styled.div`
+const SignUp = styled(Link)`
   cursor: pointer;
   display: flex;
   justify-content: center;
