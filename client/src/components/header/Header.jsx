@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import logo1 from '../../assert/logo1.png';
 import logo2 from '../../assert/logo2.png';
@@ -12,20 +12,49 @@ export const Header = () => {
   // 수정했습니다~
   const [isOpen, setIsOpen] = useState(false);
 
+  const containerRef = useRef(null);
+
+  const handleOutsideClick = (event) => {
+    if (containerRef.current && !containerRef.current.contains(event.target)) {
+      setIsOpen(false);
+      // setIsOpen(!isOpen);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleOutsideClick);
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
+
   return (
     <HeaderBox>
       <HeaderList>
         <HeaderLeftBox>
-          <HeaderHamburgerBox onClick={() => setIsOpen(!isOpen)}>
+          <HeaderHamburgerBox
+            ref={containerRef}
+            onClick={() => setIsOpen(!isOpen)}
+          >
             <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
-          {isOpen ? <Nav /> : null}
+
+          {isOpen ? (
+            <div
+              style={{ position: 'relative' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Nav />
+            </div>
+          ) : null}
+
           <HeaderLogoBox to="/">
             <HeaderLogoItem>
               <HeaderLogo1 />
               <HeaderLogo2 />
             </HeaderLogoItem>
           </HeaderLogoBox>
+
           <ButtonBox>
             <ButtonItem>
               <About>About</About>
@@ -34,7 +63,9 @@ export const Header = () => {
             </ButtonItem>
           </ButtonBox>
         </HeaderLeftBox>
+
         <Search />
+
         <AuthBox>
           <AuthItem>
             <Login to="/login">Log in</Login>
@@ -47,6 +78,9 @@ export const Header = () => {
 };
 
 const HeaderBox = styled.div`
+  position: fixed;
+  width: 100%;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,6 +88,8 @@ const HeaderBox = styled.div`
   border-top: 3px solid #f48026;
   border-bottom: 1px solid hsl(210, 8%, 85%);
   height: 56px;
+
+  z-index: 9999;
 `;
 
 const HeaderList = styled.div`
