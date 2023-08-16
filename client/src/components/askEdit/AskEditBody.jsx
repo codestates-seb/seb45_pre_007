@@ -14,22 +14,26 @@ const AskEditBody = ({ modules, isFocus, setIsFocus }) => {
 
   return (
     <AskEditBodyLayout>
-      <AskEditBodyBox>
-        <AskEditBodyText>Body</AskEditBodyText>
-        <AskEditBodyLists onClick={() => setIsFocus(1)}>
-          <ReactQuill
-            modules={modules}
-            value={content}
-            onChange={handleChangeContent}
-          />
-        </AskEditBodyLists>
-        <AskEditBodyPreviewBox onChange={handleChangeContent}>
+      <AskEditBodyEditor>
+        <AskEditBodyBox>
+          <AskEditBodyText>Body</AskEditBodyText>
+          <AskEditBodyLists onClick={() => setIsFocus(1)}>
+            <ReactQuill
+              modules={modules}
+              value={content}
+              onChange={handleChangeContent}
+            />
+          </AskEditBodyLists>
+        </AskEditBodyBox>
+        {/* <AskEditBodyPreviewBox>
           <AskEditBodyPreview
             className="ql-editor"
-            dangerouslySetInnerHTML={{ __html: content }}
+            // dangerouslySetInnerHTML={{ __html: content }}
+            // onChange={handleChangeContent}
           />
-        </AskEditBodyPreviewBox>
-      </AskEditBodyBox>
+         */}
+        <AskEditBodyPreviewBox>{content}</AskEditBodyPreviewBox>
+      </AskEditBodyEditor>
       <AsideBox>
         <AskEditAside isFocus={isFocus} index={1} />
       </AsideBox>
@@ -43,15 +47,34 @@ const AskEditBodyLayout = styled.div`
   display: flex;
 `;
 
+const AskEditBodyEditor = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 16px 0;
+`;
+
 const AskEditBodyLists = styled.div`
   display: flex;
   width: 100%;
 
   .quill {
+    height: 200px;
+
+    .ql-toolbar {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .ql-container {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
   }
 `;
 
-const AskEditBodyBox = styled.div``;
+const AskEditBodyBox = styled.div`
+  margin: 0 0 16px 0;
+`;
 
 const AsideBox = styled.div`
   position: relative;
@@ -69,6 +92,7 @@ const AskEditBodyText = styled.div`
 
 const AskEditBodyPreviewBox = styled.div`
   width: 100%;
+  height: 100%;
   margin: 0 0 16px;
 `;
 

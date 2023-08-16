@@ -39,7 +39,7 @@ const EditAskAsideTitle = styled.div`
 
 const EditAskAsideDown = styled.div`
   display: flex;
-  padding: calc(16px - 12px) - calc(16px - 1px);
+  padding: 4px 15px;
   background-color: hsl(47, 87%, 94%);
 `;
 

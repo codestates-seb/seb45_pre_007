@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import AskEditorNotice from '../components/askEdit/AskEditorNotice.jsx';
+
 import AskEditTItle from '../components/askEdit/AskEditTItle.jsx';
 import AskEditBody from '../components/askEdit/AskEditBody.jsx';
 import AskEditTag from '../components/askEdit/AskEditTag.jsx';
@@ -72,7 +72,6 @@ const AskEdit = () => {
       </NavBox>
       <AskEditBox>
         <AskEditItems>
-          <AskEditorNotice />
           <AskEditFormBox>
             <AskEditFormItem>
               <AskEditTItle isFocus={isFocus} setIsFocus={setIsFocus} />
@@ -196,7 +195,7 @@ const CancelButton = styled.div`
   align-items: center;
 
   font-size: 13px;
-  color: hsl(206, 100%, 52%);
+  color: #0174cd;
   border-radius: 6px;
 
   width: 70px;
@@ -204,7 +203,6 @@ const CancelButton = styled.div`
   padding: 12px 10px;
 
   &:hover {
-    color: hsl(206, 100%, 52%);
     background-color: hsl(206, 100%, 97%);
   }
 `;
@@ -213,7 +211,7 @@ const AddComment = styled.div`
   cursor: pointer;
   font-size: 13px;
   color: #0174cd;
-  opacity: 0.6;
+
   padding: 0 3px 2px;
 
   &:hover {

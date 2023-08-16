@@ -3,76 +3,76 @@ import { css, styled } from 'styled-components';
 import EditAsideContent from './EditAsideCotent.jsx';
 
 const AskEditAside = ({ isFocus, index }) => {
-  // const text = "to make links (use https whenever possible)
-  // <https://example.com>
-  // [example](https://example.com)
-  // <a href="https://example.com">example</a>";
-
-  // const code1 = ["<div class="bg-black-050 p8 bar-sm ff-mono my4 wmx2">
-  // ```<br>
-  // like so<br>
-  // ```
-  // </div>"];
-
-  // const code2 = "   <div class="bg-black-050 p8 bar-sm ff-mono my4 wmx2">
-  // ```python<br>
-  // <span class="fc-blue-600">def</span> function(foo):<br>
-  // <span class="fc-blue-600">&nbsp;&nbsp;&nbsp;&nbsp;print</span>(foo)<br>
-  // ```
-  // </div>"
-
   const aside = [
     {
       id: 0,
       title: <AskEditAsideTitle>How to Edit</AskEditAsideTitle>,
       content: (
-        <>
-          <AskEditAsideText>Correct minor typos or mistakes</AskEditAsideText>
-          <AskEditAsideText>
-            Clarify meaning without changing it
-          </AskEditAsideText>
-          <AskEditAsideText>Add related resources or links</AskEditAsideText>
-          <AskEditAsideText>
+        <AskNoticeList>
+          <li>Correct minor typos or mistakes</li>
+          <li>Clarify meaning without changing it</li>
+          <li>Add related resources or links</li>
+          <li>
             <i>Always</i> respect the author’s intent
-          </AskEditAsideText>
-          <AskEditAsideText>
-            Don’t use edits to reply to the author
-          </AskEditAsideText>
-        </>
+          </li>
+          <li>Don’t use edits to reply to the author</li>
+        </AskNoticeList>
       ),
     },
     {
       id: 1,
       title: <AskEditAsideTitle>How to Format</AskEditAsideTitle>,
       content: (
-        <>
-          <AskEditAsideText>
-            create code fences with backticks ` or tildes ~
-          </AskEditAsideText>
-          <AskEditAsideText>
-            add language identifier to highlight code
-          </AskEditAsideText>
-          <AskEditAsideText>put returns between paragraphs</AskEditAsideText>
-          <AskEditAsideText>for linebreak add 2 spaces at end</AskEditAsideText>
-          <AskEditAsideText>
+        <AskNoticeList>
+          <li>create code fences with backticks ` or tildes ~</li>
+          <CodeBox>
+            ```
+            <br />
+            like so
+            <br />
+            ```
+          </CodeBox>
+          <li>add language identifier to highlight code</li>
+          <CodeBox>
+            ```python
+            <br />
+            <span>def</span> function(foo):
+            <br />
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;print</span>
+            (foo)
+            <br />
+            ```
+          </CodeBox>
+          <li>put returns between paragraphs</li>
+          <li>for linebreak add 2 spaces at end</li>
+          <li>
             <i>_italic_</i> or <b>**bold**</b>
-          </AskEditAsideText>
-          <AskEditAsideText>indent code by 4 spaces</AskEditAsideText>
-          <AskEditAsideText>
-            backtick escapes <code>`like _so_`</code>
-          </AskEditAsideText>
-          <AskEditAsideText>
-            quote by placing &gt; at start of line
-          </AskEditAsideText>
-          <AskEditAsideText></AskEditAsideText>
-          <AskEditAsideText>formatting help »</AskEditAsideText>
-          <AskEditAsideText>asking help »</AskEditAsideText>
-        </>
+          </li>
+          <li>indent code by 4 spaces</li>
+          <li>
+            backtick escapes <span className="code">`like _so_`</span>
+          </li>
+          <li>quote by placing &gt; at start of line</li>
+
+          <li>
+            <li>
+              to make links (use https whenever possible)
+              <span className="none">&lt;https://example.com&gt;</span>
+              <span className="none">[example](https://example.com)</span>
+              <span className="none">
+                &lt;a href=&quot;https://example.com&quot;&gt;example&lt;/a&gt;
+              </span>
+            </li>
+          </li>
+
+          <AnotherTags style={{ margin: 0 }}>formatting help »</AnotherTags>
+          <AnotherTags>asking help »</AnotherTags>
+        </AskNoticeList>
       ),
     },
     {
       id: 2,
-      title: <AskEditAsideTitle>How to tag</AskEditAsideTitle>,
+      title: <AskEditAsideTitle>How to Tag</AskEditAsideTitle>,
       content: (
         <>
           <AskEditAsideText>
@@ -80,39 +80,38 @@ const AskEditAside = ({ isFocus, index }) => {
             other, similar questions. Choose one or more (up to 5) tags that
             will help answerers to find and interpret your question.
           </AskEditAsideText>
-          <AskEditAsideText>
-            complete the sentence: my question is about...
-          </AskEditAsideText>
-          <AskEditAsideText>
-            use tags that describe things or concepts that are essential, not
-            incidental to your question
-          </AskEditAsideText>
-          <AskEditAsideText>favor using existing popular tags</AskEditAsideText>
-          <AskEditAsideText>
-            read the descriptions that appear below the tag
-          </AskEditAsideText>
+          <AskNoticeList>
+            <li>complete the sentence: my question is about...</li>
+            <li>
+              use tags that describe things or concepts that are essential, not
+              incidental to your question
+            </li>
+            <li>
+              favor using <span>existing popular tags</span>
+            </li>
+            <li>read the descriptions that appear below the tag</li>
+          </AskNoticeList>
           <AskEditAsideText>
             If your question is primarily about a topic for which you can&apos;t
             find a tag:
           </AskEditAsideText>
-          <AskEditAsideText>
-            combine multiple words into single-words with hyphens (e.g.
-            python-3.x), up to a maximum of 35 characters
-          </AskEditAsideText>
-          <AskEditAsideText>
-            creating new tags is a privilege; if you can&apos;t yet create a tag
-            you need, then post this question without it, then ask the community
-            to create it for you
-          </AskEditAsideText>
-          <AskEditAsideText>popular tags »</AskEditAsideText>
+          <AskNoticeList>
+            <li>
+              combine multiple words into single-words with hyphens (e.g.
+              <span className="python">python-3.x</span>), up to a maximum of 35
+              characters
+            </li>
+            <li>
+              <span>creating new tags is a privilege;</span> if you can&apos;t
+              yet create a tag you need, then post this question without it,
+              then <span>ask the community to create it for you</span>
+            </li>
+          </AskNoticeList>
+          <AnotherTags>popular tags »</AnotherTags>
         </>
       ),
     },
   ];
-
-  // 하나의 컴포넌트에서 관리하고 연결하려면 컴포넌트 마다 다른 값을 주어야 한다
-  console.log(index); // 컴포넌트 마다 다른 값
-  console.log(isFocus); // 전체에서 보는 값
 
   return (
     <AskEditAsideLayout index={index} isFocus={isFocus}>
@@ -163,5 +162,90 @@ const AskEditAsideText = styled.p`
 
   span {
     color: #0074cc;
+  }
+`;
+
+const AskNoticeList = styled.ul`
+  font-size: 13px;
+  color: #3b4045;
+  list-style: none;
+  position: relative;
+
+  li {
+    margin: 12px 0 12px 10px;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: -0.5em;
+      line-height: 0.7em;
+      font-size: 1.5em;
+    }
+
+    span {
+      color: #0074cc;
+
+      &:hover {
+        color: hsl(206, 100%, 52%);
+      }
+    }
+
+    .none {
+      color: #232629;
+
+      &:hover {
+        color: #232629;
+      }
+    }
+
+    .code {
+      font-family: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono',
+        'Liberation Mono', Menlo, Monaco, Consolas, monospace;
+      color: #232629;
+      background-color: #e3e2e8;
+
+      &:hover {
+        color: #232629;
+      }
+    }
+
+    .python {
+      font-size: 12px;
+
+      background-color: hsl(205, 46%, 92%);
+      border-radius: 4px;
+
+      margin: 0 2px 0 0;
+      padding: 0 6px 2px 6px;
+    }
+  }
+`;
+
+const CodeBox = styled.div`
+  font-family: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', 'Liberation Mono',
+    Menlo, Monaco, Consolas, monospace;
+  color: #232629;
+  background-color: #f1f2f3;
+
+  margin: 4px 0;
+  padding: 8px;
+
+  width: 68%;
+
+  span {
+    color: #0074cc;
+  }
+`;
+
+const AnotherTags = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 16px 0;
+
+  font-size: 13px;
+  color: #0074cc;
+
+  &:hover {
+    color: hsl(206, 100%, 52%);
   }
 `;
