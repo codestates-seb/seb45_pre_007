@@ -19,7 +19,7 @@ const AskTag = ({ isFocus, setIsFocus }) => {
               <AskTagInputBox>
                 <AskTagInput
                   placeholder="e.g. (mysql json typescript)"
-                  readonly="readonly"
+                  readOnly
                   onClick={() => setIsFocus(3)}
                 />
               </AskTagInputBox>
