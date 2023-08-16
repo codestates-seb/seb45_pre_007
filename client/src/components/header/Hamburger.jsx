@@ -1,14 +1,14 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import useDetectClose from '../../hooks/useDetectClose';
 
 const Hamburger = ({ isOpen }) => {
+  // props에 $ 표시를 하면 DOM 무시한다
   return (
     <div>
-      <HamburgerBox trans={isOpen}>
-        <HamburgerLine1 trans={isOpen} />
-        <HamburgerLine2 trans={isOpen} />
-        <HamburgerLine3 trans={isOpen} />
+      <HamburgerBox $trans={isOpen}>
+        <HamburgerLine1 $trans={isOpen} />
+        <HamburgerLine2 $trans={isOpen} />
+        <HamburgerLine3 $trans={isOpen} />
       </HamburgerBox>
     </div>
   );
@@ -22,7 +22,7 @@ const HamburgerBox = styled.div`
   height: 15px;
 
   ${(props) =>
-    props.trans &&
+    props.$trans &&
     `
     padding-top: 5px;
   `}
@@ -36,7 +36,7 @@ const HamburgerLine1 = styled.div`
   transition: all 0.1s ease;
 
   ${(props) =>
-    props.trans &&
+    props.$trans &&
     `
       position: absolute;
       transform-origin: center;
@@ -49,7 +49,7 @@ const HamburgerLine1 = styled.div`
 
 const HamburgerLine2 = styled(HamburgerLine1)`
   ${(props) =>
-    props.trans &&
+    props.$trans &&
     `
       display:none
   `}
@@ -57,7 +57,7 @@ const HamburgerLine2 = styled(HamburgerLine1)`
 
 const HamburgerLine3 = styled(HamburgerLine1)`
   ${(props) =>
-    props.trans &&
+    props.$trans &&
     `
       position: absolute;
       transform-origin: center;
