@@ -7,6 +7,7 @@ import Footer from './components/Footer.jsx';
 import Ask from './pages/Ask.jsx';
 import Sign from './pages/Sign.jsx';
 import AskEdit from './pages/AskEdit.jsx';
+import MyPage from './pages/MyPage.jsx';
 
 const App = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/ask" element={<Ask />}></Route>
           <Route path="/signup" element={<Sign />}></Route>
           <Route path="/ask/edit" element={<AskEdit />}></Route>
+          <Route path="/mypage" element={<MyPage />}></Route>
         </Routes>
       </div>
       {!shouldHideFooter && <Footer />}
