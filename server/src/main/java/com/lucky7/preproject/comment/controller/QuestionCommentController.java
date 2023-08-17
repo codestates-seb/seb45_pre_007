@@ -37,7 +37,7 @@ public class QuestionCommentController {
     public ResponseEntity<?> postQuestionComment(@PathVariable long questionId,
                                                  @RequestBody CommentRequestDto commentRequestDto) {
         QuestionComment questionComment = commentMapper.commentRequestDtoToQuestionComment(commentRequestDto);
-        //questionComment.setQuestion(new Question());
+        questionComment.setQuestion(questionService.getQuestion(questionId));
         //questionComment.setUser(new User());
         QuestionComment createdQuestionComment = questionCommentService.createQuestionComment(questionComment);
         QuestionCommentResponseDto responseDto = commentMapper.questionCommentToQuestionCommentResponseDto(createdQuestionComment);

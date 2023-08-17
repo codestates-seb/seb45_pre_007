@@ -1,5 +1,6 @@
 package com.lucky7.preproject.comment.controller;
 
+import com.lucky7.preproject.answer.service.AnswerService;
 import com.lucky7.preproject.comment.dto.AnswerCommentResponseDto;
 import com.lucky7.preproject.comment.dto.CommentRequestDto;
 import com.lucky7.preproject.comment.entity.AnswerComment;
@@ -21,10 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class AnswerCommentController {
     private final AnswerCommentService answerCommentService;
+    private final AnswerService answerService;
     private final CommentMapper commentMapper;
 
-    public AnswerCommentController(AnswerCommentService answerCommentService, CommentMapper commentMapper) {
+    public AnswerCommentController(AnswerCommentService answerCommentService, AnswerService answerService,
+                                   CommentMapper commentMapper) {
         this.answerCommentService = answerCommentService;
+        this.answerService = answerService;
         this.commentMapper = commentMapper;
     }
 
@@ -33,7 +37,7 @@ public class AnswerCommentController {
                                                @PathVariable long answerId,
                                                @RequestBody CommentRequestDto commentRequestDto) {
         AnswerComment answerComment = commentMapper.commentRequestDtoToAnswerComment(commentRequestDto);
-        //answerComment.setAnswer()
+        answerComment.setAnswer(answerService.getAnswer(answerId));
         //answerComment.setUser()
         AnswerComment createdAnswerComment = answerCommentService.createAnswerComment(answerComment);
         AnswerCommentResponseDto responseDto = commentMapper.answerCommentToAnswerCommentResponseDto(createdAnswerComment);
