@@ -26,9 +26,7 @@ import java.util.stream.Collectors;
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
-
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<SingleQuestionResponseDto> postQuestion(@RequestBody QuestionDto questionDto) {

@@ -56,8 +56,8 @@ public class UserService {
         if (optionalUser.isPresent()) {
             return optionalUser.get();
         } else {
-            // 사용자를 찾지 못한 경우에 대한 예외 처리를 수행하거나 원하는 방식으로 처리
-            throw new RuntimeException("User not found");
+
+            return null;
         }
     }
 }
