@@ -2,13 +2,12 @@ import React from 'react';
 import { styled } from 'styled-components';
 import OAuthSign from '../components/Sign/OAuthSign.jsx';
 import SignDown from '../components/Sign/SignDown.jsx';
-// PR 테스트 및 코드수정
+// Layout height 수정
 const SignLayout = styled.div`
   background-color: #f1f2f3;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
   padding: 15px;
 `;
 
