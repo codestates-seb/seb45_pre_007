@@ -21,7 +21,11 @@ const AskExpand = ({ isFocus, setIsFocus, modules }) => {
                 </AskExpandDescription>
               </AskExpandTextBox>
               <AskExpandInputBox onClick={() => setIsFocus(2)}>
-                <ReactQuill modules={modules} style={{ height: 210 }} />
+                <ReactQuill
+                  modules={modules}
+                  style={{ height: 210 }}
+                  readOnly
+                />
               </AskExpandInputBox>
             </AskExpandItem>
           </AskExpandList>
