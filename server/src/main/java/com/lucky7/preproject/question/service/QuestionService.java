@@ -4,6 +4,7 @@ import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.question.repository.QuestionRepository;
 import com.lucky7.preproject.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public class QuestionService {
      *     서비스에서는 엔티티를 반환하도록 구현되고 있습니다.
      *     이렇게 설계한 이유는 각각의 역할을 분리하기 위함입니다.
      */
+
+
     public Question createQuestion(Question question) {
 
         return questionRepository.save(question); // 트랜잭션 구현하면 save 안해도 됨
@@ -38,6 +41,8 @@ public class QuestionService {
         return questionRepository.findById(questionId).orElse(defaultQuestion);
     }
 
+
+    @PreAuthorize("hasRole('USER') and #question.userId == principal.id")
     public Question updateQuestion(long questionId, Question questionToUpdate) {
         //todo : 수정할 권한이 있는지 확인
         Question existingQuestion = getQuestion(questionId);
@@ -53,6 +58,7 @@ public class QuestionService {
         return questionRepository.save(existingQuestion);
     }
 
+    @PreAuthorize("hasRole('USER') and #question.userId == principal.id")
     public void deleteQuestion(long questionId) {
         //todo : 삭제할 권한이 있는지 확인, 해당 Question 이 있는지 확인
         Question question = getQuestion(questionId);

@@ -1,10 +1,15 @@
 package com.lucky7.preproject.user.entity;
 
+
 import javax.persistence.EntityListeners;
+
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,4 +44,11 @@ public class User {
     @Column(nullable = false)
     @LastModifiedDate
     private LocalDateTime lastModifiedAt;
+
+    //List, Set 같은 컬렉션 타입의 필드는
+    // @ElementCollection 애너테이션을 추가하면
+    // User 권한 정보와 관련된 별도의 엔티티 클래스를 생성하지 않아도 간단하게 매핑 처리가 가능
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
 }
