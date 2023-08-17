@@ -7,7 +7,7 @@ const LoginDown = () => {
     <LoginDownBox>
       <AccountBox>
         <AccountText>Don&apos;t have an account?</AccountText>
-        <SignUpButton>Sign up</SignUpButton>
+        <SignUpButton to="/signup">Sign up</SignUpButton>
       </AccountBox>
       <EmployerBox>
         <EmployerItem>
@@ -153,6 +153,7 @@ const SignOnIcon = styled.div`
 `;
 
 const SignOnHoverBox = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
