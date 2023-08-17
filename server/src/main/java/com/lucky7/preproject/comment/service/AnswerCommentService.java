@@ -32,6 +32,6 @@ public class AnswerCommentService {
     }
 
     public List<AnswerComment> findAnswerComments(long answerId) {
-        return answerCommentRepository.findAllByAnswerId(answerId);
+        return answerCommentRepository.findAllByAnswerAnswerId(answerId);
     }
 }
