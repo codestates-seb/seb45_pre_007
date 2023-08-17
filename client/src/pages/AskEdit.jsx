@@ -6,6 +6,7 @@ import AskEditBody from '../components/askEdit/AskEditBody.jsx';
 import AskEditTag from '../components/askEdit/AskEditTag.jsx';
 import AskEditSummary from '../components/askEdit/AskEditSummary.jsx';
 import AskRevision from '../components/askEdit/AskRevision.jsx';
+import LoginNav from '../components/LoginNav.jsx';
 
 const AskEdit = () => {
   const [isFocus, setIsFocus] = useState(0);
@@ -67,9 +68,9 @@ const AskEdit = () => {
 
   return (
     <AskEditLayout>
-      <NavBox>
-        <Nav>Nav</Nav>
-      </NavBox>
+      {/* <NavBox> */}
+      <LoginNav />
+      {/* </NavBox> */}
       <AskEditBox>
         <AskEditItems>
           <AskEditFormBox>
@@ -116,7 +117,7 @@ const AskEditBox = styled.div`
 
   background-color: hsl(0, 0, 100%);
   border-radius: 0;
-  border: 1px solid hsl(210, 8%, 85%);
+  /* border: 1px solid hsl(210, 8%, 85%); */
 
   border-top-width: 0;
   border-bottom-width: 0;
