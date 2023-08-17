@@ -42,7 +42,7 @@ public class QuestionService {
         //todo : 수정할 권한이 있는지 확인
         Question existingQuestion = getQuestion(questionId);
 
-        if(questionToUpdate.getQuestionTitle() != null) {
+        if (questionToUpdate.getQuestionTitle() != null) {
             existingQuestion.setQuestionTitle(questionToUpdate.getQuestionTitle());
         }
         if (questionToUpdate.getQuestionContent() != null) {
