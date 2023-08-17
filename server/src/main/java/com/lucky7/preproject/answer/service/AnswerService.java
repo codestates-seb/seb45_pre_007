@@ -57,6 +57,7 @@ public class AnswerService {
 
     public Answer getAnswer(long answerId) {
         Answer defaultAnswer = new Answer();
+
         return answerRepository.findById(answerId).orElse(defaultAnswer);
     }
 

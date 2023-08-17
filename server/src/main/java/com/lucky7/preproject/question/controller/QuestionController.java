@@ -1,7 +1,10 @@
 package com.lucky7.preproject.question.controller;
 
+import com.lucky7.preproject.comment.entity.QuestionComment;
+import com.lucky7.preproject.comment.service.QuestionCommentService;
 import com.lucky7.preproject.question.dto.requestDto.QuestionDto;
 import com.lucky7.preproject.question.dto.responseDto.AllQuestionsResponseDto;
+import com.lucky7.preproject.question.dto.responseDto.QuestionCommentDto;
 import com.lucky7.preproject.question.dto.responseDto.SingleQuestionResponseDto;
 import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.question.mapper.QuestionMapper;
@@ -27,6 +30,7 @@ public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
     private final UserService userService;
+    private final QuestionCommentService questionCommentService;
 
     @PostMapping
     public ResponseEntity<SingleQuestionResponseDto> postQuestion(@RequestBody QuestionDto questionDto) {
@@ -60,6 +64,10 @@ public class QuestionController {
 
         Question foundQuestion = questionService.getQuestion(questionId);
         SingleQuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(foundQuestion);
+
+        List<QuestionComment> questionComments = questionCommentService.findQuestionComments(questionId);
+        List<QuestionCommentDto> questionCommentDtos = mapper.questionCommentsDtos(questionComments);
+        responseDto.setQuestionComments(questionCommentDtos);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }

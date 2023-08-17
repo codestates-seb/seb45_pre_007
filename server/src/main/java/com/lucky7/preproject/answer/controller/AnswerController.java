@@ -1,10 +1,13 @@
 package com.lucky7.preproject.answer.controller;
 
 import com.lucky7.preproject.answer.dto.requestDto.AnswerDto;
+import com.lucky7.preproject.answer.dto.responseDto.AnswerCommentDto;
 import com.lucky7.preproject.answer.dto.responseDto.AnswerResponseDto;
 import com.lucky7.preproject.answer.entity.Answer;
 import com.lucky7.preproject.answer.mapper.AnswerMapper;
 import com.lucky7.preproject.answer.service.AnswerService;
+import com.lucky7.preproject.comment.entity.AnswerComment;
+import com.lucky7.preproject.comment.service.AnswerCommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ public class AnswerController {
 
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
+    private final AnswerCommentService answerCommentService;
 
     @PostMapping
     public ResponseEntity<AnswerResponseDto> postAnswer(@PathVariable long questionId,
@@ -36,6 +40,12 @@ public class AnswerController {
     public ResponseEntity<List<AnswerResponseDto>> getAllAnswers(@PathVariable long questionId) {
         List<Answer> foundAnswers = answerService.getAllAnswers(questionId);
         List<AnswerResponseDto> responseDtos = answerMapper.answersToAnswerDtos(foundAnswers);
+
+        for(AnswerResponseDto answerResponseDto : responseDtos) {
+            List<AnswerComment> answerComments = answerCommentService.findAnswerComments(answerResponseDto.getAnswerId());
+            List<AnswerCommentDto> answerCommentDtos = answerMapper.answerCommentsToAnswerCommentDtos(answerComments);
+            answerResponseDto.setAnswerComments(answerCommentDtos);
+        }
 
         return new ResponseEntity<>(responseDtos, HttpStatus.OK);
     }
