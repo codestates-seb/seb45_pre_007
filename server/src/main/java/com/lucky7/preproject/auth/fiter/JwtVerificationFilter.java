@@ -2,6 +2,7 @@ package com.lucky7.preproject.auth.fiter;
 
 import com.lucky7.preproject.auth.jwt.JwtTokenizer;
 import com.lucky7.preproject.auth.utils.CustomAuthorityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 //JWJWT에 대해 검증 작업을 수행하는 JwtVerificationFilter
+@Slf4j
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
@@ -32,7 +34,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, IOException {
         Map<String, Object> claims = verifyJws(request);
         setAuthenticationToContext(claims);
-
+        log.info(claims.toString());
         filterChain.doFilter(request, response);
     }
 

@@ -7,6 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +19,12 @@ import java.util.Map;
 import java.util.Objects;
 
 
+@Slf4j
 @Component
 public class JwtTokenizer {
 
     @Getter
-    @Value("${jwt.key}") //JWT 생성 및 검증 시 사용되는 Secret Key 정보
+    @Value("abcdefgabcdefgabcdefgabcdefgabcdefg") //JWT 생성 및 검증 시 사용되는 Secret Key 정보 "${jwt.key}"
     private String secretKey;
 
     @Getter
@@ -66,18 +68,19 @@ public class JwtTokenizer {
 
     public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey){
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
-
+        log.info("getClaims");
         Jws<Claims> claims = Jwts.parserBuilder()
-                .setSigningKey(jws)
+                .setSigningKey(key)
                 .build()
                 .parseClaimsJws(jws);
-
+        log.info("Get claims");
+        log.info(String.valueOf(claims));
         return claims;
     }
 
     public void verifySignature(String jws, String base64EncodedSecretKey){
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
-
+        log.info("verifySignature");
         Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
