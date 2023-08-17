@@ -9,15 +9,15 @@ const OAuthSign = () => {
     <OAuthSignBox>
       <GoogleBox>
         <GoogleIcon />
-        <GoogleText>Sign uo with Google</GoogleText>
+        <GoogleText>Sign up with Google</GoogleText>
       </GoogleBox>
       <GithubBox>
         <GithubIcon />
-        <GithubText>Sign uo with GitHub</GithubText>
+        <GithubText>Sign up with GitHub</GithubText>
       </GithubBox>
       <FacebookBox>
         <FacebookIcon />
-        <FacebookText>Sign uo with Facebook</FacebookText>
+        <FacebookText>Sign up with Facebook</FacebookText>
       </FacebookBox>
     </OAuthSignBox>
   );
