@@ -118,6 +118,8 @@ const AskEditAside = ({ isFocus, index }) => {
     setScrollHeight(height);
   };
 
+  console.log(scrollHeight);
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -163,7 +165,7 @@ const AskEditAsideLayout = styled.div`
     `}
 
   ${({ scrollHeight }) =>
-    scrollHeight > 85 &&
+    scrollHeight > 1 &&
     css`
       position: fixed;
       top: 65px;
