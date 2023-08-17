@@ -6,9 +6,14 @@ import com.lucky7.preproject.question.dto.responseDto.SingleQuestionResponseDto;
 import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.question.mapper.QuestionMapper;
 import com.lucky7.preproject.question.service.QuestionService;
+import com.lucky7.preproject.user.entity.User;
+import com.lucky7.preproject.user.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +27,22 @@ public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping
     public ResponseEntity<SingleQuestionResponseDto> postQuestion(@RequestBody QuestionDto questionDto) {
+        // 현재 인증된 사용자 정보 가져오기
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findUserByEmail(auth.getPrincipal().toString());
+
         // DTO에서 Entity로 변환
         Question questionToCreate = mapper.questionPostDtoToQuestion(questionDto);
-        // 서비스에서 엔티티를 생성
+
+        // 사용자 정보 설정
+        questionToCreate.setUser(currentUser);
+
+        // 서비스에서 엔티티 생성 및 저장
         Question createdQuestion = questionService.createQuestion(questionToCreate);
         SingleQuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(createdQuestion);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
