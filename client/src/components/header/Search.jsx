@@ -183,8 +183,8 @@ const ListItem = styled.div`
 `;
 
 const Title = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Inter&family=Source+Code+Pro&display=swap');
-  font-family: 'Source Code Pro', monospace;
+  font-family: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', 'Liberation Mono',
+    Menlo, Monaco, Consolas, monospace;
 `;
 
 const Li = styled.li`

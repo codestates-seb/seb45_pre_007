@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class QuestionPatchDto {
+public class QuestionDto {
     private String questionTitle;
     private String questionContent;
 }
