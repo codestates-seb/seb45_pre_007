@@ -52,8 +52,8 @@ public class SecurityConfiguration {
                        // .antMatchers("/users/oauth/**").permitAll() // OAuth 토큰 요청은 모든 사용자에게 허용
                         .antMatchers(HttpMethod.GET, "/questions").permitAll() //질문 목록을 보는건 모든 사용자에게 허용
                         .antMatchers(HttpMethod.POST, "/questions").hasRole("USER") // 질문을 생성하는건 인증된 사용자에게만 혀용
-                        .antMatchers(HttpMethod.GET, "/questions/{questionId}").hasRole("USER") //질문을 선택해 조회하는 기능은 인증된 사용자에게만 혀용
-                        .antMatchers(HttpMethod.GET, "/questions/{questionId}/answers").hasRole("USER") //특정  답변을 선택해 조회하는 기능은 인증된 사용자에게만 혀용
+                        .antMatchers(HttpMethod.GET, "/questions/{questionId}").permitAll() //질문을 선택해 조회하는 기능은 인증된 사용자에게만 혀용
+                        .antMatchers(HttpMethod.GET, "/questions/{questionId}/answers").permitAll() //특정  답변을 선택해 조회하는 기능은 인증된 사용자에게만 혀용
                         .antMatchers(HttpMethod.POST,"/questions/{questionId}/answers/**").hasRole("USER") // 답변과 관련된 경로는 인증된 사용자에게만 허용
                         .antMatchers(HttpMethod.POST,"/questions/{questionId}/comments/**").hasRole("USER") // 댓글과 관련된 경로는 인증된 사용자에게만 허용
                         .anyRequest().permitAll()

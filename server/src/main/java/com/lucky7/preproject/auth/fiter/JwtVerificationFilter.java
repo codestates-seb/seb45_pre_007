@@ -31,14 +31,14 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         Map<String, Object> claims = verifyJws(request);
         setAuthenticationToContext(claims);
         log.info(claims.toString());
         filterChain.doFilter(request, response);
     }
 
-    // (6)
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String authorization = request.getHeader("Authorization");

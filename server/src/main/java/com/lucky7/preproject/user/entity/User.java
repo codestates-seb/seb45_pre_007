@@ -41,6 +41,7 @@ public class User {
     @CreatedDate
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
     @LastModifiedDate
     private LocalDateTime lastModifiedAt;
 
