@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="152x152" href="/apple-icon-152x152.png">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -25,13 +25,22 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <style>
+      html, body, #root {
+        height: 100%;
+      }
+
+      #pages {
+        padding: 56px 0 0 0;
+        height: 100%;
+      }
+
       * {
       .collapse-css-transition {
         transition: height 50ms cubic-bezier(0.4, 0, 0.2, 1);
       }
     }
     </style>
-    <title>React App</title>
+    <title>Stack Overflow - Where Developers Learn, Share, & Build Careers</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

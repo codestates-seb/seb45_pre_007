@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { css, styled } from 'styled-components';
 import EditAsideContent from './EditAsideCotent.jsx';
 
@@ -24,7 +24,9 @@ const AskEditAside = ({ isFocus, index }) => {
       title: <AskEditAsideTitle>How to Format</AskEditAsideTitle>,
       content: (
         <AskNoticeList>
-          <li>create code fences with backticks ` or tildes ~</li>
+          <li className="none">
+            create code fences with backticks ` or tildes ~
+          </li>
           <CodeBox>
             ```
             <br />
@@ -32,7 +34,7 @@ const AskEditAside = ({ isFocus, index }) => {
             <br />
             ```
           </CodeBox>
-          <li>add language identifier to highlight code</li>
+          <li className="none">add language identifier to highlight code</li>
           <CodeBox>
             ```python
             <br />
@@ -53,18 +55,14 @@ const AskEditAside = ({ isFocus, index }) => {
             backtick escapes <span className="code">`like _so_`</span>
           </li>
           <li>quote by placing &gt; at start of line</li>
-
           <li>
-            <li>
-              to make links (use https whenever possible)
-              <span className="none">&lt;https://example.com&gt;</span>
-              <span className="none">[example](https://example.com)</span>
-              <span className="none">
-                &lt;a href=&quot;https://example.com&quot;&gt;example&lt;/a&gt;
-              </span>
-            </li>
+            to make links (use https whenever possible)
+            <span className="none">&lt;https://example.com&gt;</span>
+            <span className="none">[example](https://example.com)</span>
+            <span className="none">
+              &lt;a href=&quot;https://example.com&quot;&gt;example&lt;/a&gt;
+            </span>
           </li>
-
           <AnotherTags style={{ margin: 0 }}>formatting help »</AnotherTags>
           <AnotherTags>asking help »</AnotherTags>
         </AskNoticeList>
@@ -113,8 +111,26 @@ const AskEditAside = ({ isFocus, index }) => {
     },
   ];
 
+  const [scrollHeight, setScrollHeight] = useState(0);
+
+  const handleScroll = () => {
+    const height = window.scrollY;
+    setScrollHeight(height);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <AskEditAsideLayout index={index} isFocus={isFocus}>
+    <AskEditAsideLayout
+      index={index}
+      isFocus={isFocus}
+      scrollHeight={scrollHeight}
+    >
       <AskEditAsideBox key={aside[isFocus].id}>
         <EditAsideContent
           id={aside[isFocus].id}
@@ -145,6 +161,13 @@ const AskEditAsideLayout = styled.div`
     css`
       display: none;
     `}
+
+  ${({ scrollHeight }) =>
+    scrollHeight > 85 &&
+    css`
+      position: fixed;
+      top: 65px;
+    `}
 `;
 
 const AskEditAsideBox = styled.div``;
@@ -167,9 +190,16 @@ const AskEditAsideText = styled.p`
 
 const AskNoticeList = styled.ul`
   font-size: 13px;
-  color: #3b4045;
+  color: #232629;
   list-style: none;
   position: relative;
+
+  .none {
+    color: #232629;
+    &:hover {
+      color: #232629;
+    }
+  }
 
   li {
     margin: 12px 0 12px 10px;
@@ -187,14 +217,6 @@ const AskNoticeList = styled.ul`
 
       &:hover {
         color: hsl(206, 100%, 52%);
-      }
-    }
-
-    .none {
-      color: #232629;
-
-      &:hover {
-        color: #232629;
       }
     }
 
