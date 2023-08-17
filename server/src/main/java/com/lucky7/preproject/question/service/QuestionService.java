@@ -1,5 +1,7 @@
 package com.lucky7.preproject.question.service;
 
+import com.lucky7.preproject.comment.entity.QuestionComment;
+import com.lucky7.preproject.comment.service.QuestionCommentService;
 import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.question.repository.QuestionRepository;
 import com.lucky7.preproject.user.repository.UserRepository;
@@ -14,6 +16,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
+    // 추후 트랜잭션 구현을 위해 레포지토리가 아닌 서비스에서 DI를 받습니다.
+    private final QuestionCommentService questionCommentService;
 
     /**
      *     서비스에서의 목적은 비즈니스 로직을 처리하는 것 입니다.
@@ -38,9 +42,9 @@ public class QuestionService {
         // 예외처리 로직 추가 필요 (존재하지 않는 질문을 조회할 경우)
         // ex) EntityNotFoundException (orElseThrow 사용 등의 방법이 있습니다.)
         Question defaultQuestion = new Question();
+
         return questionRepository.findById(questionId).orElse(defaultQuestion);
     }
-
 
     @PreAuthorize("hasRole('USER') and #question.userId == principal.id")
     public Question updateQuestion(long questionId, Question questionToUpdate) {
