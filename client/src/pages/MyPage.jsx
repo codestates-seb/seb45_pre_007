@@ -45,7 +45,6 @@ const MypageProfile = styled.div`
   display: flex;
   //position: relative;
   color: #545454;
-  padding-left: 35px;
 
   div.profileContents {
     padding: 0 10px;
@@ -72,7 +71,6 @@ const MypageProfile = styled.div`
 
 const MypageCategoryWrap = styled.ul`
   list-style: none;
-  padding-left: 40px;
   margin: 30px 0;
   .active {
     background-color: #f4852b;
@@ -207,7 +205,7 @@ const PostCommunities = styled.div`
 `;
 
 const PostWrap = styled.div`
-  width: 1075px;
+  width: 1050px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
