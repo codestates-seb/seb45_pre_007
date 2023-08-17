@@ -8,15 +8,15 @@ import logo2 from '../assert/posts.jpg';
 import LoginNav from '../components/LoginNav.jsx';
 import facebook from '../assert/facebook.png';
 // facebook 사진 테스트용
+import { isPC, isMobile } from '../utils/mediaQueryUtils';
 
 const MypageLayout = styled.section`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 `;
 
 const MypageBox = styled.section`
-  //width: 1200px;
-  width: 1051px;
+  width: 1100px;
   text-align: left;
   padding: 24px;
 `;
@@ -40,14 +40,12 @@ const ProfileBtn = styled.button`
 `;
 
 const MypageProfile = styled.div`
+  width: 1067px;
   height: 144px;
   display: flex;
-  //justify-content: flex-end;
-  justify-content: center;
-  padding-right: 30px;
-  //padding-right: 60px;
-  position: relative;
+  //position: relative;
   color: #545454;
+  padding-left: 35px;
 
   div.profileContents {
     padding: 0 10px;
@@ -74,8 +72,7 @@ const MypageProfile = styled.div`
 
 const MypageCategoryWrap = styled.ul`
   list-style: none;
-  //padding-left: 200px;
-  padding-left: 50px;
+  padding-left: 40px;
   margin: 30px 0;
   .active {
     background-color: #f4852b;
@@ -96,7 +93,7 @@ const PostAbout = styled.div`
   div {
     display: flex;
     justify-content: center;
-    width: 700px;
+    width: 782px;
     height: 100px;
     border: 1px solid #d9d9d9;
     border-radius: 5px;
@@ -120,7 +117,7 @@ const PostBadges = styled.div`
     display: flex;
     justify-content: center;
     font-size: 13px;
-    width: 700px;
+    width: 782px;
     height: 82px;
     border: 1px solid #d9d9d9;
     border-radius: 5px;
@@ -138,7 +135,7 @@ const PostPosts = styled.div`
   div {
     text-align: center;
     font-size: 13px;
-    width: 700px;
+    width: 782px;
     height: 400px;
     border: 1px solid #d9d9d9;
     border-radius: 5px;
@@ -159,7 +156,7 @@ const PostStats = styled.div`
   margin: 5px 0 10px 0;
   width: 250px;
   div {
-    width: 215px;
+    width: 235px;
     height: 125px;
     border: 1px solid #d9d9d9;
     border-radius: 5px;
@@ -210,6 +207,7 @@ const PostCommunities = styled.div`
 `;
 
 const PostWrap = styled.div`
+  width: 1075px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -217,6 +215,9 @@ const PostWrap = styled.div`
 `;
 
 const Mypage = () => {
+  const isDesktop = isPC();
+  const isMobileScreen = isMobile();
+
   return (
     <MypageLayout>
       <LoginNav />
