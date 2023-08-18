@@ -1,23 +1,51 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { styled } from 'styled-components';
+import { postToLogin } from '../../redux/api/loginApi';
+import {
+  resetLogin,
+  setEmail,
+  setPassword,
+} from '../../redux/feature/loginSlice';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loginData = useSelector((state) => state.login);
+
+  const handleLoginSumbit = () => {
+    dispatch(
+      postToLogin({ email: loginData.email, password: loginData.password })
+    );
+
+    if (loginData.isSuccessed) {
+      navigate('/main'); //Todo: 이전 페이지로 리다이렉트하기
+    } else {
+      alert('로그인에 실패했습니다.');
+    }
+
+    dispatch(resetLogin());
+  };
+
   return (
     <LoginFormBox>
       <LoginFormItem>
         <EmailFormbox>
           <EmailText>Email</EmailText>
-          <EmailInput />
+          <EmailInput onChange={(e) => dispatch(setEmail(e.target.value))} />
         </EmailFormbox>
         <PasswordFormbox>
           <PasswordTextBox>
             <PasswordText>Password</PasswordText>
             <PasswordFind>Forgot password?</PasswordFind>
           </PasswordTextBox>
-          <PasswordInput />
+          <PasswordInput
+            onChange={(e) => dispatch(setPassword(e.target.value))}
+          />
         </PasswordFormbox>
         <LoginSubmitBox>
-          <LoginSubmit>Log in</LoginSubmit>
+          <LoginSubmit onClick={handleLoginSumbit}>Log in</LoginSubmit>
         </LoginSubmitBox>
       </LoginFormItem>
     </LoginFormBox>

@@ -1,8 +1,13 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import AskAside from '../ask/askAside/AskAside.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTitle } from '../../redux/feature/askSlice.js';
 
 const AskTitle = ({ isFocus, setIsFocus }) => {
+  const title = useSelector((state) => state.ask.title);
+  const dispatch = useDispatch();
+
   return (
     <TitleLayout>
       <AskTitleLayout>
@@ -20,6 +25,8 @@ const AskTitle = ({ isFocus, setIsFocus }) => {
                 <AskTitleInput
                   placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
                   onClick={() => setIsFocus(0)}
+                  onChange={(e) => dispatch(setTitle(e.target.value))}
+                  value={title}
                 />
               </AskTitleInputBox>
             </AskTitleItem>

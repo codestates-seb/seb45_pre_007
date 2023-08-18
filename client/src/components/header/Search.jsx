@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled, css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import useDetectClose from '../../hooks/useDetectClose';
 import search from '../../assert/search.png';
+import { useSelector } from 'react-redux';
 
 const Search = () => {
   const { handleOnPress, isSelected, ref } = useDetectClose(false);
@@ -24,6 +25,10 @@ const Search = () => {
       content: <span>collective content</span>,
     },
   ];
+  const loginData = useSelector((state) => state.login);
+  const successedUser = loginData.isSuccessed;
+  //! test
+  const [test, setTest] = useState(null);
 
   const searchHint2 = [
     {
@@ -45,7 +50,7 @@ const Search = () => {
   ];
 
   return (
-    <SearchBox>
+    <SearchBox successedUser={test}>
       <DropdownContainer>
         <SearchInputBox>
           <SearchArea onClick={handleOnPress} ref={ref}>
@@ -53,12 +58,13 @@ const Search = () => {
           </SearchArea>
           <SearchInput
             placeholder="Search..."
+            successedUser={test}
             isSelected={isSelected}
             onClick={handleOnPress}
             ref={ref}
           />
         </SearchInputBox>
-        <Menu isDropped={isSelected}>
+        <Menu isDropped={isSelected} successedUser={test}>
           <SearchTop>
             <Ul>
               {searchHint1.map((current, index) => (
@@ -102,6 +108,12 @@ const SearchBox = styled.div`
   @media (max-width: 640px) {
     max-width: 100%;
   }
+
+  ${({ successedUser }) =>
+    successedUser === null &&
+    css`
+      max-width: 100%;
+    `}
 `;
 
 const DropdownContainer = styled.div`
@@ -115,8 +127,8 @@ const Menu = styled.div`
   background: white;
   position: absolute;
   top: 55px;
-  left: 69%;
-  width: 642px;
+  left: 70%;
+  width: 660px;
 
   display: flex;
   flex-direction: column;
@@ -157,6 +169,12 @@ const Menu = styled.div`
     /* left: 95%; */
     width: 100%;
   }
+
+  ${({ successedUser }) =>
+    successedUser === null &&
+    css`
+      width: 99%;
+    `}
 `;
 
 const Ul = styled.ul`
@@ -229,6 +247,7 @@ const SearchInputBox = styled.div`
   align-items: center;
   width: 100%;
   height: 56px;
+  padding: 0 8px;
 
   @media (max-width: 640px) {
     display: flex;
@@ -284,6 +303,12 @@ const SearchInput = styled.input.attrs((props) => ({
     border: 1.3px solid #6cbbf7;
     box-shadow: 0px 0px 0px 3px #dcebf8;
   }
+
+  ${({ successedUser }) =>
+    successedUser === null &&
+    css`
+      margin: 0;
+    `}
 
   @media (max-width: 640px) {
     display: none;
