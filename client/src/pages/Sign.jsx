@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import OAuthSign from '../components/Sign/OAuthSign.jsx';
 import SignDown from '../components/Sign/SignDown.jsx';
 import axios from 'axios';
+import { isValidEmail, hasLetterAndNumber } from '../utils/validationUtils.js';
 // Layout height 수정
 
 const SignUp = () => {
@@ -34,10 +35,10 @@ const SignUp = () => {
       setPasswordError('');
     }
 
-    // 유효성 검사를 통과한 경우 axios를 사용하여 API로 GET 요청을 보냅니다.
+    // 유효성 검사를 통과한 경우 axios를 사용하여 API로 Post 요청을 보냅니다.
     try {
       const response = await axios.post(
-        'http://ec2-15-164-76-46.ap-northeast-2.compute.amazonaws.com:8080/users',
+        `${process.env.REACT_APP_API_URL}/users`,
         {
           userName: IdValue,
           userEmail: EmailValue,
@@ -61,16 +62,6 @@ const SignUp = () => {
 
   const SavePassword = (event) => {
     setPassword(event.target.value);
-  };
-
-  const isValidEmail = (email) => {
-    return email.includes('@') && email.includes('.');
-  };
-
-  const hasLetterAndNumber = (str) => {
-    const hasLetter = /[a-zA-Z]/.test(str);
-    const hasNumber = /\d/.test(str);
-    return hasLetter && hasNumber;
   };
 
   return (
