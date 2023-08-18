@@ -4,8 +4,10 @@ import com.lucky7.preproject.comment.entity.QuestionComment;
 import com.lucky7.preproject.comment.service.QuestionCommentService;
 import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.question.repository.QuestionRepository;
+import com.lucky7.preproject.user.entity.User;
 import com.lucky7.preproject.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -46,11 +48,13 @@ public class QuestionService {
         return questionRepository.findById(questionId).orElse(defaultQuestion);
     }
 
-    @PreAuthorize("hasRole('USER') and #question.userId == principal.id")
-    public Question updateQuestion(long questionId, Question questionToUpdate) {
+    public Question updateQuestion(long questionId, Question questionToUpdate, User user) {
         //todo : 수정할 권한이 있는지 확인
         Question existingQuestion = getQuestion(questionId);
 
+        if (!existingQuestion.getUser().equals(user)) {
+            throw new AccessDeniedException("You do not have permission to update this question.");
+        }
         if (questionToUpdate.getQuestionTitle() != null) {
             existingQuestion.setQuestionTitle(questionToUpdate.getQuestionTitle());
         }
@@ -62,10 +66,14 @@ public class QuestionService {
         return questionRepository.save(existingQuestion);
     }
 
-    @PreAuthorize("hasRole('USER') and #question.userId == principal.id")
-    public void deleteQuestion(long questionId) {
+    public void deleteQuestion(long questionId, User user) {
         //todo : 삭제할 권한이 있는지 확인, 해당 Question 이 있는지 확인
         Question question = getQuestion(questionId);
+
+        if (!question.getUser().equals(user)) {
+            throw new AccessDeniedException("You do not have permission to update this question.");
+        }
+
         questionRepository.delete(question);
     }
 }
