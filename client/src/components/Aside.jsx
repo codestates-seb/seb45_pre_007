@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const AsideLayout = styled.section`
   width: 300px;
-  padding: 20px;
+  //padding: 20px;
   color: #232629;
   text-align: left;
 `;
