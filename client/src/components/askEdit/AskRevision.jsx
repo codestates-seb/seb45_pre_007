@@ -33,10 +33,6 @@ const AskRevisionLists = styled.div`
   width: 100%;
 `;
 
-const AsideBox = styled.div`
-  position: relative;
-`;
-
 const AskRevisionText = styled.div`
   cursor: pointer;
   font-size: 15px;
