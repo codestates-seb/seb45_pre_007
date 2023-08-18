@@ -12,6 +12,7 @@ export const loginSlice = createSlice({
     isSuccessed: null,
     error: null,
     status: null,
+    nextLevel: '',
   },
   reducers: {
     setEmail: (state, action) => {
@@ -35,6 +36,9 @@ export const loginSlice = createSlice({
       state.isSuccessed = null;
       state.status = null;
     },
+    setNextLevel: (state, action) => {
+      state.nextLevel = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,7 +58,6 @@ export const loginSlice = createSlice({
         ) {
           console.log('API Response:', action.payload); // 확인용 로그
 
-          // 토큰을 어떻게 가져오는지 확인
           state.token = action.payload.headers.authorization;
           state.loading = 'idle';
           state.isSuccessed = true;
@@ -80,6 +83,7 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { setEmail, setPassword, resetLogin, logout } = loginSlice.actions;
+export const { setEmail, setPassword, resetLogin, logout, setNextLevel } =
+  loginSlice.actions;
 
 export default loginSlice.reducer;

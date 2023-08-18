@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { styled, css } from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import useDetectClose from '../../hooks/useDetectClose';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNextLevel } from '../../redux/feature/loginSlice';
 
 const Search = () => {
   const { handleOnPress, isSelected, ref } = useDetectClose(false);
@@ -44,6 +45,7 @@ const Search = () => {
     },
   ];
 
+  const dispatch = useDispatch();
   const loginData = useSelector((state) => state.login);
   const successedUser = loginData.isSuccessed;
   const navigete = useNavigate();
@@ -53,6 +55,7 @@ const Search = () => {
     if (successedUser) {
       navigete('/ask');
     } else {
+      dispatch(setNextLevel('/ask'));
       navigete('/login');
     }
   };
@@ -154,8 +157,8 @@ const Menu = styled.div`
   background: white;
   position: absolute;
   top: 55px;
-  left: 70%;
-  width: 660px;
+  left: 68.5%;
+  width: 633px;
 
   display: flex;
   flex-direction: column;
@@ -200,7 +203,8 @@ const Menu = styled.div`
   ${({ successedUser }) =>
     successedUser &&
     css`
-      width: 99%;
+      width: 100%;
+      left: 70%;
     `}
 `;
 

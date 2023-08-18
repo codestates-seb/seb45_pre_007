@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import OAuthLogin from '../components/login/OAuthLogin.jsx';
 import LoginForm from '../components/login/LoginForm.jsx';
 import LoginDown from '../components/login/LoginDown.jsx';
@@ -7,17 +7,18 @@ import { Link } from 'react-router-dom';
 import logo1 from '../assert/logo1.png';
 
 export const Login = () => {
-  const [check, setCheck] = useState(false);
+  const [allCheck, setAllCheck] = useState(true);
+
   return (
-    <LoginBox>
+    <LoginBox check={allCheck}>
       <Logo to="/">
         <img src={logo1} alt="logo" />
       </Logo>
       {/* OAuth Login */}
-      <OAuthLogin check={check} setCheck={setCheck} />
+      <OAuthLogin />
 
       {/* Login Form */}
-      <LoginForm check={check} setCheck={setCheck} />
+      <LoginForm allCheck={allCheck} setAllCheck={setAllCheck} />
 
       {/* Login footer */}
       <LoginDown />
@@ -40,10 +41,17 @@ const LoginBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  height: 100%;
   padding: 24px;
   background-color: #f2f2f3;
+
+  ${({ check }) =>
+    check
+      ? css`
+          height: 100%;
+        `
+      : css`
+          /* height: 0; */
+        `}
 `;
 
-// depth: html, body, #root, App.js, Login
+// depth: html, body, #root, App.js

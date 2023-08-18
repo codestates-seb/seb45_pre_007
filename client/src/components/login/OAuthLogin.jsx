@@ -4,7 +4,7 @@ import google from '../../assert/google.png';
 import github from '../../assert/github.png';
 import facebook from '../../assert/facebook.png';
 
-const OAuthLogin = ({ check, setCheck }) => {
+const OAuthLogin = ({ allCheck }) => {
   return (
     <OAuthLoginBox>
       <GoogleBox>
@@ -41,6 +41,7 @@ const GoogleBox = styled.div`
   border-radius: 6px;
   background-color: #ffffff;
 
+  width: 288px;
   height: 38px;
 
   margin: 8px 0;
@@ -53,15 +54,6 @@ const GoogleBox = styled.div`
   @media (max-width: 640px) {
     width: 266px;
   }
-
-  ${({ check }) =>
-    check
-      ? css`
-          width: 288px;
-        `
-      : css`
-          width: 299px;
-        `}
 `;
 
 const GoogleIcon = styled.img.attrs({
