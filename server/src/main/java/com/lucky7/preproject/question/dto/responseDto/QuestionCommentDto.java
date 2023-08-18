@@ -11,5 +11,6 @@ public class QuestionCommentDto {
     private String commentUser;
     private String commentContent;
     private String createdAt;
+    private String lastModifiedAt;
 //    private String avatarImg; // 추후에 추가할 예정
 }
