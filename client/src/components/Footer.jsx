@@ -3,6 +3,44 @@ import { styled } from 'styled-components';
 import StackOverFlowLogo from '../assert/logo1.png';
 import { navData, socialLinks } from '../utils/footerDataUtils.js';
 
+const Footer = () => {
+  return (
+    <FooterBox>
+      <FooterLogo>
+        <img src={StackOverFlowLogo} alt="로고 이미지" />
+      </FooterLogo>
+      <Nav>
+        {navData.map((section) => (
+          <NavSection
+            key={section.title}
+            title={section.title}
+            links={section.links}
+          />
+        ))}
+      </Nav>
+      <FlexDiv marginRight="100px">
+        <FlexUl direction="row">
+          {socialLinks.map((link) => (
+            <ListItem key={link} marginRight="10px">
+              <FooterLink>{link}</FooterLink>
+            </ListItem>
+          ))}
+        </FlexUl>
+        <Ptag>
+          Site design / logo © 2023 Stack Exchange Inc user contributions
+          <br /> licensed under
+          <Svnrev>
+            <FooterLink>CC BY-SA</FooterLink>
+          </Svnrev>
+          . rev 2023.8.10.43574
+        </Ptag>
+      </FlexDiv>
+    </FooterBox>
+  );
+};
+
+export default Footer;
+
 const spaceBetweenItems = '20px';
 
 const FooterBox = styled.footer`
@@ -100,41 +138,3 @@ const NavSection = ({ title, links }) => (
     </FlexUl>
   </FooterItemDiv>
 );
-
-const Footer = () => {
-  return (
-    <FooterBox>
-      <FooterLogo>
-        <img src={StackOverFlowLogo} alt="로고 이미지" />
-      </FooterLogo>
-      <Nav>
-        {navData.map((section) => (
-          <NavSection
-            key={section.title}
-            title={section.title}
-            links={section.links}
-          />
-        ))}
-      </Nav>
-      <FlexDiv marginRight="100px">
-        <FlexUl direction="row">
-          {socialLinks.map((link) => (
-            <ListItem key={link} marginRight="10px">
-              <FooterLink>{link}</FooterLink>
-            </ListItem>
-          ))}
-        </FlexUl>
-        <Ptag>
-          Site design / logo © 2023 Stack Exchange Inc user contributions
-          <br /> licensed under
-          <Svnrev>
-            <FooterLink>CC BY-SA</FooterLink>
-          </Svnrev>
-          . rev 2023.8.10.43574
-        </Ptag>
-      </FlexDiv>
-    </FooterBox>
-  );
-};
-
-export default Footer;
