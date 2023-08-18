@@ -1,149 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import OAuthSign from '../components/Sign/OAuthSign.jsx';
 import SignDown from '../components/Sign/SignDown.jsx';
+import axios from 'axios';
 // Layout height 수정
-const SignLayout = styled.div`
-  background-color: #f1f2f3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-`;
-
-const SignRow = styled.div`
-  display: flex;
-`;
-
-const SignLeftBox = styled.div`
-  margin-right: 48px;
-  margin-bottom: 128px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const SignRightBox = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const SignflexBox = styled.div`
-  display: flex;
-  margin-bottom: 24px;
-`;
-
-const SignIconBox = styled.div`
-  box-sizing: border-box;
-  padding-right: 10px;
-`;
-
-const SignReCapthaBox = styled.div`
-  display: flex;
-  background-color: #f1f2f3;
-  justify-content: center;
-  align-items: center;
-  width: 266px;
-  height: 144px;
-`;
-
-const SignH1 = styled.h1`
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Adjusted',
-    'Segoe UI', 'Liberation Sans', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 27px;
-  line-height: 27px;
-  color: #232629;
-  margin-bottom: 32px;
-`;
-
-const SignA = styled.a`
-  color: #007bff; /* 기본 링크 색상 */
-
-  &:visited {
-    color: #007bff; /* 방문한 링크 색상 */
-  }
-
-  &:hover {
-    color: #8295ff; /* 호버 시 링크 색상 */
-  }
-`;
-
-const SignSpan = styled.span`
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Adjusted',
-    'Segoe UI', 'Liberation Sans', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 20px;
-  color: #232629;
-  margin-bottom: 4px;
-`;
-
-const SignParagraph = styled.p`
-  font-size: 12px;
-  margin: 4px 0;
-`;
-
-const SignLabelBox = styled.div`
-  display: flex;
-  margin: 10px 6px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Adjusted',
-    'Segoe UI', 'Liberation Sans', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 17px;
-  color: #232629;
-`;
-
-const LabelTextBox = styled.div`
-  margin-left: 5px;
-`;
-
-const SignLabel = styled.label`
-  font-size: 12px;
-`;
-
-const SignUpForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  width: 300px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  margin-bottom: 24px;
-`;
-
-const InputField = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 6px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-const SubmitButton = styled.button`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 24px;
-  background-color: #0a95ff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background-color: #0555aa;
-  }
-`;
 
 const SignUp = () => {
-  const handleSubmit = (e) => {
+  const [IdValue, setId] = useState('');
+  const [EmailValue, setEmail] = useState('');
+  const [PasswordValue, setPassword] = useState('');
+
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // 유효성 검사
+
+    if (!isValidEmail(EmailValue)) {
+      setEmailError('올바른 이메일 형식이 아닙니다.');
+      return;
+    } else {
+      setEmailError('');
+    }
+
+    if (PasswordValue.length < 4 || !hasLetterAndNumber(PasswordValue)) {
+      setPasswordError(
+        '비밀번호는 최소 4자 이상이어야 하며, 최소 1개의 문자와 1개의 숫자를 포함해야 합니다.'
+      );
+      return;
+    } else {
+      setPasswordError('');
+    }
+
+    // 유효성 검사를 통과한 경우 axios를 사용하여 API로 GET 요청을 보냅니다.
+    try {
+      const response = await axios.post(
+        'http://ec2-15-164-76-46.ap-northeast-2.compute.amazonaws.com:8080/users',
+        {
+          userName: IdValue,
+          userEmail: EmailValue,
+          hashedUserPassword: PasswordValue,
+        }
+      );
+
+      console.log('API 응답:', response.data);
+    } catch (error) {
+      console.error('API 요청 실패:', error);
+    }
+  };
+
+  const SaveId = (event) => {
+    setId(event.target.value);
+  };
+
+  const SaveEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const SavePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const isValidEmail = (email) => {
+    return email.includes('@') && email.includes('.');
+  };
+
+  const hasLetterAndNumber = (str) => {
+    const hasLetter = /[a-zA-Z]/.test(str);
+    const hasNumber = /\d/.test(str);
+    return hasLetter && hasNumber;
   };
 
   return (
@@ -230,11 +157,31 @@ const SignUp = () => {
           <OAuthSign />
           <SignUpForm onSubmit={handleSubmit}>
             <SignSpan>Display name</SignSpan>
-            <InputField type="text" placeholder="Username" />
+            <InputField
+              className="Sign_Id"
+              type="text"
+              placeholder="Username"
+              value={IdValue}
+              onChange={SaveId}
+            />
             <SignSpan>Email</SignSpan>
-            <InputField type="email" placeholder="Email" />
+            <InputField
+              className="Sign_Email"
+              type="email"
+              placeholder="Email"
+              value={EmailValue}
+              onChange={SaveEmail}
+            />
+            {emailError && <ErrorText>{emailError}</ErrorText>}
             <SignSpan>Password</SignSpan>
-            <InputField type="password" placeholder="Password" />
+            <InputField
+              className="Sign_Password"
+              type="password"
+              placeholder="Password"
+              value={PasswordValue}
+              onChange={SavePassword}
+            />
+            {passwordError && <ErrorText>{passwordError}</ErrorText>}
             <SignParagraph>
               Passwords must contain at least eight characters, including at
               least 1 letter and 1 number.
@@ -270,7 +217,9 @@ const SignUp = () => {
                 </svg>
               </div>
             </SignLabelBox>
-            <SubmitButton type="submit">Sign Up</SubmitButton>
+            <SubmitButton onClick={handleSubmit} type="submit">
+              Sign Up
+            </SubmitButton>
             <SignParagraph>
               By clicking “Sign up”, you agree to our
               <SignA>terms of service</SignA> and acknowledge that you have read
@@ -286,3 +235,147 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+const SignLayout = styled.div`
+  background-color: #f1f2f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+`;
+
+const SignRow = styled.div`
+  display: flex;
+`;
+
+const SignLeftBox = styled.div`
+  margin-right: 48px;
+  margin-bottom: 128px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const SignRightBox = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const SignflexBox = styled.div`
+  display: flex;
+  margin-bottom: 24px;
+`;
+
+const SignIconBox = styled.div`
+  box-sizing: border-box;
+  padding-right: 10px;
+`;
+
+const SignReCapthaBox = styled.div`
+  display: flex;
+  background-color: #f1f2f3;
+  justify-content: center;
+  align-items: center;
+  width: 266px;
+  height: 144px;
+`;
+
+const SignH1 = styled.h1`
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Adjusted',
+    'Segoe UI', 'Liberation Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 27px;
+  line-height: 27px;
+  color: #232629;
+  margin-bottom: 32px;
+`;
+
+const SignA = styled.a`
+  color: #007bff; /* 기본 링크 색상 */
+
+  &:visited {
+    color: #007bff; /* 방문한 링크 색상 */
+  }
+
+  &:hover {
+    color: #8295ff; /* 호버 시 링크 색상 */
+  }
+`;
+
+const ErrorText = styled.p`
+  font-size: 12px;
+  color: red;
+  margin: 4px 0;
+`;
+
+const SignSpan = styled.span`
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Adjusted',
+    'Segoe UI', 'Liberation Sans', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+  color: #232629;
+  margin-bottom: 4px;
+`;
+
+const SignParagraph = styled.p`
+  font-size: 12px;
+  margin: 4px 0;
+`;
+
+const SignLabelBox = styled.div`
+  display: flex;
+  margin: 10px 6px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Adjusted',
+    'Segoe UI', 'Liberation Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 17px;
+  color: #232629;
+`;
+
+const LabelTextBox = styled.div`
+  margin-left: 5px;
+`;
+
+const SignLabel = styled.label`
+  font-size: 12px;
+`;
+
+const SignUpForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-bottom: 24px;
+`;
+
+const InputField = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+
+const SubmitButton = styled.button`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 24px;
+  background-color: #0a95ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #0555aa;
+  }
+`;
