@@ -48,7 +48,6 @@ public class QuestionService {
         return questionRepository.findById(questionId).orElse(defaultQuestion);
     }
 
-    @PreAuthorize("hasRole('USER') and #question.userId == principal.id")
     public Question updateQuestion(long questionId, Question questionToUpdate, User user) {
         //todo : 수정할 권한이 있는지 확인
         Question existingQuestion = getQuestion(questionId);
