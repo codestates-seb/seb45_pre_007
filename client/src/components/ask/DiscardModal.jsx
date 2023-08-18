@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
+import { resetAsk } from '../../redux/feature/askSlice.js';
+import { useDispatch } from 'react-redux';
 
 const DiscardModal = ({ setIsOpen, isOpen }) => {
   const handleModal = () => {
@@ -9,6 +11,13 @@ const DiscardModal = ({ setIsOpen, isOpen }) => {
   const handleModalClose = () => {
     setIsOpen(false);
   };
+
+  const discardClose = () => {
+    dispatch(resetAsk());
+    setIsOpen(false);
+  };
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -38,7 +47,9 @@ const DiscardModal = ({ setIsOpen, isOpen }) => {
               </DiscardModalText>
             </DiscardModalUp>
             <DiscardModalDown>
-              <DiscardQuestionButton>Discard question</DiscardQuestionButton>
+              <DiscardQuestionButton onClick={discardClose}>
+                Discard question
+              </DiscardQuestionButton>
               <DiscardModalCancleBox>
                 <DiscardModalCancleButton onClick={handleModal}>
                   Cancel

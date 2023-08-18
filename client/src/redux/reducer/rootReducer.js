@@ -1,9 +1,13 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { lawsSlice } from '../feature/lawSlice';
+import { askSlice } from '../feature/askSlice';                                    
+import { loginSlice } from '../feature/loginSlice';
+import { counterSlice } from '../feature/counterSlice';
 // 아래에 createSlice import 해오기
 
 const rootReducer = combineReducers({
-  laws: lawsSlice.reducer,
+  ask: askSlice.reducer,
+  login: loginSlice.reducer,
+  counter: counterSlice.reducer,
 });
 
 export default rootReducer;

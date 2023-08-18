@@ -107,6 +107,13 @@ const PostAbout = styled.div`
   &:last-child h1 {
     margin-top: 30px;
   }
+  a {
+    color: #0074cc;
+  }
+  a:hover {
+    color: #0074cc;
+    text-decoration: none;
+  }
 `;
 
 const PostBadges = styled.div`
@@ -125,6 +132,13 @@ const PostBadges = styled.div`
   }
   &:last-child h1 {
     margin-top: 30px;
+  }
+  a {
+    color: #0074cc;
+  }
+  a:hover {
+    color: #0074cc;
+    text-decoration: none;
   }
 `;
 
@@ -291,7 +305,7 @@ const Mypage = () => {
               <p>
                 Your about me section is currently blank. Would you &nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;like
-                to add one? <a href="/">Edit profile</a>
+                to add one? <a href="/mypage">Edit profile</a>
               </p>
             </div>
           </PostAbout>
