@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import OAuthSign from '../components/Sign/OAuthSign.jsx';
 import SignDown from '../components/Sign/SignDown.jsx';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { isValidEmail, hasLetterAndNumber } from '../utils/validationUtils.js';
 // Layout height 수정
@@ -13,6 +14,8 @@ const SignUp = () => {
 
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +50,7 @@ const SignUp = () => {
       );
 
       console.log('API 응답:', response.data);
+      navigate('/login');
     } catch (error) {
       console.error('API 요청 실패:', error);
     }
