@@ -9,8 +9,9 @@ export const loginSlice = createSlice({
     token: '',
     loading: 'idle',
     currentRequestId: undefined,
-    error: null,
     isSuccessed: null,
+    error: null,
+    status: null,
   },
   reducers: {
     setEmail: (state, action) => {
@@ -18,9 +19,6 @@ export const loginSlice = createSlice({
     },
     setPassword: (state, action) => {
       state.password = action.payload;
-    },
-    setToken: (state, action) => {
-      state.token = action.payload;
     },
     resetLogin: (state, action) => {
       state.email = '';
@@ -35,6 +33,7 @@ export const loginSlice = createSlice({
       state.loading = 'idle';
       state.currentRequestId = undefined;
       state.isSuccessed = null;
+      state.status = null;
     },
   },
   extraReducers: (builder) => {
@@ -51,12 +50,18 @@ export const loginSlice = createSlice({
         if (
           state.loading === 'pending' &&
           state.currentRequestId === requestId &&
-          action.payload.code === 200
+          action.payload.status === 200
         ) {
-          // token
-          state.token = action.payload.headers.Authorization;
-          state.isSuccessed = true;
+          console.log('API Response:', action.payload); // 확인용 로그
+
+          // 토큰을 어떻게 가져오는지 확인
+          const token = action.payload.headers.Authorization;
+          console.log('Token:', token); // 확인용 로그
+
+          state.token = token;
           state.loading = 'idle';
+          state.isSuccessed = true;
+          state.status = 200;
           state.currentRequestId = undefined;
         }
       })
@@ -66,17 +71,18 @@ export const loginSlice = createSlice({
         if (
           state.loading === 'pending' &&
           state.currentRequestId === requestId &&
-          action.payload.code === 401
+          action.payload?.status === 401
         ) {
-          state.isSuccessed = null;
           state.loading = 'idle';
           state.error = action.error;
+          state.isSuccessed = false;
+          state.status = 401;
           state.currentRequestId = undefined;
         }
       });
   },
 });
 
-export const { setEmail, setPassword, resetLogin } = loginSlice.actions;
+export const { setEmail, setPassword, resetLogin, logout } = loginSlice.actions;
 
 export default loginSlice.reducer;

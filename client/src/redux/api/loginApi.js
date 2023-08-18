@@ -19,7 +19,7 @@ export const postToLogin = createAsyncThunk(
       password,
     });
 
-    console.log(response);
+    console.log(response); // 토큰 출력
     return response;
   }
 );

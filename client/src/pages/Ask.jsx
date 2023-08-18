@@ -11,6 +11,7 @@ import AskExpand from '../components/ask/AskExpand.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetAsk } from '../redux/feature/askSlice.js';
 import { postToAsk } from '../redux/api/askApi.js';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Ask = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -79,6 +80,13 @@ const Ask = () => {
     dispatch(postToAsk({ title: askData.title, content: askData.content }));
     dispatch(resetAsk());
   };
+
+  // const { pathname } = useLocation();
+  // const navigate = useNavigate();
+
+  // const goToLogin = () => {
+  //   navigate('/login', { state: pathname });
+  // };
 
   return (
     <AskBox>

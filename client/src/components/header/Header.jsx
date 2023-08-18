@@ -14,17 +14,13 @@ export const Header = () => {
   const loginData = useSelector((state) => state.login);
   const successedUser = loginData.isSuccessed;
   const [isOpen, setIsOpen] = useState(false);
-  //! test -> successedUser를 사용해야 함
-  const [test, setTest] = useState(true);
 
   //Todo: Ask 페이지에서는 햄버거 보여질 수 있게 구현하기
-
   const containerRef = useRef(null);
 
   const handleOutsideClick = (event) => {
     if (containerRef.current && !containerRef.current.contains(event.target)) {
       setIsOpen(false);
-      // setIsOpen(!isOpen);
     }
   };
 
@@ -35,8 +31,6 @@ export const Header = () => {
     };
   }, []);
 
-  // console.log(successedUser);
-
   return (
     <HeaderBox>
       <HeaderList>
@@ -45,7 +39,7 @@ export const Header = () => {
           <HeaderHamburgerBox
             ref={containerRef}
             onClick={() => setIsOpen(!isOpen)}
-            successedUser={test}
+            successedUser={successedUser}
           >
             <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
@@ -59,28 +53,28 @@ export const Header = () => {
           ) : null}
 
           <HeaderLogoBox to="/">
-            <HeaderLogoItem successedUser={test}>
+            <HeaderLogoItem successedUser={successedUser}>
               <HeaderLogo1 />
               <HeaderLogo2 />
             </HeaderLogoItem>
           </HeaderLogoBox>
 
           <ButtonBox>
-            <ButtonItem successedUser={test}>
-              <About successedUser={test}>About</About>
+            <ButtonItem successedUser={successedUser}>
+              <About successedUser={successedUser}>About</About>
               <Products />
-              <ForTeams successedUser={test}>For Teams</ForTeams>
+              <ForTeams successedUser={successedUser}>For Teams</ForTeams>
             </ButtonItem>
           </ButtonBox>
         </HeaderLeftBox>
         <Search />
-        <AuthBox successedUser={test}>
+        <AuthBox successedUser={successedUser}>
           <AuthItem>
             <Login to="/login">Log in</Login>
             <SignUp to="/signup">Sign up</SignUp>
           </AuthItem>
         </AuthBox>
-        {test === null && <HeaderNav />}
+        {successedUser && <HeaderNav />}
       </HeaderList>
     </HeaderBox>
   );
@@ -132,9 +126,13 @@ const HeaderHamburgerBox = styled.div`
   }
 
   ${({ successedUser }) =>
-    successedUser === null &&
+    successedUser &&
     css`
       display: none;
+
+      @media (max-width: 816px) {
+        display: flex;
+      }
     `}
 `;
 
@@ -149,7 +147,7 @@ const HeaderLogoBox = styled(Link)`
   }
 
   ${({ successedUser }) =>
-    successedUser === null &&
+    successedUser &&
     css`
       width: 164px;
       padding: 0px;
@@ -163,15 +161,21 @@ const HeaderLogoBox = styled(Link)`
 const HeaderLogoItem = styled.div`
   display: flex;
   align-items: center;
+  padding: 0px 8px;
 
   ${({ successedUser }) =>
-    successedUser === null &&
+    successedUser &&
     css`
       width: 166px;
       padding: 0px 4px 0 0;
 
       &:hover {
         background-color: #e4e6e8;
+      }
+
+      @media (max-width: 640px) {
+        width: 30px;
+        margin: 0 3px;
       }
     `}
 `;
@@ -209,15 +213,17 @@ const ButtonItem = styled.div`
 
   width: 250px;
   height: 100%;
+  margin: 0 0 0 5px;
 
   @media (max-width: 816px) {
     width: 85px;
   }
 
   ${({ successedUser }) =>
-    successedUser === null &&
+    successedUser &&
     css`
-      width: 85px;
+      width: 50%;
+      margin: 0;
     `}
 `;
 
@@ -243,7 +249,7 @@ const Button = styled.div`
   }
 
   ${({ successedUser }) =>
-    successedUser === null &&
+    successedUser &&
     css`
       display: none;
     `}
@@ -263,7 +269,7 @@ const AuthBox = styled.div`
   margin: 0 10px 0 0;
 
   ${({ successedUser }) =>
-    successedUser === null &&
+    successedUser &&
     css`
       display: none;
     `}

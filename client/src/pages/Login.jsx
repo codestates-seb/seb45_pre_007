@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import OAuthLogin from '../components/login/OAuthLogin.jsx';
 import LoginForm from '../components/login/LoginForm.jsx';
@@ -7,16 +7,17 @@ import { Link } from 'react-router-dom';
 import logo1 from '../assert/logo1.png';
 
 export const Login = () => {
+  const [check, setCheck] = useState(false);
   return (
     <LoginBox>
       <Logo to="/">
         <img src={logo1} alt="logo" />
       </Logo>
       {/* OAuth Login */}
-      <OAuthLogin />
+      <OAuthLogin check={check} setCheck={setCheck} />
 
       {/* Login Form */}
-      <LoginForm />
+      <LoginForm check={check} setCheck={setCheck} />
 
       {/* Login footer */}
       <LoginDown />
