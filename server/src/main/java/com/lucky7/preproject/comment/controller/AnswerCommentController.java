@@ -8,7 +8,6 @@ import com.lucky7.preproject.comment.mapper.CommentMapper;
 import com.lucky7.preproject.comment.service.AnswerCommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/questions/{questionId}/answers/{answerId}/comments")
-@CrossOrigin
 public class AnswerCommentController {
     private final AnswerCommentService answerCommentService;
     private final AnswerService answerService;

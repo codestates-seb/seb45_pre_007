@@ -12,7 +12,6 @@ import com.lucky7.preproject.question.service.QuestionService;
 import com.lucky7.preproject.user.entity.User;
 import com.lucky7.preproject.user.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,7 +24,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/questions")
-@CrossOrigin
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper mapper;
