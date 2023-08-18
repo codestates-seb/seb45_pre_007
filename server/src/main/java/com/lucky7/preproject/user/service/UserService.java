@@ -38,8 +38,6 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(user.getUserId());
         if (optionalUser.isPresent()) {
             User foundUser = optionalUser.get();
-            foundUser.setHashedUserPassword(passwordEncoder.encode(user.getHashedUserPassword()));
-            foundUser.setRoles(authorityUtils.createRoles(user.getUserEmail()));
             userRepository.save(foundUser);
 
             return foundUser;
