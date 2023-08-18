@@ -57,6 +57,8 @@ const Search = () => {
     }
   };
 
+  console.log(loginData.token);
+
   return (
     <SearchBox successedUser={successedUser}>
       <DropdownContainer>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { css, styled } from 'styled-components';
 import { postToLogin } from '../../redux/api/loginApi';
@@ -28,7 +28,6 @@ const LoginForm = ({ check, setCheck }) => {
     // postToLogin 액션의 비동기 처리 완료가 성공적으로 처리되었는지 확인
     if (postToLogin.fulfilled.match(action)) {
       if (action.payload && action.payload.status === 200) {
-        console.log(loginData.token);
         navigate('/questions');
       }
     } else {
@@ -47,6 +46,13 @@ const LoginForm = ({ check, setCheck }) => {
   };
 
   console.log(check);
+
+  useEffect(() => {
+    // const storedToken = localStorage.getItem('token');
+    if (loginData.token) {
+      console.log(loginData.token);
+    }
+  }, []);
 
   return (
     <LoginFormBox>
@@ -149,6 +155,13 @@ const LoginFormItem = styled.div`
   @media (max-width: 640px) {
     width: 266px;
   }
+
+  ${({ check }) =>
+    check
+      ? css``
+      : css`
+          width: 100%;
+        `}
 `;
 
 // email
@@ -157,14 +170,13 @@ const EmailFormbox = styled.div`
 `;
 
 const LoginDataBox = styled.div`
-  display: flex;
-
-  position: relative;
+  /* display: flex; */
+  /* position: relative; */
 
   svg {
     fill: hsl(358, 68%, 59%);
     position: relative;
-    top: 5px;
+    top: 6px;
     right: 10%;
   }
 `;
@@ -197,7 +209,7 @@ const EmailInput = styled.input.attrs((props) => ({
           }
         `
       : css`
-          width: 258px;
+          width: 260px;
           border: 1.3px solid hsl(358, 68%, 59%);
           padding: 0 32px 0 9.1px;
           &:focus {
@@ -301,4 +313,13 @@ const LoginSubmit = styled.div`
   @media (max-width: 640px) {
     width: 219px;
   }
+
+  ${({ check }) =>
+    check
+      ? css`
+          width: 260px;
+        `
+      : css`
+          width: 258px;
+        `}
 `;

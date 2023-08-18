@@ -55,10 +55,7 @@ export const loginSlice = createSlice({
           console.log('API Response:', action.payload); // 확인용 로그
 
           // 토큰을 어떻게 가져오는지 확인
-          const token = action.payload.headers.Authorization;
-          console.log('Token:', token); // 확인용 로그
-
-          state.token = token;
+          state.token = action.payload.headers.authorization;
           state.loading = 'idle';
           state.isSuccessed = true;
           state.status = 200;
