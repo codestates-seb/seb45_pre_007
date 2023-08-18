@@ -5,7 +5,7 @@ import SignDown from '../components/Sign/SignDown.jsx';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { isValidEmail, hasLetterAndNumber } from '../utils/validationUtils.js';
-// 유효성 검사 유틸파일 생성 , 회원가입 기능 구현 완료 , 회원가입 완료 시 로그인 페이지로 리다이렉트
+// 유효성 검사 유틸파일 생성, 회원가입 기능 구현 완료, 회원가입 완료 시 로그인 페이지로 리다이렉트
 
 const SignUp = () => {
   const [IdValue, setId] = useState('');
