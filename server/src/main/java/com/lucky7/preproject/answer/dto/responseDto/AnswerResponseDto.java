@@ -1,5 +1,6 @@
 package com.lucky7.preproject.answer.dto.responseDto;
 
+import com.lucky7.preproject.comment.entity.AnswerComment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +15,5 @@ public class AnswerResponseDto {
     private String answerUser;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
-    private List<CommentDto> answerComments;
+    private List<AnswerCommentDto> answerComments;
 }
