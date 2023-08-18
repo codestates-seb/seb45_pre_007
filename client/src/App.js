@@ -9,6 +9,7 @@ import Sign from './pages/Sign.jsx';
 import AskEdit from './pages/AskEdit.jsx';
 import MyPage from './pages/MyPage.jsx';
 import Answer from './pages/Answer.jsx';
+import Question from './pages/Question.jsx';
 
 const App = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/ask/edit" element={<AskEdit />}></Route>
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/answer" element={<Answer />}></Route>
+          <Route path="/questions" element={<Question />}></Route>
         </Routes>
         {!shouldHideFooter && <Footer />}
       </div>

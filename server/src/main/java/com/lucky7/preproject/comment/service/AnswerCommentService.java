@@ -2,6 +2,10 @@ package com.lucky7.preproject.comment.service;
 
 import com.lucky7.preproject.comment.entity.AnswerComment;
 import com.lucky7.preproject.comment.repository.AnswerCommentRepository;
+import java.util.List;
+
+import com.lucky7.preproject.user.entity.User;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,13 +20,36 @@ public class AnswerCommentService {
         return answerCommentRepository.save(answerComment);
     }
 
-    public AnswerComment updateAnswerComment(AnswerComment answerComment) {
-        AnswerComment foundAnswerComment = answerCommentRepository.findById(answerComment.getAnswerCommentId()).get();
+    public AnswerComment updateAnswerComment(AnswerComment answerComment, User user) {
+        AnswerComment foundAnswerComment = answerCommentRepository.findById(answerComment.getAnswerCommentId()).orElse(null);
+        if (foundAnswerComment == null) {
+            return null;
+        }
+
+        if (!foundAnswerComment.getUser().equals(user)) {
+            throw new AccessDeniedException("You do not have permission to update this comment.");
+        }
         foundAnswerComment.setAnswerCommentContent(answerComment.getAnswerCommentContent());
         return answerCommentRepository.save(foundAnswerComment);
     }
 
-    public void deleteAnswerComment(long answerCommentId) {
-        answerCommentRepository.deleteById(answerCommentId);
+    public AnswerComment deleteAnswerComment(long answerCommentId, User user) {
+        AnswerComment existingAnswerComment = answerCommentRepository.findById(answerCommentId).orElse(null);
+
+
+        if (!existingAnswerComment.getUser().equals(user)) {
+            throw new AccessDeniedException("You do not have permission to delete this comment.");
+        }
+
+        if (existingAnswerComment == null || existingAnswerComment.getAnswer().getAnswerId() != answerCommentId) {
+            return null;
+        }
+
+        answerCommentRepository.delete(existingAnswerComment);
+        return existingAnswerComment;
+    }
+
+    public List<AnswerComment> findAnswerComments(long answerId) {
+        return answerCommentRepository.findAllByAnswerAnswerId(answerId);
     }
 }

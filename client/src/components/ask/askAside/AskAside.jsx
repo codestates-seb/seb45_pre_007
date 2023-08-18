@@ -178,8 +178,8 @@ const AskAside = ({ isFocus, index }) => {
   ];
 
   // 하나의 컴포넌트에서 관리하고 연결하려면 컴포넌트 마다 다른 값을 주어야 한다
-  console.log(index); // 컴포넌트 마다 다른 값
-  console.log(isFocus); // 전체에서 보는 값
+  // console.log(index); // 컴포넌트 마다 다른 값
+  // console.log(isFocus); // 전체에서 보는 값
 
   return (
     <AskAsideLayout index={index} isFocus={isFocus}>

@@ -6,6 +6,7 @@ import AskEditBody from '../components/askEdit/AskEditBody.jsx';
 import AskEditTag from '../components/askEdit/AskEditTag.jsx';
 import AskEditSummary from '../components/askEdit/AskEditSummary.jsx';
 import AskRevision from '../components/askEdit/AskRevision.jsx';
+import LoginNav from '../components/LoginNav.jsx';
 
 const AskEdit = () => {
   const [isFocus, setIsFocus] = useState(0);
@@ -67,9 +68,8 @@ const AskEdit = () => {
 
   return (
     <AskEditLayout>
-      <NavBox>
-        <Nav>Nav</Nav>
-      </NavBox>
+      {/* Nav ver.2 */}
+      <LoginNav />
       <AskEditBox>
         <AskEditItems>
           <AskEditFormBox>
@@ -116,7 +116,7 @@ const AskEditBox = styled.div`
 
   background-color: hsl(0, 0, 100%);
   border-radius: 0;
-  border: 1px solid hsl(210, 8%, 85%);
+  /* border: 1px solid hsl(210, 8%, 85%); */
 
   border-top-width: 0;
   border-bottom-width: 0;
@@ -129,29 +129,6 @@ const AskEditItems = styled.div`
   width: calc(100% - 365px - 24px);
   margin: 0;
   padding: 0;
-`;
-
-// Nav
-const NavBox = styled.div`
-  position: relative;
-  z-index: 1000;
-  width: 164px;
-  box-shadow: 0 0 0 hsla(210, 8%, 5%, 0.05);
-  transition:
-    box-shadow ease-in-out 0.1s,
-    transform ease-in-out 0.1s;
-  transform: translateZ(0);
-`;
-
-const Nav = styled.div`
-  position: sticky;
-  top: 56px;
-
-  width: auto;
-  max-height: calc(100vh -56px);
-
-  margin: 0 0 8px 0;
-  padding: 24px 0 0 0;
 `;
 
 const AskEditFormBox = styled.div`

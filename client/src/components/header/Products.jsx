@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled, css } from 'styled-components';
 import useDetectClose from '../../hooks/useDetectClose';
+import { Link } from 'react-router-dom';
 
 const Products = () => {
   const { handleOnPress, isSelected, ref } = useDetectClose(false);
@@ -98,6 +99,11 @@ const Button = styled.div`
 
   &:hover {
     background-color: #e4e6e8;
+  }
+
+  @media (max-width: 640px) {
+    /* left: 95%; */
+    width: 100%;
   }
 `;
 
