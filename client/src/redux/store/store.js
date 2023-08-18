@@ -14,12 +14,11 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
+  middleware: [
+    ...getDefaultMiddleware({
       serializableCheck: {
-        // redux-persist가 직접 처리하므로 ignoreActions에 넣어준다
         ignoreActions: [PERSIST, PURGE],
-        thunk: true,
       },
     }),
+  ],
 });
