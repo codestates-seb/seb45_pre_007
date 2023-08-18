@@ -19,7 +19,6 @@ import java.util.Map;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/questions/{questionId}/answers")
-@CrossOrigin
 public class AnswerController {
 
     private final AnswerService answerService;
