@@ -6,9 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionCommentResponseDto {
-    private Long questionCommentId;
-    private String questionCommentUser;
-    private String questionCommentContent;
+    private Long id;
+    private String content;
+    private String user;
     private String createdAt;
     private String lastModifiedAt;
 }

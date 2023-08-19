@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -28,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         log.info("loadUserByUsername before");
-        Optional<User> optionUser = userRepository.findByUserEmail(userEmail);
+        Optional<User> optionUser = userRepository.findByEmail(userEmail);
         log.info("loadUserByUsername after");
 
         log.info(String.valueOf(optionUser));
@@ -40,9 +39,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final class CustomUserDetails extends User implements UserDetails {
         CustomUserDetails(User user) {
-            setUserId(user.getUserId());
-            setUserEmail(user.getUserEmail());
-            setHashedUserPassword(user.getHashedUserPassword());
+            setId(user.getId());
+            setEmail(user.getEmail());
+            setHashedPassword(user.getHashedPassword());
             setRoles(user.getRoles());
         }
 
@@ -53,12 +52,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         @Override
         public String getPassword() {
-            return getHashedUserPassword();
+            return getHashedPassword();
         }
 
         @Override
         public String getUsername() {
-            return getUserEmail();
+            return getEmail();
         }
 
         @Override
