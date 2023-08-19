@@ -5,12 +5,16 @@ import LoginForm from '../components/login/LoginForm.jsx';
 import LoginDown from '../components/login/LoginDown.jsx';
 import { Link } from 'react-router-dom';
 import logo1 from '../assert/logo1.png';
+import LoginVaild from '../components/login/LoginVaild.jsx';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Login = () => {
   const [allCheck, setAllCheck] = useState(true);
+  const loginData = useSelector((state) => state.login);
 
   return (
-    <LoginBox check={allCheck}>
+    <LoginBox ask={loginData.nextLevel}>
+      {loginData.nextLevel === '/ask' && <LoginVaild />}
       <Logo to="/">
         <img src={logo1} alt="logo" />
       </Logo>
@@ -41,17 +45,16 @@ const LoginBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 24px;
-  background-color: #f2f2f3;
 
-  ${({ check }) =>
-    check
-      ? css`
-          height: 100%;
-        `
-      : css`
-          /* height: 0; */
-        `}
+  ${({ ask }) =>
+    ask !== '/ask' &&
+    css`
+      height: 100%;
+    `}
+
+  padding: 24px;
+
+  background-color: #f2f2f3;
 `;
 
 // depth: html, body, #root, App.js

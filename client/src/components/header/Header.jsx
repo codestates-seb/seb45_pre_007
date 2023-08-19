@@ -7,13 +7,15 @@ import Products from './Products.jsx';
 import Search from './Search.jsx';
 import Hamburger from './Hamburger.jsx';
 import Nav from '../Nav.jsx';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HeaderNav from './HeaderNav.jsx';
+import { setNextLevel } from '../../redux/feature/loginSlice';
 
 export const Header = () => {
   const loginData = useSelector((state) => state.login);
   const successedUser = loginData.isSuccessed;
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
   const location = useLocation();
   console.log(location.pathname);
 
@@ -73,7 +75,9 @@ export const Header = () => {
         <Search />
         <AuthBox successedUser={successedUser}>
           <AuthItem>
-            <Login to="/login">Log in</Login>
+            <Login to="/login" onClick={() => dispatch(setNextLevel(''))}>
+              Log in
+            </Login>
             <SignUp to="/signup">Sign up</SignUp>
           </AuthItem>
         </AuthBox>

@@ -46,7 +46,7 @@ const LoginForm = ({ allCheck, setAllCheck }) => {
             navigate(loginData.nextLevel);
             dispatch(setNextLevel(''));
           } else {
-            navigate(-1);
+            navigate('/questions');
           }
         }
       } else {
@@ -66,6 +66,12 @@ const LoginForm = ({ allCheck, setAllCheck }) => {
       setAllCheck(false);
     } else {
       setAllCheck(true);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleLoginSumbit();
     }
   };
 
@@ -104,6 +110,7 @@ const LoginForm = ({ allCheck, setAllCheck }) => {
               onChange={(e) => dispatch(setPassword(e.target.value))}
               value={loginData.password}
               check={allCheck}
+              onKeyDown={(e) => handleKeyDown(e)}
             />
             <svg
               aria-hidden="true"

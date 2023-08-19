@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { postToAsk } from '../api/askApi';
+import { postToAskEdit } from '../api/askEditApi';
 
-export const askSlice = createSlice({
-  name: 'ask',
+export const askEditSlice = createSlice({
+  name: 'askEdit',
   initialState: {
     id: 0,
     title: '',
@@ -12,13 +12,13 @@ export const askSlice = createSlice({
     error: null,
   },
   reducers: {
-    setTitle: (state, action) => {
+    setEditTitle: (state, action) => {
       state.title = action.payload;
     },
-    setContent: (state, action) => {
+    setEditContent: (state, action) => {
       state.content = action.payload;
     },
-    resetAsk: (state, action) => {
+    resetAskEdit: (state, action) => {
       state.title = '';
       state.content = '';
       state.loading = 'idle';
@@ -27,13 +27,13 @@ export const askSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(postToAsk.pending, (state, action) => {
+      .addCase(postToAskEdit.pending, (state, action) => {
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(postToAsk.fulfilled, (state, action) => {
+      .addCase(postToAskEdit.fulfilled, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -45,7 +45,7 @@ export const askSlice = createSlice({
           state.currentRequestId = undefined;
         }
       })
-      .addCase(postToAsk.rejected, (state, action) => {
+      .addCase(postToAskEdit.rejected, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -60,6 +60,7 @@ export const askSlice = createSlice({
   },
 });
 
-export const { setContent, setTitle, resetAsk } = askSlice.actions;
+export const { setEditContent, setEditTitle, resetAskEdit } =
+  askEditSlice.actions;
 
-export default askSlice.reducer;
+export default askEditSlice.reducer;

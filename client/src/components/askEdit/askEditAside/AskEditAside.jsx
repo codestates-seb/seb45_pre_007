@@ -172,7 +172,7 @@ const AskEditAsideLayout = styled.div`
         `
       : css`
           position: absolute;
-          top: 100px;
+          /* top: 100px; */
         `}
 `;
 

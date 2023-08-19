@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import AskEditAside from './askEditAside/AskEditAside.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { setEditTitle } from '../../redux/feature/askEditSlice.js';
 
 const AskEditTitle = ({ isFocus, setIsFocus }) => {
+  const questionTitle = useSelector((state) => state.question.title);
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    setTitle(questionTitle);
+  }, []);
+
+  const handleChangeTitle = (e) => {
+    dispatch(setEditTitle(e.target.value));
+    setTitle(e.target.value);
+  };
+
   return (
     <AskEditTitleLayout>
       <AskEditTitleLists>
         <AskEditTitleText>Title</AskEditTitleText>
         <AskEditTitleInputBox>
-          <AskEditTitleInput onClick={() => setIsFocus(0)} />
+          <AskEditTitleInput
+            onClick={() => setIsFocus(0)}
+            onChange={(e) => handleChangeTitle(e)}
+            value={title}
+          />
         </AskEditTitleInputBox>
       </AskEditTitleLists>
       <AsideBox>

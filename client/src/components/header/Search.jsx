@@ -49,7 +49,7 @@ const Search = () => {
   const loginData = useSelector((state) => state.login);
   const successedUser = loginData.isSuccessed;
   const navigete = useNavigate();
-  console.log(successedUser);
+  // console.log(successedUser);
 
   const handleGoToPage = () => {
     if (successedUser) {
@@ -60,7 +60,7 @@ const Search = () => {
     }
   };
 
-  console.log(loginData.token);
+  // console.log(loginData.token);
 
   return (
     <SearchBox successedUser={successedUser}>

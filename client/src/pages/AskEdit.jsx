@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 import AskEditTItle from '../components/askEdit/AskEditTItle.jsx';
@@ -6,10 +6,21 @@ import AskEditBody from '../components/askEdit/AskEditBody.jsx';
 import AskEditTag from '../components/askEdit/AskEditTag.jsx';
 import AskEditSummary from '../components/askEdit/AskEditSummary.jsx';
 import AskRevision from '../components/askEdit/AskRevision.jsx';
+
 import LoginNav from '../components/LoginNav.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { getByQuestion } from '../redux/api/getByQuestion.js';
+import { resetQuestion } from '../redux/feature/questionSlice.js';
+import { postToAskEdit } from '../redux/api/askEditApi.js';
+import { Link, useNavigate } from 'react-router-dom';
+import { resetAskEdit } from '../redux/feature/askEditSlice.js';
+import AskComment from '../components/askEdit/AskComment.jsx';
 
 const AskEdit = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isFocus, setIsFocus] = useState(0);
+  const [comment, setComment] = useState(false);
   const modules = {
     toolbar: {
       container: [
@@ -66,6 +77,34 @@ const AskEdit = () => {
     },
   };
 
+  const token = useSelector((state) => state.login.token);
+  const askId = useSelector((state) => state.ask.id);
+  const editData = useSelector((state) => state.askEdit);
+
+  console.log(askId);
+
+  useEffect(() => {
+    // 가져오기 전에 초기화를 먼저 해주어야 함
+    dispatch(resetQuestion());
+    dispatch(getByQuestion(askId));
+  }, [askId, dispatch]);
+
+  const handleAskEditSumbit = async () => {
+    if (editData.title && editData.content) {
+      await dispatch(
+        postToAskEdit({
+          id: askId,
+          title: editData.title,
+          content: editData.content,
+          token: token,
+        })
+      );
+
+      navigate('/answer');
+      dispatch(resetAskEdit());
+    }
+  };
+
   return (
     <AskEditLayout>
       {/* Nav ver.2 */}
@@ -85,10 +124,15 @@ const AskEdit = () => {
               <AskEditSummary />
             </AskEditFormItem>
             <AskSubmitBox>
-              <AskSubmitButton>Save edits</AskSubmitButton>
-              <CancelButton>Cancel</CancelButton>
+              <AskSubmitButton onClick={handleAskEditSumbit}>
+                Save edits
+              </AskSubmitButton>
+              <CancelButton to="/answer">Cancel</CancelButton>
             </AskSubmitBox>
-            <AddComment>Add a comment</AddComment>
+            <AddCommentText onClick={() => setComment(true)} comment={comment}>
+              Add a comment
+            </AddCommentText>
+            {comment && <AskComment setComment={setComment} />}
           </AskEditFormBox>
         </AskEditItems>
       </AskEditBox>
@@ -166,7 +210,7 @@ const AskSubmitButton = styled.div`
   }
 `;
 
-const CancelButton = styled.div`
+const CancelButton = styled(Link)`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -185,7 +229,8 @@ const CancelButton = styled.div`
   }
 `;
 
-const AddComment = styled.div`
+const AddCommentText = styled.div`
+  display: ${({ comment }) => (comment ? 'none' : 'block')};
   cursor: pointer;
   font-size: 13px;
   color: #0174cd;
