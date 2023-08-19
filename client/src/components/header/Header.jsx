@@ -19,7 +19,6 @@ export const Header = () => {
   const location = useLocation();
   console.log(location.pathname);
 
-  //Todo: Ask 페이지에서는 햄버거 보여질 수 있게 구현하기
   const containerRef = useRef(null);
 
   const handleOutsideClick = (event) => {

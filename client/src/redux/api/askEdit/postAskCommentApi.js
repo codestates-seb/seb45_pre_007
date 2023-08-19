@@ -18,7 +18,7 @@ export const postToAskComment = createAsyncThunk(
     const response = await axios.post(
       `${url}/questions/${questionId}/comments`,
       {
-        content,
+        content: content,
       },
       {
         headers: {

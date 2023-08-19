@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 
 import AskEditTItle from '../components/askEdit/AskEditTItle.jsx';
@@ -15,6 +15,7 @@ import { postToAskEdit } from '../redux/api/askEdit/postAskEditApi.js';
 import { Link, useNavigate } from 'react-router-dom';
 import { resetAskEdit } from '../redux/feature/askEdit/askEditSlice.js';
 import AskComment from '../components/askEdit/AskComment.jsx';
+import AskComments from '../components/askEdit/AskComments.jsx';
 
 const AskEdit = () => {
   const navigate = useNavigate();
@@ -129,17 +130,15 @@ const AskEdit = () => {
               </AskSubmitButton>
               <CancelButton to="/answer">Cancel</CancelButton>
             </AskSubmitBox>
-            <AddCommentBox>
-              {/*Todo: 생성한 Comment가 쌓이고 보일 수 있게 구현하기 */}
-              <AddCommentText
-                onClick={() => setComment(true)}
-                comment={comment}
-              >
-                Add a comment
-              </AddCommentText>
-              {comment && <AskComment setComment={setComment} />}
-            </AddCommentBox>
           </AskEditFormBox>
+          <AddCommentBox>
+            {/*Todo: 생성한 Comment가 쌓이고 보일 수 있게 구현하기 */}
+            <AskComments />
+            <AddCommentText onClick={() => setComment(true)} comment={comment}>
+              Add a comment
+            </AddCommentText>
+            {comment && <AskComment setComment={setComment} />}
+          </AddCommentBox>
         </AskEditItems>
       </AskEditBox>
     </AskEditLayout>

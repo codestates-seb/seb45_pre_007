@@ -4,7 +4,6 @@ import { postToAskComment } from '../../api/askEdit/postAskCommentApi';
 export const askCommentSlice = createSlice({
   name: 'askComment',
   initialState: {
-    id: 0,
     content: '',
     loading: 'idle',
     currentRequestId: undefined,
@@ -36,7 +35,6 @@ export const askCommentSlice = createSlice({
           state.loading === 'pending' &&
           state.currentRequestId === requestId
         ) {
-          state.id = action.payload.questionCommentId;
           state.loading = 'idle';
           state.currentRequestId = undefined;
         }

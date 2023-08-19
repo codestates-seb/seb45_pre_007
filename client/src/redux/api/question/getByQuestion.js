@@ -18,7 +18,7 @@ export const getByQuestion = createAsyncThunk(
     console.log(questionId);
 
     const response = await axios.get(`${url}/questions/${questionId}`);
-    console.log(response.data);
+    console.log(...response.data.questionComments);
     return response.data;
   }
 );

@@ -44,10 +44,18 @@ const AskComment = ({ setComment }) => {
       <AskCommentLists>
         <AskCommentInputBox>
           <AskCommentInput
-            onClick={handleCloseComment}
             onKeyDown={(e) => handleKeyDown(e)}
             onChange={(e) => dispatch(setAskComment(e.target.value))}
           />
+          <svg
+            className="svg-icon iconClearSm pe-none"
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            onClick={handleCloseComment}
+          >
+            <path d="M12 3.41L10.59 2 7 5.59 3.41 2 2 3.41 5.59 7 2 10.59 3.41 12 7 8.41 10.59 12 12 10.59 8.41 7z"></path>
+          </svg>
         </AskCommentInputBox>
       </AskCommentLists>
     </AskCommentLayout>
@@ -62,15 +70,12 @@ const AskCommentLayout = styled.div`
 
 const AskCommentLists = styled.div`
   display: flex;
-  flex-direction: column;
   width: 100%;
 `;
 
-const AskCommentInputBox = styled.div``;
-
-const AskCommentInput = styled.input.attrs((props) => ({
-  type: 'text',
-}))`
+const AskCommentInputBox = styled.div`
+  display: flex;
+  align-items: center;
   border: 1.3px solid #bbc0c4;
   border-radius: 5px;
 
@@ -91,4 +96,28 @@ const AskCommentInput = styled.input.attrs((props) => ({
     @media (max-width: 640px) {
       display: none;
     } */
+
+  .svg-icon {
+    margin: 0 10px 0 0;
+    fill: hsl(205, 47%, 42%);
+
+    &:hover {
+      border: 1px solid white;
+      border-radius: 4px;
+      background: hsl(205, 46%, 92%);
+    }
+  }
+`;
+
+const AskCommentInput = styled.input.attrs((props) => ({
+  type: 'text',
+}))`
+  outline: none;
+  border: none;
+  width: 100%;
+  height: 30px;
+
+  @media (max-width: 640px) {
+    width: 219px;
+  }
 `;

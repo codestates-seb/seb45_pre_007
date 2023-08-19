@@ -8,6 +8,7 @@ export const questionSlice = createSlice({
     title: '',
     content: '',
     author: '',
+    comments: '',
     loading: 'idle',
     currentRequestId: undefined,
     error: null,
@@ -17,6 +18,7 @@ export const questionSlice = createSlice({
       state.id = 0;
       state.title = '';
       state.content = '';
+      state.comments = [];
       state.loading = 'idle';
       state.currentRequestId = undefined;
     },
@@ -40,6 +42,7 @@ export const questionSlice = createSlice({
           state.title = action.payload.questionTitle;
           state.content = action.payload.questionContent;
           state.author = action.payload.questionUser;
+          state.comments = action.payload.questionComments;
 
           state.loading = 'idle';
           state.currentRequestId = undefined;
