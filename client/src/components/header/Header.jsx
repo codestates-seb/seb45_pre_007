@@ -9,7 +9,7 @@ import Hamburger from './Hamburger.jsx';
 import Nav from '../Nav.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import HeaderNav from './HeaderNav.jsx';
-import { setNextLevel } from '../../redux/feature/loginSlice';
+import { setNextLevel } from '../../redux/feature/login/loginSlice';
 
 export const Header = () => {
   const loginData = useSelector((state) => state.login);

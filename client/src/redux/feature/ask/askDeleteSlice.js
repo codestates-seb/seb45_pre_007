@@ -1,26 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getByQuestion } from '../api/getByQuestion';
+import { getByQuestion } from '../../api/question/getByQuestion';
 
-export const questionSlice = createSlice({
+export const askDeleteSlice = createSlice({
   name: 'question',
   initialState: {
-    id: 0,
-    title: '',
-    content: '',
-    author: '',
     loading: 'idle',
     currentRequestId: undefined,
     error: null,
   },
-  reducers: {
-    resetQuestion: (state, action) => {
-      state.id = 0;
-      state.title = '';
-      state.content = '';
-      state.loading = 'idle';
-      state.currentRequestId = undefined;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getByQuestion.pending, (state, action) => {
@@ -36,11 +24,6 @@ export const questionSlice = createSlice({
           state.loading === 'pending' &&
           state.currentRequestId === requestId
         ) {
-          state.id = action.payload.questionId;
-          state.title = action.payload.questionTitle;
-          state.content = action.payload.questionContent;
-          state.author = action.payload.questionUser;
-
           state.loading = 'idle';
           state.currentRequestId = undefined;
         }
@@ -60,6 +43,4 @@ export const questionSlice = createSlice({
   },
 });
 
-export const { resetQuestion } = questionSlice.actions;
-
-export default questionSlice.reducer;
+export default askDeleteSlice.reducer;

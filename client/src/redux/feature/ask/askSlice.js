@@ -1,34 +1,51 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getByQuestion } from '../api/getByQuestion';
+import { postToAsk } from '../../api/ask/postAskApi';
 
-export const askDeleteSlice = createSlice({
-  name: 'question',
+export const askSlice = createSlice({
+  name: 'ask',
   initialState: {
+    id: 0,
+    title: '',
+    content: '',
     loading: 'idle',
     currentRequestId: undefined,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setTitle: (state, action) => {
+      state.title = action.payload;
+    },
+    setContent: (state, action) => {
+      state.content = action.payload;
+    },
+    resetAsk: (state, action) => {
+      state.title = '';
+      state.content = '';
+      state.loading = 'idle';
+      state.currentRequestId = undefined;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getByQuestion.pending, (state, action) => {
+      .addCase(postToAsk.pending, (state, action) => {
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(getByQuestion.fulfilled, (state, action) => {
+      .addCase(postToAsk.fulfilled, (state, action) => {
         const { requestId } = action.meta;
 
         if (
           state.loading === 'pending' &&
           state.currentRequestId === requestId
         ) {
+          state.id = action.payload.questionId;
           state.loading = 'idle';
           state.currentRequestId = undefined;
         }
       })
-      .addCase(getByQuestion.rejected, (state, action) => {
+      .addCase(postToAsk.rejected, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -43,4 +60,6 @@ export const askDeleteSlice = createSlice({
   },
 });
 
-export default askDeleteSlice.reducer;
+export const { setContent, setTitle, resetAsk } = askSlice.actions;
+
+export default askSlice.reducer;

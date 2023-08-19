@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import AskEditAside from './askEditAside/AskEditAside.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEditContent } from '../../redux/feature/askEditSlice.js';
+import { setEditContent } from '../../redux/feature/askEdit/askEditSlice.js';
 
 const AskEditBody = ({ modules, isFocus, setIsFocus }) => {
   const questionContent = useSelector((state) => state.question.content);

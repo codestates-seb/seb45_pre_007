@@ -10,8 +10,8 @@ import AskProblem from '../components/ask/AskProblem.jsx';
 import AskExpand from '../components/ask/AskExpand.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { resetAsk } from '../redux/feature/askSlice.js';
-import { postToAsk } from '../redux/api/askApi.js';
+import { resetAsk } from '../redux/feature/ask/askSlice.js';
+import { postToAsk } from '../redux/api/ask/postAskApi.js';
 // import { useLocation, useNavigate } from 'react-router-dom';
 
 const Ask = () => {

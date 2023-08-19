@@ -9,11 +9,11 @@ import AskRevision from '../components/askEdit/AskRevision.jsx';
 
 import LoginNav from '../components/LoginNav.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { getByQuestion } from '../redux/api/getByQuestion.js';
-import { resetQuestion } from '../redux/feature/questionSlice.js';
-import { postToAskEdit } from '../redux/api/askEditApi.js';
+import { getByQuestion } from '../redux/api/question/getByQuestion.js';
+import { resetQuestion } from '../redux/feature/question/questionSlice.js';
+import { postToAskEdit } from '../redux/api/askEdit/postAskEditApi.js';
 import { Link, useNavigate } from 'react-router-dom';
-import { resetAskEdit } from '../redux/feature/askEditSlice.js';
+import { resetAskEdit } from '../redux/feature/askEdit/askEditSlice.js';
 import AskComment from '../components/askEdit/AskComment.jsx';
 
 const AskEdit = () => {
@@ -129,10 +129,16 @@ const AskEdit = () => {
               </AskSubmitButton>
               <CancelButton to="/answer">Cancel</CancelButton>
             </AskSubmitBox>
-            <AddCommentText onClick={() => setComment(true)} comment={comment}>
-              Add a comment
-            </AddCommentText>
-            {comment && <AskComment setComment={setComment} />}
+            <AddCommentBox>
+              {/*Todo: 생성한 Comment가 쌓이고 보일 수 있게 구현하기 */}
+              <AddCommentText
+                onClick={() => setComment(true)}
+                comment={comment}
+              >
+                Add a comment
+              </AddCommentText>
+              {comment && <AskComment setComment={setComment} />}
+            </AddCommentBox>
           </AskEditFormBox>
         </AskEditItems>
       </AskEditBox>
@@ -228,6 +234,8 @@ const CancelButton = styled(Link)`
     background-color: hsl(206, 100%, 97%);
   }
 `;
+
+const AddCommentBox = styled.div``;
 
 const AddCommentText = styled.div`
   display: ${({ comment }) => (comment ? 'none' : 'block')};

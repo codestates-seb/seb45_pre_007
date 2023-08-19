@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import AskEditAside from './askEditAside/AskEditAside.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEditTitle } from '../../redux/feature/askEditSlice.js';
+import { setEditTitle } from '../../redux/feature/askEdit/askEditSlice.js';
 
 const AskEditTitle = ({ isFocus, setIsFocus }) => {
   const questionTitle = useSelector((state) => state.question.title);

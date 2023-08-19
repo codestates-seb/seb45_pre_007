@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { styled, css } from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useDetectClose from '../../hooks/useDetectClose';
 import { useDispatch, useSelector } from 'react-redux';
-import { setNextLevel } from '../../redux/feature/loginSlice';
+import { setNextLevel } from '../../redux/feature/login/loginSlice';
 
 const Search = () => {
   const { handleOnPress, isSelected, ref } = useDetectClose(false);

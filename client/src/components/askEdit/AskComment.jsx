@@ -1,32 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { styled } from 'styled-components';
-// import { useDispatch, useSelector } from 'react-redux';
+import {
+  resetAskComment,
+  setAskComment,
+} from '../../redux/feature/askEdit/askCommentSlice';
+import { postToAskComment } from '../../redux/api/askEdit/postAskCommentApi';
 
 const AskComment = ({ setComment }) => {
-  //   const questionTitle = useSelector((state) => state.question.title);
-  //   const dispatch = useDispatch();
-  //   const [title, setTitle] = useState('');
+  const dispatch = useDispatch();
 
-  //   useEffect(() => {
-  //     setTitle(questionTitle);
-  //   }, []);
+  const token = useSelector((state) => state.login.token);
+  const askId = useSelector((state) => state.ask.id);
+  console.log(askId);
 
-  // const handleChangeTitle = (e) => {
-  //   dispatch(setEditTitle(e.target.value));
-  //   setTitle(e.target.value);
-  // };
+  const commentData = useSelector((state) => state.askComment.content);
+
+  const handleAskComment = async () => {
+    await dispatch(
+      postToAskComment({
+        id: askId,
+        content: commentData,
+        token,
+      })
+    );
+
+    dispatch(resetAskComment());
+  };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && commentData !== '') {
       setComment(false);
+      handleAskComment();
     }
+  };
+
+  const handleCloseComment = () => {
+    setComment(false);
   };
 
   return (
     <AskCommentLayout>
       <AskCommentLists>
         <AskCommentInputBox>
-          <AskCommentInput onKeyDown={(e) => handleKeyDown(e)} />
+          <AskCommentInput
+            onClick={handleCloseComment}
+            onKeyDown={(e) => handleKeyDown(e)}
+            onChange={(e) => dispatch(setAskComment(e.target.value))}
+          />
         </AskCommentInputBox>
       </AskCommentLists>
     </AskCommentLayout>

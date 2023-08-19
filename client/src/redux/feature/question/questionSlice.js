@@ -1,20 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { postToAskComment } from '../api/askCommentApi';
+import { getByQuestion } from '../../api/question/getByQuestion';
 
-export const askCommentSlice = createSlice({
-  name: 'askComment',
+export const questionSlice = createSlice({
+  name: 'question',
   initialState: {
     id: 0,
+    title: '',
     content: '',
+    author: '',
     loading: 'idle',
     currentRequestId: undefined,
     error: null,
   },
   reducers: {
-    setContent: (state, action) => {
-      state.content = action.payload;
-    },
-    resetAskComment: (state, action) => {
+    resetQuestion: (state, action) => {
+      state.id = 0;
       state.title = '';
       state.content = '';
       state.loading = 'idle';
@@ -23,25 +23,29 @@ export const askCommentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(postToAskComment.pending, (state, action) => {
+      .addCase(getByQuestion.pending, (state, action) => {
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(postToAskComment.fulfilled, (state, action) => {
+      .addCase(getByQuestion.fulfilled, (state, action) => {
         const { requestId } = action.meta;
 
         if (
           state.loading === 'pending' &&
           state.currentRequestId === requestId
         ) {
-          state.id = action.payload.questionCommentId;
+          state.id = action.payload.questionId;
+          state.title = action.payload.questionTitle;
+          state.content = action.payload.questionContent;
+          state.author = action.payload.questionUser;
+
           state.loading = 'idle';
           state.currentRequestId = undefined;
         }
       })
-      .addCase(postToAskComment.rejected, (state, action) => {
+      .addCase(getByQuestion.rejected, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -56,6 +60,6 @@ export const askCommentSlice = createSlice({
   },
 });
 
-export const { setContent, resetAskComment } = askCommentSlice.actions;
+export const { resetQuestion } = questionSlice.actions;
 
-export default askCommentSlice.reducer;
+export default questionSlice.reducer;

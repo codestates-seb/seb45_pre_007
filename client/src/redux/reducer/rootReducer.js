@@ -1,11 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { askSlice } from '../feature/askSlice';
-import { loginSlice } from '../feature/loginSlice';
+import { askSlice } from '../feature/ask/askSlice';
+import { loginSlice } from '../feature/login/loginSlice';
 import { counterSlice } from '../feature/counterSlice';
-import { questionSlice } from '../feature/questionSlice';
-import { askEditSlice } from '../feature/askEditSlice';
-import { askDeleteSlice } from '../feature/askDeleteSlice';
-import { askCommentSlice } from '../feature/askCommentSlice';
+import { questionSlice } from '../feature/question/questionSlice';
+import { askEditSlice } from '../feature/askEdit/askEditSlice';
+import { askDeleteSlice } from '../feature/ask/askDeleteSlice';
+import { askCommentSlice } from '../feature/askEdit/askCommentSlice';
 
 // 아래에 createSlice import 해오기
 

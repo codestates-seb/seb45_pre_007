@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { postToLogin } from '../api/loginApi';
+import { postToLogin } from '../../api/login/postLoginApi';
 
 export const loginSlice = createSlice({
   name: 'login',

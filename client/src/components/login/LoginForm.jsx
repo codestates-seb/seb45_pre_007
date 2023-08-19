@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { css, styled } from 'styled-components';
-import { postToLogin } from '../../redux/api/loginApi';
+import { postToLogin } from '../../redux/api/login/postLoginApi';
 import {
   setNextLevel,
   logout,
   resetLogin,
   setEmail,
   setPassword,
-} from '../../redux/feature/loginSlice';
+} from '../../redux/feature/login/loginSlice';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ allCheck, setAllCheck }) => {

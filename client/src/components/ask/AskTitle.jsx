@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from 'styled-components';
 import AskAside from '../ask/askAside/AskAside.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTitle } from '../../redux/feature/askSlice.js';
+import { setTitle } from '../../redux/feature/ask/askSlice.js';
 
 const AskTitle = ({ isFocus, setIsFocus }) => {
   const title = useSelector((state) => state.ask.title);
