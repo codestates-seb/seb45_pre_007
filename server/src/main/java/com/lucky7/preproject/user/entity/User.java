@@ -26,16 +26,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long userId;
+    private Long id;
 
     @Column(length = 10, nullable = false)
-    private String userName;
+    private String name;
 
     @Column(length = 20, nullable = false)
-    private String userEmail;
+    private String email;
 
     @Column(length = 255, nullable = false)
-    private String hashedUserPassword;
+    private String hashedPassword;
 
     @Column(nullable = false)
     @CreatedDate

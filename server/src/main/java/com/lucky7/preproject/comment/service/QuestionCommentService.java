@@ -21,7 +21,7 @@ public class QuestionCommentService {
     }
 
     public QuestionComment updateQuestionComment(QuestionComment questionComment, User user) {
-        QuestionComment foundQuestionComment = questionCommentRepository.findById(questionComment.getQuestionCommentId()).orElse(null);
+        QuestionComment foundQuestionComment = questionCommentRepository.findById(questionComment.getId()).orElse(null);
         if (foundQuestionComment == null) {
             return null;
         }
@@ -30,7 +30,7 @@ public class QuestionCommentService {
             throw new AccessDeniedException("You do not have permission to update this comment.");
         }
 
-        foundQuestionComment.setQuestionCommentContent(questionComment.getQuestionCommentContent());
+        foundQuestionComment.setContent(questionComment.getContent());
         return questionCommentRepository.save(foundQuestionComment);
     }
 
@@ -40,7 +40,7 @@ public class QuestionCommentService {
         if (!existingQuestionComment.getUser().equals(user)) {
             throw new AccessDeniedException("You do not have permission to delete this comment.");
         }
-        if(existingQuestionComment==null || existingQuestionComment.getQuestion().getQuestionId() != questionCommentId) {
+        if(existingQuestionComment==null || existingQuestionComment.getQuestion().getId() != questionCommentId) {
             return null;
         }
         questionCommentRepository.delete(existingQuestionComment);
@@ -49,6 +49,6 @@ public class QuestionCommentService {
     }
 
     public List<QuestionComment> findQuestionComments(long questionId) {
-        return questionCommentRepository.findAllByQuestionQuestionId(questionId);
+        return questionCommentRepository.findAllByQuestionId(questionId);
     }
 }
