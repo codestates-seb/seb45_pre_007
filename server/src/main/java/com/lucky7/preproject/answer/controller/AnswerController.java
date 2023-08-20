@@ -10,6 +10,7 @@ import com.lucky7.preproject.comment.entity.AnswerComment;
 import com.lucky7.preproject.comment.service.AnswerCommentService;
 import com.lucky7.preproject.user.entity.User;
 import com.lucky7.preproject.user.service.UserService;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -52,11 +53,17 @@ public class AnswerController {
     @GetMapping
     public ResponseEntity<List<AnswerResponseDto>> getAllAnswers(@PathVariable long questionId) {
         List<Answer> foundAnswers = answerService.getAllAnswers(questionId);
-        List<AnswerResponseDto> responseDtos = answerMapper.answersToAnswerDtos(foundAnswers);
+        List<AnswerResponseDto> responseDtos = foundAnswers
+                        .stream()
+                        .map(answerMapper::answerToAnswerDto)
+                        .collect(Collectors.toList());
 
         for(AnswerResponseDto answerResponseDto : responseDtos) {
             List<AnswerComment> answerComments = answerCommentService.findAnswerComments(answerResponseDto.getAnswerId());
-            List<AnswerCommentDto> answerCommentDtos = answerMapper.answerCommentsToAnswerCommentDtos(answerComments);
+            List<AnswerCommentDto> answerCommentDtos = answerComments
+                            .stream()
+                            .map(answerMapper::answerCommentToAnswerCommentDto)
+                            .collect(Collectors.toList());
             answerResponseDto.setAnswerComments(answerCommentDtos);
         }
 

@@ -14,6 +14,8 @@ public interface CommentMapper {
     AnswerComment commentRequestDtoToAnswerComment(CommentRequestDto commentRequestDto);
     @Mapping(source = "content", target = "questionCommentContent")
     QuestionComment commentRequestDtoToQuestionComment(CommentRequestDto commentRequestDto);
+    @Mapping(source = "user.userName", target = "answerCommentUser")
     AnswerCommentResponseDto answerCommentToAnswerCommentResponseDto(AnswerComment answerComment);
+    @Mapping(source = "user.userName", target = "questionCommentUser")
     QuestionCommentResponseDto questionCommentToQuestionCommentResponseDto(QuestionComment questionComment);
 }
