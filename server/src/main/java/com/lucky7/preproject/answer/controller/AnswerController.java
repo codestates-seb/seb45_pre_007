@@ -51,7 +51,7 @@ public class AnswerController {
 
     @GetMapping
     public ResponseEntity<List<AnswerResponseDto>> getAllAnswers(@PathVariable long questionId) {
-        List<Answer> foundAnswers = answerService.getAllAnswers(questionId);
+        List<Answer> foundAnswers = answerService.findAllAnswers(questionId);
         List<AnswerResponseDto> responseDtos = answerMapper.answersToAnswerDtos(foundAnswers);
 
         for(AnswerResponseDto answerResponseDto : responseDtos) {
