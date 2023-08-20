@@ -1,31 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchLawById } from '../api/example';
+import { postToAsk } from '../api/askApi';
 
-export const lawsSlice = createSlice({
-  name: 'laws',
+export const askSlice = createSlice({
+  name: 'ask',
   initialState: {
     title: '',
     content: '',
-    koreaLaws: [],
     loading: 'idle',
     currentRequestId: undefined,
     error: null,
   },
   reducers: {
-    // useEffect가 실행될 때 이전에 가져온 데이터 초기화 하기
-    resetLaws: (state, action) => {
-      state.koreaLaws = [];
+    setTitle: (state, action) => {
+      state.title = action.payload;
+    },
+    setContent: (state, action) => {
+      state.content = action.payload;
+    },
+    resetAsk: (state, action) => {
+      state.title = '';
+      state.content = '';
+      state.loading = 'idle';
+      state.currentRequestId = undefined;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchLawById.pending, (state, action) => {
+      .addCase(postToAsk.pending, (state, action) => {
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(fetchLawById.fulfilled, (state, action) => {
+      .addCase(postToAsk.fulfilled, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -33,11 +40,10 @@ export const lawsSlice = createSlice({
           state.currentRequestId === requestId
         ) {
           state.loading = 'idle';
-          state.koreaLaws.push(action.payload);
           state.currentRequestId = undefined;
         }
       })
-      .addCase(fetchLawById.rejected, (state, action) => {
+      .addCase(postToAsk.rejected, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -52,5 +58,6 @@ export const lawsSlice = createSlice({
   },
 });
 
-// 유저 관련
-// 질문 관련
+export const { setContent, setTitle, resetAsk } = askSlice.actions;
+
+export default askSlice.reducer;

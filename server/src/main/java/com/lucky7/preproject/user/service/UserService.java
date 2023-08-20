@@ -13,7 +13,6 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder; //passwordEncoder 추가
-
     private final CustomAuthorityUtils authorityUtils;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
@@ -36,18 +35,34 @@ public class UserService {
     }
 
     public User updateUser(User user){
+        Optional<User> optionalUser = userRepository.findById(user.getUserId());
+
+        if (optionalUser.isPresent()) {
+            User foundUser = optionalUser.get();
+
+            if (user.getUserEmail() != null) {
+                foundUser.setUserEmail(user.getUserEmail());
+            }
+
+            if (user.getUserName() != null) {
+                foundUser.setUserName(user.getUserName());
+            }
+
+            userRepository.save(foundUser);
+
+            return foundUser;
+        }
 
         return null;
     }
 
     public User findUser(long userId) {
 
-        return null;
+        return userRepository.findById(userId).orElse(null);
     }
 
-    public User deleteUser(long userId){
-
-        return null;
+    public void deleteUser(long userId){
+        userRepository.deleteById(userId);
     }
 
     public User findUserByEmail(String email) {

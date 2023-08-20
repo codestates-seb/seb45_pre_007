@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import logo1 from '../../assert/logo1.png';
 import logo2 from '../../assert/logo2.png';
 import { Link } from 'react-router-dom';
@@ -7,17 +7,20 @@ import Products from './Products.jsx';
 import Search from './Search.jsx';
 import Hamburger from './Hamburger.jsx';
 import Nav from '../Nav.jsx';
+import { useSelector } from 'react-redux';
+import HeaderNav from './HeaderNav.jsx';
 
 export const Header = () => {
-  // 수정했습니다~
+  const loginData = useSelector((state) => state.login);
+  const successedUser = loginData.isSuccessed;
   const [isOpen, setIsOpen] = useState(false);
 
+  //Todo: Ask 페이지에서는 햄버거 보여질 수 있게 구현하기
   const containerRef = useRef(null);
 
   const handleOutsideClick = (event) => {
     if (containerRef.current && !containerRef.current.contains(event.target)) {
       setIsOpen(false);
-      // setIsOpen(!isOpen);
     }
   };
 
@@ -32,13 +35,14 @@ export const Header = () => {
     <HeaderBox>
       <HeaderList>
         <HeaderLeftBox>
+          {/* 로그인 시 햄버거 및 nav 숨김 */}
           <HeaderHamburgerBox
             ref={containerRef}
             onClick={() => setIsOpen(!isOpen)}
+            successedUser={successedUser}
           >
             <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
-
           {isOpen ? (
             <div
               style={{ position: 'relative' }}
@@ -49,29 +53,28 @@ export const Header = () => {
           ) : null}
 
           <HeaderLogoBox to="/">
-            <HeaderLogoItem>
+            <HeaderLogoItem successedUser={successedUser}>
               <HeaderLogo1 />
               <HeaderLogo2 />
             </HeaderLogoItem>
           </HeaderLogoBox>
 
           <ButtonBox>
-            <ButtonItem>
-              <About>About</About>
+            <ButtonItem successedUser={successedUser}>
+              <About successedUser={successedUser}>About</About>
               <Products />
-              <ForTeams>For Teams</ForTeams>
+              <ForTeams successedUser={successedUser}>For Teams</ForTeams>
             </ButtonItem>
           </ButtonBox>
         </HeaderLeftBox>
-
         <Search />
-
-        <AuthBox>
+        <AuthBox successedUser={successedUser}>
           <AuthItem>
             <Login to="/login">Log in</Login>
             <SignUp to="/signup">Sign up</SignUp>
           </AuthItem>
         </AuthBox>
+        {successedUser && <HeaderNav />}
       </HeaderList>
     </HeaderBox>
   );
@@ -97,7 +100,7 @@ const HeaderList = styled.div`
   align-items: center;
   justify-content: center;
   // 큰화면으로 갔을때 줄어들 수 있게 구현하기
-  width: 98%;
+  width: 99%;
   height: 100%;
 `;
 
@@ -121,23 +124,60 @@ const HeaderHamburgerBox = styled.div`
   &:hover {
     background-color: #e4e6e8;
   }
+
+  ${({ successedUser }) =>
+    successedUser &&
+    css`
+      display: none;
+
+      @media (max-width: 816px) {
+        display: flex;
+      }
+    `}
 `;
 
 // logo
 const HeaderLogoBox = styled(Link)`
   cursor: pointer;
   display: flex;
-  padding: 0 8px;
 
   &:hover {
     background-color: #e4e6e8;
     height: 100%;
   }
+
+  ${({ successedUser }) =>
+    successedUser &&
+    css`
+      width: 164px;
+      padding: 0px;
+
+      &:hover {
+        background-color: #e4e6e8;
+      }
+    `}
 `;
 
 const HeaderLogoItem = styled.div`
   display: flex;
   align-items: center;
+  padding: 0px 8px;
+
+  ${({ successedUser }) =>
+    successedUser &&
+    css`
+      width: 166px;
+      padding: 0px 4px 0 0;
+
+      &:hover {
+        background-color: #e4e6e8;
+      }
+
+      @media (max-width: 640px) {
+        width: 30px;
+        margin: 0 3px;
+      }
+    `}
 `;
 
 const HeaderLogo1 = styled.img.attrs({
@@ -155,7 +195,7 @@ const HeaderLogo2 = styled.img.attrs({
   width: 120px;
   height: 15px;
 
-  margin: 2px 0 0 0;
+  margin: 2px 0 0;
 
   @media (max-width: 640px) {
     display: none;
@@ -173,10 +213,18 @@ const ButtonItem = styled.div`
 
   width: 250px;
   height: 100%;
+  margin: 0 0 0 5px;
 
   @media (max-width: 816px) {
     width: 85px;
   }
+
+  ${({ successedUser }) =>
+    successedUser &&
+    css`
+      width: 50%;
+      margin: 0;
+    `}
 `;
 
 const Button = styled.div`
@@ -199,6 +247,12 @@ const Button = styled.div`
   @media (max-width: 816px) {
     display: none;
   }
+
+  ${({ successedUser }) =>
+    successedUser &&
+    css`
+      display: none;
+    `}
 `;
 
 const About = styled(Button)``;
@@ -213,6 +267,12 @@ const AuthBox = styled.div`
   justify-content: center;
 
   margin: 0 10px 0 0;
+
+  ${({ successedUser }) =>
+    successedUser &&
+    css`
+      display: none;
+    `}
 `;
 
 const AuthItem = styled.div`

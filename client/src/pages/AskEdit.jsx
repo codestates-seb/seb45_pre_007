@@ -68,9 +68,8 @@ const AskEdit = () => {
 
   return (
     <AskEditLayout>
-      {/* <NavBox> */}
+      {/* Nav ver.2 */}
       <LoginNav />
-      {/* </NavBox> */}
       <AskEditBox>
         <AskEditItems>
           <AskEditFormBox>
@@ -130,29 +129,6 @@ const AskEditItems = styled.div`
   width: calc(100% - 365px - 24px);
   margin: 0;
   padding: 0;
-`;
-
-// Nav
-const NavBox = styled.div`
-  position: relative;
-  z-index: 1000;
-  width: 164px;
-  box-shadow: 0 0 0 hsla(210, 8%, 5%, 0.05);
-  transition:
-    box-shadow ease-in-out 0.1s,
-    transform ease-in-out 0.1s;
-  transform: translateZ(0);
-`;
-
-const Nav = styled.div`
-  position: sticky;
-  top: 56px;
-
-  width: auto;
-  max-height: calc(100vh -56px);
-
-  margin: 0 0 8px 0;
-  padding: 24px 0 0 0;
 `;
 
 const AskEditFormBox = styled.div`

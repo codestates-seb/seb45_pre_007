@@ -1,5 +1,7 @@
 package com.lucky7.preproject.question.dto.responseDto;
 
+import com.lucky7.preproject.comment.entity.AnswerComment;
+import com.lucky7.preproject.comment.entity.QuestionComment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +17,5 @@ public class SingleQuestionResponseDto {
     private String questionUser;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
-    private List<CommentDto> questionComments;   // CommentDto 생성 후에 담아줄 예정
+    private List<QuestionCommentDto> questionComments;
 }
