@@ -66,7 +66,7 @@ public class QuestionController {
         Question foundQuestion = questionService.findQuestion(questionId);
         SingleQuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(foundQuestion);
 
-        List<QuestionComment> questionComments = questionCommentService.findQuestionComments(questionId);
+        List<QuestionComment> questionComments = questionCommentService.findAllQuestionComments(questionId);
         List<QuestionCommentDto> questionCommentDtos = mapper.questionCommentsDtos(questionComments);
         responseDto.setQuestionComments(questionCommentDtos);
 

@@ -49,7 +49,7 @@ public class AnswerCommentService {
         return existingAnswerComment;
     }
 
-    public List<AnswerComment> findAnswerComments(long answerId) {
+    public List<AnswerComment> findAllAnswerComments(long answerId) {
         return answerCommentRepository.findAllByAnswerId(answerId);
     }
 }

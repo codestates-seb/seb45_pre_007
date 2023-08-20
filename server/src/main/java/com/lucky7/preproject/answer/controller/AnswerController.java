@@ -55,7 +55,7 @@ public class AnswerController {
         List<AnswerResponseDto> responseDtos = answerMapper.answersToAnswerDtos(foundAnswers);
 
         for(AnswerResponseDto answerResponseDto : responseDtos) {
-            List<AnswerComment> answerComments = answerCommentService.findAnswerComments(answerResponseDto.getId());
+            List<AnswerComment> answerComments = answerCommentService.findAllAnswerComments(answerResponseDto.getId());
             List<AnswerCommentDto> answerCommentDtos = answerMapper.answerCommentsToAnswerCommentDtos(answerComments);
             answerResponseDto.setAnswerComments(answerCommentDtos);
         }
