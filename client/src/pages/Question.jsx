@@ -1,10 +1,28 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import LoginNav from '../components/LoginNav.jsx';
 import Aside from '../components/Aside.jsx';
 import QuestionFilterBar from '../components/Question/QuestionFilterBar.jsx';
 import QuestionListMain from '../components/Question/QuestionListMain.jsx';
+import { setNextLevel } from '../redux/feature/login/loginSlice.js';
 const Question = () => {
+  const dispatch = useDispatch();
+  const loginData = useSelector((state) => state.login);
+  const successedUser = loginData.isSuccessed;
+  const navigete = useNavigate();
+  // console.log(successedUser);
+
+  const handleGoToPage = () => {
+    if (successedUser) {
+      navigete('/ask');
+    } else {
+      dispatch(setNextLevel('/ask'));
+      navigete('/login');
+    }
+  };
+
   return (
     <QuestionLayout>
       <QuestionLeftBox>
@@ -16,7 +34,9 @@ const Question = () => {
         <QuestionMainBox>
           <QuestionTitleAndAsk>
             <QuestionTitle>All Questions</QuestionTitle>
-            <QuestionButton>Ask Question</QuestionButton>
+            <QuestionButton onClick={() => handleGoToPage()}>
+              Ask Question
+            </QuestionButton>
           </QuestionTitleAndAsk>
           <QuestionFilterBar />
           <QuestionListMain />
