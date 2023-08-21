@@ -185,7 +185,8 @@ const Answer = () => {
   };
 
   const EditBtn = () => {
-    navigate('/ask/edit');
+    const editRoute = `/questions/${questionId}/edit`;
+    navigate(editRoute);
   };
 
   useEffect(() => {
