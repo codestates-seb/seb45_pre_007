@@ -11,10 +11,9 @@ import com.lucky7.preproject.question.entity.Question;
 import org.mapstruct.Mapper;
 
 import java.util.List;
-<<<<<<< HEAD
-=======
+
 import org.mapstruct.Mapping;
->>>>>>> c92b562a4689b83c157a99c35994b69991a525b4
+
 
 @Mapper(componentModel = "spring") // Spring 의 Bean 으로 등록
 public interface QuestionMapper {

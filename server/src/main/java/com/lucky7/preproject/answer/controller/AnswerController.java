@@ -55,15 +55,9 @@ public class AnswerController {
         List<AnswerResponseDto> responseDtos = answerMapper.answersToAnswerDtos(foundAnswers);
 
         for(AnswerResponseDto answerResponseDto : responseDtos) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            List<AnswerComment> answerComments = answerCommentService.findAnswerComments(answerResponseDto.getAnswerId());
-=======
-            List<AnswerComment> answerComments = answerCommentService.findAnswerComments(answerResponseDto.getId());
->>>>>>> c92b562a4689b83c157a99c35994b69991a525b4
-=======
+
             List<AnswerComment> answerComments = answerCommentService.findAllAnswerComments(answerResponseDto.getId());
->>>>>>> 0c97674dc36f7142e4947fdabec4d0f73144510f
+
             List<AnswerCommentDto> answerCommentDtos = answerMapper.answerCommentsToAnswerCommentDtos(answerComments);
             answerResponseDto.setAnswerComments(answerCommentDtos);
         }
