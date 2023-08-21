@@ -1,11 +1,11 @@
 package com.lucky7.preproject.answer.controller;
 
-import com.lucky7.preproject.answer.dto.requestDto.AnswerDto;
-import com.lucky7.preproject.answer.dto.responseDto.AnswerCommentDto;
-import com.lucky7.preproject.answer.dto.responseDto.AnswerResponseDto;
+import com.lucky7.preproject.answer.dto.AnswerRequestDto;
+import com.lucky7.preproject.answer.dto.AnswerResponseDto;
 import com.lucky7.preproject.answer.entity.Answer;
 import com.lucky7.preproject.answer.mapper.AnswerMapper;
 import com.lucky7.preproject.answer.service.AnswerService;
+import com.lucky7.preproject.comment.dto.CommentResponseDto;
 import com.lucky7.preproject.comment.entity.AnswerComment;
 import com.lucky7.preproject.comment.service.AnswerCommentService;
 import com.lucky7.preproject.user.entity.User;
@@ -36,7 +36,7 @@ public class AnswerController {
 
     @PostMapping
     public ResponseEntity<AnswerResponseDto> postAnswer(@PathVariable long questionId,
-                                                        @RequestBody AnswerDto requestDto) {
+                                                        @RequestBody AnswerRequestDto requestDto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getPrincipal().toString());
 
@@ -60,11 +60,11 @@ public class AnswerController {
 
         for(AnswerResponseDto answerResponseDto : responseDtos) {
             List<AnswerComment> answerComments = answerCommentService.findAllAnswerComments(answerResponseDto.getId());
-            List<AnswerCommentDto> answerCommentDtos = answerComments
+            List<CommentResponseDto> commentResponseDtos = answerComments
                     .stream()
-                    .map(answerMapper::answerCommentToAnswerCommentDto)
+                    .map(answerMapper::answerCommentToCommentResponseDto)
                     .collect(Collectors.toList());
-            answerResponseDto.setAnswerComments(answerCommentDtos);
+            answerResponseDto.setAnswerComments(commentResponseDtos);
         }
 
         return new ResponseEntity<>(responseDtos, HttpStatus.OK);
@@ -73,7 +73,7 @@ public class AnswerController {
     @PatchMapping("/{answerId}")
     public ResponseEntity<AnswerResponseDto> patchAnswer(@PathVariable long questionId,
                                                          @PathVariable long answerId,
-                                                         @RequestBody AnswerDto requestDto) {
+                                                         @RequestBody AnswerRequestDto requestDto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getPrincipal().toString());
 

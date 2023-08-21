@@ -1,7 +1,7 @@
 package com.lucky7.preproject.comment.controller;
 
 import com.lucky7.preproject.answer.service.AnswerService;
-import com.lucky7.preproject.comment.dto.AnswerCommentResponseDto;
+import com.lucky7.preproject.comment.dto.CommentResponseDto;
 import com.lucky7.preproject.comment.dto.CommentRequestDto;
 import com.lucky7.preproject.comment.entity.AnswerComment;
 import com.lucky7.preproject.comment.mapper.CommentMapper;
@@ -51,7 +51,7 @@ public class AnswerCommentController {
         answerComment.setUser(user); // 값을 할당하기위해 추가
         //answerComment.setUser()
         AnswerComment createdAnswerComment = answerCommentService.createAnswerComment(answerComment);
-        AnswerCommentResponseDto responseDto = commentMapper.answerCommentToAnswerCommentResponseDto(createdAnswerComment);
+        CommentResponseDto responseDto = commentMapper.answerCommentToCommentResponseDto(createdAnswerComment);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -70,7 +70,7 @@ public class AnswerCommentController {
         try {
             //CommentService를 사용해서 업데이트된 Comment Entity를 new Entity에 저장
             AnswerComment updatedAnswerComment = answerCommentService.updateAnswerComment(answerComment, user);
-            AnswerCommentResponseDto responseDto = commentMapper.answerCommentToAnswerCommentResponseDto(updatedAnswerComment);
+            CommentResponseDto responseDto = commentMapper.answerCommentToCommentResponseDto(updatedAnswerComment);
 
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } catch (AccessDeniedException e) {

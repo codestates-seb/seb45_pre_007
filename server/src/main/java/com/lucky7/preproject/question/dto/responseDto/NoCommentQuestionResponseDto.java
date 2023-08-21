@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class AllQuestionsResponseDto {
+public class NoCommentQuestionResponseDto {
     private long id;
     private String title;
     private String content;
