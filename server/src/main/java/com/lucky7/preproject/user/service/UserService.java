@@ -35,30 +35,20 @@ public class UserService {
     }
 
     public User updateUser(User user){
-<<<<<<< HEAD
-        Optional<User> optionalUser = userRepository.findById(user.getUserId());
-=======
+
         Optional<User> optionalUser = userRepository.findById(user.getId());
->>>>>>> c92b562a4689b83c157a99c35994b69991a525b4
+
 
         if (optionalUser.isPresent()) {
             User foundUser = optionalUser.get();
 
-<<<<<<< HEAD
-            if (user.getUserEmail() != null) {
-                foundUser.setUserEmail(user.getUserEmail());
-            }
 
-            if (user.getUserName() != null) {
-                foundUser.setUserName(user.getUserName());
-=======
             if (user.getEmail() != null) {
                 foundUser.setEmail(user.getEmail());
             }
 
             if (user.getName() != null) {
                 foundUser.setName(user.getName());
->>>>>>> c92b562a4689b83c157a99c35994b69991a525b4
             }
 
             userRepository.save(foundUser);
