@@ -1,18 +1,31 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { styled } from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { getByQuestions } from '../../redux/api/question/getByQuestions';
+import { reset } from '../../redux/feature/question/allQuestionsSlice';
+
 const QuestionListMain = () => {
   const [questions, setQuestions] = useState([]);
 
+  // useEffect(async () => {
+  //   const result = await axios
+  //     .get(`${process.env.REACT_APP_API_URL}/questions`)
+  //     .then((res) => res.data);
+  //   setQuestions(result);
+  // }, []);
+
+  // const user = () => {
+  //   questions.map((cur, idx) => {
+  //     console.log(cur);
+  //   });
+  // };
+
+  const dispatch = useDispatch();
+  // const questionsData = useSelector((state) => state.allQuestions.questions);
+
   useEffect(() => {
-    async function fetchData() {
-      const result = await axios.get(
-        `${process.env.REACT_APP_API_URL}/questions`
-      );
-      setQuestions(result.data);
-      console.log(result.data);
-    }
-    fetchData();
+    dispatch(reset());
+    dispatch(getByQuestions());
   }, []);
 
   return (
@@ -40,7 +53,7 @@ const QuestionListMain = () => {
           </div>
           <div>
             <div>tag</div>
-            <div>유저 ID</div>
+            {/* <div>{user}</div> */}
           </div>
         </QuestionRightBox>
       </QuestionListContent>

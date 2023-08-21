@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const AnswerTitleLayout = styled.div`
   width: 727px;
@@ -17,12 +18,12 @@ const AnswerTitleLayout = styled.div`
 `;
 
 const AnswerTitleBox = styled.div`
-  witdh: 726.78px;
+  width: 726.78px;
   display: flex;
 `;
 
 const AnswerContents = styled.div`
-  witdh: 670px;
+  width: 670px;
   padding: 0 16px 0 0;
 `;
 
