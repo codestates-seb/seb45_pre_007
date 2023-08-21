@@ -2,20 +2,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import { css, styled } from 'styled-components';
 import logo1 from '../../assert/logo1.png';
 import logo2 from '../../assert/logo2.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Products from './Products.jsx';
 import Search from './Search.jsx';
 import Hamburger from './Hamburger.jsx';
 import Nav from '../Nav.jsx';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HeaderNav from './HeaderNav.jsx';
+import { setNextLevel } from '../../redux/feature/login/loginSlice';
 
 export const Header = () => {
   const loginData = useSelector((state) => state.login);
   const successedUser = loginData.isSuccessed;
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  console.log(location.pathname);
 
-  //Todo: Ask 페이지에서는 햄버거 보여질 수 있게 구현하기
   const containerRef = useRef(null);
 
   const handleOutsideClick = (event) => {
@@ -35,14 +38,15 @@ export const Header = () => {
     <HeaderBox>
       <HeaderList>
         <HeaderLeftBox>
-          {/* 로그인 시 햄버거 및 nav 숨김 */}
           <HeaderHamburgerBox
             ref={containerRef}
             onClick={() => setIsOpen(!isOpen)}
             successedUser={successedUser}
+            isAsk={location.pathname}
           >
             <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
+
           {isOpen ? (
             <div
               style={{ position: 'relative' }}
@@ -70,7 +74,9 @@ export const Header = () => {
         <Search />
         <AuthBox successedUser={successedUser}>
           <AuthItem>
-            <Login to="/login">Log in</Login>
+            <Login to="/login" onClick={() => dispatch(setNextLevel(''))}>
+              Log in
+            </Login>
             <SignUp to="/signup">Sign up</SignUp>
           </AuthItem>
         </AuthBox>
@@ -125,15 +131,15 @@ const HeaderHamburgerBox = styled.div`
     background-color: #e4e6e8;
   }
 
-  ${({ successedUser }) =>
+  ${({ successedUser, isAsk }) =>
     successedUser &&
     css`
-      display: none;
-
-      @media (max-width: 816px) {
-        display: flex;
-      }
+      display: ${({ isAsk }) => (isAsk === '/ask' ? 'flex' : 'none')};
     `}
+
+  @media (max-width: 816px) {
+    display: flex;
+  }
 `;
 
 // logo
