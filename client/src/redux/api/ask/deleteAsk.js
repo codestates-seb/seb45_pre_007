@@ -5,7 +5,7 @@ const url = process.env.REACT_APP_API_URL;
 
 export const deleteByAsk = createAsyncThunk(
   'ask/deleteAsk',
-  async (id, { getState, requestId }) => {
+  async ({ questionId, token }, { getState, requestId }) => {
     const { currentRequestId, loading } = getState().askEdit;
 
     if (loading !== 'pending' || requestId !== currentRequestId) {
@@ -13,9 +13,11 @@ export const deleteByAsk = createAsyncThunk(
       return;
     }
 
-    let questionId = id;
-
-    const response = await axios.delete(`${url}/questions/${questionId}`);
+    const response = await axios.delete(`${url}/questions/${questionId}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
 
     console.log(response);
     return response;
