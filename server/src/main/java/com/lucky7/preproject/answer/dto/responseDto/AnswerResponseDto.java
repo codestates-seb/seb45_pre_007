@@ -16,4 +16,5 @@ public class AnswerResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
     private List<AnswerCommentDto> answerComments;
+    private String avatarImg;
 }
