@@ -20,8 +20,14 @@ public interface QuestionMapper {
     Question questionPostDtoToQuestion(QuestionDto questionDto);
     Question questionPatchDtoToQuestion(QuestionDto questionDto);
     @Mapping(source = "user.name", target = "user")
+    @Mapping(source = "user.avatarImg", target = "avatarImg")
     SingleQuestionResponseDto questionToSingleQuestionResponseDto(Question question);
     @Mapping(source = "user.name", target = "user")
+    @Mapping(source = "user.avatarImg", target = "avatarImg")
     AllQuestionsResponseDto questionToAllQuestionResponseDto(Question question);
-    List<QuestionCommentDto> questionCommentsDtos(List<QuestionComment> questionComments);
+
+    @Mapping(source = "user.name", target = "commentUser")
+    @Mapping(source = "id", target = "questionCommentId")
+    @Mapping(source = "content", target = "commentContent")
+    QuestionCommentDto questionCommentToQuestionCommentsDto(QuestionComment questionComment);
 }
