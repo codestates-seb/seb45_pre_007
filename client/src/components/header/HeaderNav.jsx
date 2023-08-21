@@ -67,7 +67,7 @@ const HeaderNav = () => {
   return (
     <HeaderNavLayout>
       <HeaderNavLists>
-        <UserImgBox to="/mypage">
+        <UserImgBox to="/mypage/:userId">
           {/* userImg로 수정하기 */}
           <img
             src="https://lh3.googleusercontent.com/a/AAcHTtfSJECs_nw15TFo4pPL2oyjYNUbwGvR1uTIInqkY_Iyxw=k-s48"
