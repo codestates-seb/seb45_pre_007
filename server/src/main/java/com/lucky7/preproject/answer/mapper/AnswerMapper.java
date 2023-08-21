@@ -13,8 +13,13 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {
     @Mapping(source = "user.name", target = "user")
+    @Mapping(source = "user.avatarImg", target = "avatarImg")
     AnswerResponseDto answerToAnswerDto(Answer answer);
     Answer answerDtoToAnswer(AnswerDto answerDto);
-    List<AnswerResponseDto> answersToAnswerDtos(List<Answer> answers);
-    List<AnswerCommentDto> answerCommentsToAnswerCommentDtos(List<AnswerComment> answerComments);
+    //List<AnswerResponseDto> answersToAnswerDtos(List<Answer> answers);
+    @Mapping(source = "content", target = "commentContent")
+    @Mapping(source = "user.name", target = "commentUser")
+    @Mapping(source = "id", target = "answerCommentId")
+
+    AnswerCommentDto answerCommentToAnswerCommentDto(AnswerComment answerComment);
 }
