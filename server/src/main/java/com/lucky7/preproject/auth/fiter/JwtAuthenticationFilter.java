@@ -68,6 +68,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private String delegateAccessToken(User user) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", user.getUserId()); // Payload에 UserId 추가
         claims.put("userEmail", user.getUserEmail());
         claims.put("roles", user.getRoles());
 
