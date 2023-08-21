@@ -15,6 +15,7 @@ public class SingleQuestionResponseDto {
     private String questionTitle;
     private String questionContent;
     private String questionUser;
+    private String avatarImg;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
     private List<QuestionCommentDto> questionComments;
