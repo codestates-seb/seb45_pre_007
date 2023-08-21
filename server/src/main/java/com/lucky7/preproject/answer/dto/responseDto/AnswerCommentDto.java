@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class AnswerCommentDto {
+    private Long answerCommentId;
     private Long commentUser;
     private String commentContent;
     private LocalDateTime createdAt;

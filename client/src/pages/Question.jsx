@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginNav from '../components/LoginNav.jsx';
 import Aside from '../components/Aside.jsx';
-import QuestionFilterBar from '../components/Question/QuestionFilterBar.jsx';
 import QuestionListMain from '../components/Question/QuestionListMain.jsx';
 import { setNextLevel } from '../redux/feature/login/loginSlice.js';
 const Question = () => {
@@ -38,7 +37,6 @@ const Question = () => {
               Ask Question
             </QuestionButton>
           </QuestionTitleAndAsk>
-          <QuestionFilterBar />
           <QuestionListMain />
         </QuestionMainBox>
         <QuestionAside>
