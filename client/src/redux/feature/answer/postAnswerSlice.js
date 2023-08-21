@@ -1,48 +1,44 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getByUser } from '../../api/users/getUser';
+import { postToAnswer } from '../../api/answer/postAnswer';
 
-export const usersSlice = createSlice({
-  name: 'users',
+export const postAnswerSlice = createSlice({
+  name: 'postAnswer',
   initialState: {
-    user: [],
+    content: '',
     loading: 'idle',
     currentRequestId: undefined,
     error: null,
   },
   reducers: {
-    // setComments: (state, action) => {
-    //   state.comments = action.payload;
-    // },
-    // // resetQuestion: (state, action) => {
-    // //   state.id = 0;
-    // //   state.title = '';
-    // //   state.content = '';
-    // //   state.comments = [];
-    // //   state.loading = 'idle';
-    // //   state.currentRequestId = undefined;
-    // // },
+    setAnswerContent: (state, action) => {
+      state.content = action.payload;
+    },
+    resetAnswer: (state, action) => {
+      state.content = '';
+      state.loading = 'idle';
+      state.currentRequestId = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getByUser.pending, (state, action) => {
+      .addCase(postToAnswer.pending, (state, action) => {
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(getByUser.fulfilled, (state, action) => {
+      .addCase(postToAnswer.fulfilled, (state, action) => {
         const { requestId } = action.meta;
 
         if (
           state.loading === 'pending' &&
           state.currentRequestId === requestId
         ) {
-          state.user = action.payload;
           state.loading = 'idle';
           state.currentRequestId = undefined;
         }
       })
-      .addCase(getByUser.rejected, (state, action) => {
+      .addCase(postToAnswer.rejected, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -57,6 +53,6 @@ export const usersSlice = createSlice({
   },
 });
 
-// export const {} = usersSlice.actions;
+export const { setAnswerContent, resetAnswer } = postAnswerSlice.actions;
 
-export default usersSlice.reducer;
+export default postAnswerSlice.reducer;

@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-<<<<<<< HEAD
-import { useDispatch, useSelector } from 'react-redux';
-import { getByQuestions } from '../../redux/api/question/getByQuestions';
-import { reset } from '../../redux/feature/question/allQuestionsSlice';
-
-=======
 import QuestionListContent from './QustionListContent.jsx';
 import QuestionPageNation from './QuestionPageNation.jsx';
->>>>>>> e828e0a690aff293cc69e0d8bf8d3d17def467e2
+import axios from 'axios';
 const QuestionListMain = () => {
   const [questions, setQuestions] = useState([]);
   const [isFetch, setisFetch] = useState(false);
@@ -26,14 +20,9 @@ const QuestionListMain = () => {
   //   });
   // };
 
-  const dispatch = useDispatch();
   // const questionsData = useSelector((state) => state.allQuestions.questions);
 
   useEffect(() => {
-<<<<<<< HEAD
-    dispatch(reset());
-    dispatch(getByQuestions());
-=======
     async function fetchData() {
       try {
         const result = await axios.get(
@@ -47,46 +36,15 @@ const QuestionListMain = () => {
       }
     }
     fetchData();
->>>>>>> e828e0a690aff293cc69e0d8bf8d3d17def467e2
   }, []);
 
   return (
     <QuestionListLayout>
-<<<<<<< HEAD
-      <QuestionListContent>
-        <QuestionLeftBox>
-          <div>
-            <span>1</span>
-            <span>votes</span>
-          </div>
-          <div>
-            <span>0</span>
-            <span>answers</span>
-          </div>
-          <div>
-            <span>2</span>
-            <span>views</span>
-          </div>
-        </QuestionLeftBox>
-        <QuestionRightBox>
-          <h3>질문 제목</h3>
-          {/* map 으로 수정 */}
-          <div>
-            <span>질문 내용</span>
-          </div>
-          <div>
-            <div>tag</div>
-            {/* <div>{user}</div> */}
-          </div>
-        </QuestionRightBox>
-      </QuestionListContent>
-=======
       {isFetch &&
         questions.map((question, index) => {
           return <QuestionListContent key={index} question={question} />;
         })}
       <QuestionPageNation />
->>>>>>> e828e0a690aff293cc69e0d8bf8d3d17def467e2
     </QuestionListLayout>
   );
 };

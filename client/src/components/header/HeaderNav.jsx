@@ -67,12 +67,8 @@ const HeaderNav = () => {
   ];
 
   const userId = useSelector((state) => state.login.id);
-  console.log(userId);
-  const getUser = useSelector((state) => state.users);
-
-  useEffect(() => {
-    dispatch(getByUser(userId));
-  }, [userId]);
+  const getUser = useSelector((state) => state.users.user);
+  console.log(getUser);
 
   return (
     <HeaderNavLayout>

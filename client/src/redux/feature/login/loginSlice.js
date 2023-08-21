@@ -4,7 +4,7 @@ import { postToLogin } from '../../api/login/postLoginApi';
 export const loginSlice = createSlice({
   name: 'login',
   initialState: {
-    id: 0,
+    id: '',
     email: '',
     password: '',
     token: '',
@@ -29,7 +29,7 @@ export const loginSlice = createSlice({
       state.currentRequestId = undefined;
     },
     logout: (state, action) => {
-      state.id = 0;
+      state.id = '';
       state.email = '';
       state.password = '';
       state.token = '';
@@ -61,7 +61,7 @@ export const loginSlice = createSlice({
           console.log('API Response:', action.payload); // 확인용 로그
 
           //! 정확한 response에서 오는 userId 적기
-          state.id = action.payload.headers.userId;
+          state.id = action.payload.headers.userid;
           state.token = action.payload.headers.authorization;
           state.loading = 'idle';
           state.isSuccessed = true;

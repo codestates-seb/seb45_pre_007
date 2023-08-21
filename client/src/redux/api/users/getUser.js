@@ -12,10 +12,11 @@ export const getByUser = createAsyncThunk(
       // pending 상태가 아니거나 요청한 id가 갖지않다면 바로 return
       return;
     }
-    let userId = id;
+    let userId = Number(id);
     console.log(userId);
 
     const response = await axios.get(`${url}/users/${userId}`);
+    console.log(response);
     return response.data;
   }
 );

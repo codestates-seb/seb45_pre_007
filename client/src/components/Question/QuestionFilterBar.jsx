@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
-import { useState } from 'react';
 import { ReactComponent as FilterIcon } from '../../assert/filtericon.svg';
+
 const QuestionFilterBar = () => {
   return (
     <QuestionFilterLayout>
-      <QuestionTotalBox>{length} question</QuestionTotalBox>
+      <QuestionTotalBox>question</QuestionTotalBox>
       <QuestionFilterBox>
         <QuestionFilterMenu>
           <QuestionFilterMenuButton>

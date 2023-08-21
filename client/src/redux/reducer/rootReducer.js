@@ -9,6 +9,7 @@ import { askCommentSlice } from '../feature/askEdit/askCommentSlice';
 import { patchCommentSlice } from '../feature/askEdit/patchComment';
 import { allQuestionsSlice } from '../feature/question/allQuestionsSlice';
 import { usersSlice } from '../feature/users/userSlice';
+import { postAnswerSlice } from '../feature/answer/postAnswerSlice';
 
 // 아래에 createSlice import 해오기
 
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   editComment: patchCommentSlice.reducer,
   questions: allQuestionsSlice.reducer,
   users: usersSlice.reducer,
+  postAnswer: postAnswerSlice.reducer,
 });
 
 export default rootReducer;
