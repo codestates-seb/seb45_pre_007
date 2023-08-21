@@ -50,7 +50,7 @@ public class AnswerService {
         return answerRepository.save(existingAnswer);
     }
 
-    public List<Answer> getAllAnswers(long questionId) {
+    public List<Answer> findAllAnswers(long questionId) {
         Question question = questionRepository.findById(questionId).orElse(null);
         if (question == null) {
             return null;
@@ -60,7 +60,7 @@ public class AnswerService {
         }
     }
 
-    public Answer getAnswer(long answerId) {
+    public Answer findAnswer(long answerId) {
         Answer defaultAnswer = new Answer();
 
         return answerRepository.findById(answerId).orElse(defaultAnswer);

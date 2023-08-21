@@ -48,7 +48,7 @@ public class QuestionCommentService {
         return existingQuestionComment;
     }
 
-    public List<QuestionComment> findQuestionComments(long questionId) {
+    public List<QuestionComment> findAllQuestionComments(long questionId) {
         return questionCommentRepository.findAllByQuestionId(questionId);
     }
 }
