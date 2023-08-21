@@ -35,28 +35,15 @@ public class UserService {
     }
 
     public User updateUser(User user){
+        Optional<User> optionalFoundUser = userRepository.findById(user.getId());
+        User foundUser = optionalFoundUser.orElse(null);
 
-        Optional<User> optionalUser = userRepository.findById(user.getId());
+        Optional.ofNullable(user.getEmail())
+                .ifPresent(email -> foundUser.setEmail(email));
+        Optional.ofNullable(user.getName())
+                .ifPresent(name -> foundUser.setName(name));
 
-
-        if (optionalUser.isPresent()) {
-            User foundUser = optionalUser.get();
-
-
-            if (user.getEmail() != null) {
-                foundUser.setEmail(user.getEmail());
-            }
-
-            if (user.getName() != null) {
-                foundUser.setName(user.getName());
-            }
-
-            userRepository.save(foundUser);
-
-            return foundUser;
-        }
-
-        return null;
+        return userRepository.save(foundUser);
     }
 
     public User findUser(long userId) {
@@ -68,14 +55,9 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public User findUserByEmail(String email) {
+    public User findByEmail(String email) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
 
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        } else {
-
-            return null;
-        }
+        return optionalUser.orElse(null);
     }
 }

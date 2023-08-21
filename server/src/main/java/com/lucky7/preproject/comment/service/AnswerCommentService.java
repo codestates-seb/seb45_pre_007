@@ -1,6 +1,5 @@
 package com.lucky7.preproject.comment.service;
 
-import com.lucky7.preproject.answer.entity.Answer;
 import com.lucky7.preproject.comment.entity.AnswerComment;
 import com.lucky7.preproject.comment.repository.AnswerCommentRepository;
 import java.util.List;

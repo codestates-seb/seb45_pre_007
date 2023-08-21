@@ -1,6 +1,5 @@
 package com.lucky7.preproject.comment.service;
 
-import com.lucky7.preproject.comment.entity.AnswerComment;
 import com.lucky7.preproject.comment.entity.QuestionComment;
 import com.lucky7.preproject.comment.repository.QuestionCommentRepository;
 import java.util.List;
@@ -21,15 +20,11 @@ public class QuestionCommentService {
 
     public QuestionComment updateQuestionComment(QuestionComment questionComment, User user) {
         QuestionComment foundQuestionComment = questionCommentRepository.findById(questionComment.getId()).orElse(null);
+        validateAuthor(foundQuestionComment, user);
 
         if (foundQuestionComment == null) {
             return null;
         }
-
-        if (!foundQuestionComment.getUser().equals(user)) {
-            throw new AccessDeniedException("You do not have permission to update this comment.");
-        }
-
 
         foundQuestionComment.setContent(questionComment.getContent());
         return questionCommentRepository.save(foundQuestionComment);

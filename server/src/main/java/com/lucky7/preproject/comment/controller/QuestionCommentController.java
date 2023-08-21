@@ -8,6 +8,7 @@ import com.lucky7.preproject.comment.service.QuestionCommentService;
 import com.lucky7.preproject.question.service.QuestionService;
 import com.lucky7.preproject.user.entity.User;
 import com.lucky7.preproject.user.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/questions/{questionId}/comments")
 @Slf4j
 public class QuestionCommentController {
@@ -31,20 +33,10 @@ public class QuestionCommentController {
     private final CommentMapper commentMapper;
     private final UserService userService;
 
-    public QuestionCommentController(QuestionCommentService questionCommentService,
-                                     QuestionService questionService,
-                                     CommentMapper commentMapper, UserService userService) {
-        this.questionCommentService = questionCommentService;
-        this.questionService = questionService;
-        this.commentMapper = commentMapper;
-        this.userService = userService;
-    }
-
     @PostMapping
     public ResponseEntity<?> postQuestionComment(@PathVariable long questionId,
                                                  @RequestBody CommentRequestDto commentRequestDto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
+        User user = getCurrentUser();
 
         QuestionComment questionComment = commentMapper.commentRequestDtoToQuestionComment(commentRequestDto);
         questionComment.setQuestion(questionService.findQuestion(questionId));
@@ -60,8 +52,7 @@ public class QuestionCommentController {
     public ResponseEntity<?> patchQuestionComment(@PathVariable long questionId,
                                                   @PathVariable long commentId,
                                                   @RequestBody CommentRequestDto commentRequestDto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
+        User user = getCurrentUser();
 
         QuestionComment questionComment = commentMapper.commentRequestDtoToQuestionComment(commentRequestDto);
         questionComment.setId(commentId);
@@ -81,8 +72,7 @@ public class QuestionCommentController {
     @DeleteMapping("/{commentId}")
     public ResponseEntity<?> deleteQuestionComment(@PathVariable long questionId,
                                                    @PathVariable long commentId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
+        User user = getCurrentUser();
 
         try {
             questionCommentService.deleteQuestionComment(commentId, user);
@@ -92,6 +82,12 @@ public class QuestionCommentController {
 
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+    }
+
+    private User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return userService.findByEmail(auth.getPrincipal().toString());
     }
 }
 

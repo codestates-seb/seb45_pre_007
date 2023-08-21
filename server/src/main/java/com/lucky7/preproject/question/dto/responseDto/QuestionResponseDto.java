@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class QuestionResponseDto {
-    private long id;
+    private Long id;
     private String title;
     private String content;
     private String user;

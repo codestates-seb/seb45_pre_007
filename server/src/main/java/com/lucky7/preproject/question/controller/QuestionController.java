@@ -36,18 +36,14 @@ public class QuestionController {
     @PostMapping
     public ResponseEntity<QuestionResponseDto> postQuestion(@RequestBody QuestionRequestDto questionRequestDto) {
         // 현재 인증된 사용자 정보 가져오기
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getPrincipal().toString());
+        User user = getCurrentUser();
 
-        // DTO에서 Entity로 변환
-        Question questionToCreate = mapper.questionPostDtoToQuestion(questionRequestDto);
+        Question questionToCreate = mapper.questionPostDtoToQuestion(questionRequestDto); // DTO에서 Entity로 변환
+        questionToCreate.setUser(user); // 사용자 정보 설정
 
-        // 사용자 정보 설정
-        questionToCreate.setUser(currentUser);
-
-        // 서비스에서 엔티티 생성 및 저장
-        Question createdQuestion = questionService.createQuestion(questionToCreate);
+        Question createdQuestion = questionService.createQuestion(questionToCreate); // 서비스에서 엔티티 생성 및 저장
         QuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(createdQuestion);
+
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
     @GetMapping
@@ -62,7 +58,6 @@ public class QuestionController {
     }
     @GetMapping("/{questionId}")
     public ResponseEntity<QuestionResponseDto> getQuestion(@PathVariable long questionId) {
-
         Question foundQuestion = questionService.findQuestion(questionId);
         QuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(foundQuestion);
 
@@ -78,8 +73,7 @@ public class QuestionController {
     @PatchMapping("/{questionId}")
     public ResponseEntity<QuestionResponseDto> patchQuestion(@PathVariable long questionId,
                                                              @RequestBody QuestionRequestDto questionRequestDto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
+       User user = getCurrentUser();
 
         // 업데이트할 데이터를 DTO 에서 new Entity 로 변환
        Question questionToUpdate = mapper.questionPatchDtoToQuestion(questionRequestDto);
@@ -99,8 +93,7 @@ public class QuestionController {
     }
     @DeleteMapping("/{questionId}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable long questionId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
+        User user = getCurrentUser();
 
         try {
             questionService.deleteQuestion(questionId, user);
@@ -111,5 +104,11 @@ public class QuestionController {
 
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+    }
+
+    private User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return userService.findByEmail(auth.getPrincipal().toString());
     }
 }

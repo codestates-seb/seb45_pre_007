@@ -23,12 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @RestController
+@AllArgsConstructor
 @RequestMapping("/questions/{questionId}/answers")
 @Slf4j
 public class AnswerController {
-
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
     private final AnswerCommentService answerCommentService;
@@ -37,12 +36,10 @@ public class AnswerController {
     @PostMapping
     public ResponseEntity<AnswerResponseDto> postAnswer(@PathVariable long questionId,
                                                         @RequestBody AnswerRequestDto requestDto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
-
+        User user = getCurrentUser();
         Answer answerToCreate = answerMapper.answerDtoToAnswer(requestDto);
 
-        answerToCreate.setUser(user);// 값을 할당하기위해 추가
+        answerToCreate.setUser(user); // 값을 할당하기위해 추가
 
         Answer createdAnswer = answerService.createAnswer(questionId, answerToCreate);
         AnswerResponseDto responseDto = answerMapper.answerToAnswerDto(createdAnswer);
@@ -74,9 +71,7 @@ public class AnswerController {
     public ResponseEntity<AnswerResponseDto> patchAnswer(@PathVariable long questionId,
                                                          @PathVariable long answerId,
                                                          @RequestBody AnswerRequestDto requestDto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
-
+        User user = getCurrentUser();
         Answer answerToUpdate = answerMapper.answerDtoToAnswer(requestDto);
 
         try {
@@ -96,9 +91,7 @@ public class AnswerController {
     @DeleteMapping("/{answerId}")
     public ResponseEntity<Map<String, Object>> deleteAnswer(@PathVariable long questionId,
                                                             @PathVariable long answerId) {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
+        User user = getCurrentUser();
 
         try {
             answerService.deleteAnswer(questionId, answerId, user);
@@ -109,5 +102,11 @@ public class AnswerController {
 
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+    }
+
+    private User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return userService.findByEmail(auth.getPrincipal().toString());
     }
 }

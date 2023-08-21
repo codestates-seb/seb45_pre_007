@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class NoCommentQuestionResponseDto {
-    private long id;
+    private Long id;
     private String title;
     private String content;
     private String user; // user의 userName 과 매핑해야 합니다.

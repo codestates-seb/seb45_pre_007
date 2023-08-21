@@ -6,7 +6,6 @@ import com.lucky7.preproject.user.dto.UserResponseDto;
 import com.lucky7.preproject.user.entity.User;
 import org.mapstruct.Mapper;
 
-import java.util.List;
 import org.mapstruct.Mapping;
 
 
@@ -16,6 +15,4 @@ public interface UserMapper {
     User userPostToUser(UserPostDto requestBody);
     User userPatchToUser(UserPatchDto requestBody);
     UserResponseDto userToUserResponseDto(User user);
-
-    List<UserResponseDto> userToUserResponses(List<User> user);
 }
