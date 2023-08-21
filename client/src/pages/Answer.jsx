@@ -57,12 +57,12 @@ const AnswerContentBox = styled.div`
 const AnswerVote = styled.div`
   width: 56.78px;
   padding: 0 16px 0 0;
-  color: #232629
+  color: #232629;
   font-size: 13px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap
-  
+  flex-wrap: wrap;
+
   button {
     cursor: pointer;
   }
@@ -71,7 +71,7 @@ const AnswerCount = styled.div`
   font-size: 19px;
   margin: 2px;
   padding: 4px 0;
-  witdh: 44.78px;
+  width: 44.78px;
   //width: 32.84px;
   text-align: center;
 `;
@@ -79,7 +79,7 @@ const AnswerCount = styled.div`
 const AnswerContent = styled.div`
   width: 670.22px;
   padding: 0 16px 0 0;
-  color: #232629
+  color: #232629;
   font-size: 13px;
   display: flex;
   justify-content: flex-start;
@@ -164,13 +164,14 @@ const AnswerBtn = styled.div`
   color: white;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: rgba(255,255,255,0.4);
+  box-shadow: rgba(255, 255, 255, 0.4);
   line-height: 0.938rem;
   white-space: nowrap;
   border-radius: 0.188rem;
 
   &:hover {
-    background-color:  #0174cd;
+    background-color: #0174cd;
+  }
 `;
 
 const Answer = () => {

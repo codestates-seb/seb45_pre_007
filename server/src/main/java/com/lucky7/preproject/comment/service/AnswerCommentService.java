@@ -21,7 +21,11 @@ public class AnswerCommentService {
     }
 
     public AnswerComment updateAnswerComment(AnswerComment answerComment, User user) {
+<<<<<<< HEAD
+        AnswerComment foundAnswerComment = answerCommentRepository.findById(answerComment.getAnswerCommentId()).orElse(null);
+=======
         AnswerComment foundAnswerComment = answerCommentRepository.findById(answerComment.getId()).orElse(null);
+>>>>>>> c92b562a4689b83c157a99c35994b69991a525b4
         if (foundAnswerComment == null) {
             return null;
         }
@@ -29,7 +33,11 @@ public class AnswerCommentService {
         if (!foundAnswerComment.getUser().equals(user)) {
             throw new AccessDeniedException("You do not have permission to update this comment.");
         }
+<<<<<<< HEAD
+        foundAnswerComment.setAnswerCommentContent(answerComment.getAnswerCommentContent());
+=======
         foundAnswerComment.setContent(answerComment.getContent());
+>>>>>>> c92b562a4689b83c157a99c35994b69991a525b4
         return answerCommentRepository.save(foundAnswerComment);
     }
 
@@ -41,7 +49,11 @@ public class AnswerCommentService {
             throw new AccessDeniedException("You do not have permission to delete this comment.");
         }
 
+<<<<<<< HEAD
+        if (existingAnswerComment == null || existingAnswerComment.getAnswer().getAnswerId() != answerCommentId) {
+=======
         if (existingAnswerComment == null || existingAnswerComment.getAnswer().getId() != answerCommentId) {
+>>>>>>> c92b562a4689b83c157a99c35994b69991a525b4
             return null;
         }
 
