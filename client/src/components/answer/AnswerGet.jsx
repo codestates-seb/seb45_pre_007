@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const AnswerTitleLayout = styled.div`
   width: 727px;
