@@ -13,6 +13,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {
     @Mapping(source = "user.userName", target = "answerUser")
+    @Mapping(source = "user.avatarImg", target = "avatarImg")
     AnswerResponseDto answerToAnswerDto(Answer answer);
     Answer answerDtoToAnswer(AnswerDto answerDto);
     //@Mapping(source = "user.userName", target = "answerUser")
