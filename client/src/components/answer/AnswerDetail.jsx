@@ -1,10 +1,14 @@
-import { useMemo, useRef, useState, React } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { styled } from 'styled-components';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  resetAnswer,
+  setAnswerContent,
+} from '../../redux/feature/answer/postAnswerSlice';
+import { postToAnswer } from '../../redux/api/answer/postAnswer';
 
 const AnswerFormLayout = styled.form`
   width: 727px;
@@ -77,10 +81,26 @@ const AnswerBtn = styled.div`
 `;
 
 const AnswerDetail = () => {
-  const loginData = useSelector((state) => state.login);
-  console.log(loginData.token);
+  const { questionId } = useParams();
+  // 토큰을 보내기 위해 가져오는 데이터
+  const token = useSelector((state) => state.login.token);
+  const answerContent = useSelector((state) => state.postAnswer.content);
+  const dispatch = useDispatch();
+
+  // console.log(questionId);
+  // console.log(89, token);
+  // console.log(90, answerContent);
+
+  const handleAnswerSubmit = async () => {
+    if (answerContent) {
+      await dispatch(
+        postToAnswer({ id: questionId, token: token, content: answerContent })
+      );
+    }
+    dispatch(resetAnswer());
+  };
+
   const quillRef = useRef();
-  const [content, setContent] = useState('');
   const navigate = useNavigate();
   const modules = useMemo(() => {
     return {
@@ -97,34 +117,33 @@ const AnswerDetail = () => {
     };
   }, []);
 
-  const PostAnswer = () => {
-    const { questionId } = useParams();
-    const quill = quillRef.current.getEditor();
-    const text = quill.getText();
-    const data = {
-      answerId: 0,
-      answerContent: text,
-      createdAt: new Date().toISOString(),
-    };
-    const url = process.env.REACT_APP_API_URL;
-    const headers = {
-      Authorization: loginData.token,
-    };
-    axios
-      .post(`${url}/questions/${questionId}/answers`, data, { headers })
-      .then((response) => {
-        console.log(response.status);
-        if (response.status === 201) {
-          navigate('/questions');
-        } else {
-          alert('답변이 등록되지 않았습니다.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error posting answer:', error);
-        alert('An error occurred while posting the answer.');
-      });
-  };
+  // const PostAnswer = () => {
+  //   const quill = quillRef.current.getEditor();
+  //   const text = quill.getText();
+  //   const data = {
+  //     answerId: 0,
+  //     answerContent: text,
+  //     createdAt: new Date().toISOString(),
+  //   };
+  //   const url = process.env.REACT_APP_API_URL;
+  //   const headers = {
+  //     Authorization: loginData.token,
+  //   };
+  //   axios
+  //     .post(`${url}/questions/${questionId}/answers`, data, { headers })
+  //     .then((response) => {
+  //       console.log(response.status);
+  //       if (response.status === 201) {
+  //         navigate('/questions');
+  //       } else {
+  //         alert('답변이 등록되지 않았습니다.');
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error posting answer:', error);
+  //       alert('An error occurred while posting the answer.');
+  //     });
+  // };
 
   return (
     <AnswerFormLayout>
@@ -132,14 +151,14 @@ const AnswerDetail = () => {
       <AnswerInputBox>
         <ReactQuill
           ref={quillRef}
-          value={content}
-          onChange={setContent}
+          value={answerContent}
+          onChange={(content) => dispatch(setAnswerContent(content))}
           modules={modules}
           style={{ height: 210 }}
         />
       </AnswerInputBox>
       <AnswerBtnbox>
-        <AnswerBtn onClick={PostAnswer}>Post your Answer</AnswerBtn>
+        <AnswerBtn onClick={handleAnswerSubmit}>Post your Answer</AnswerBtn>
       </AnswerBtnbox>
     </AnswerFormLayout>
   );

@@ -18,12 +18,12 @@ const AnswerTitleLayout = styled.div`
 `;
 
 const AnswerTitleBox = styled.div`
-  witdh: 726.78px;
+  width: 726.78px;
   display: flex;
 `;
 
 const AnswerContents = styled.div`
-  witdh: 670px;
+  width: 670px;
   padding: 0 16px 0 0;
 `;
 
