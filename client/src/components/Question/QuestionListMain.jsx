@@ -5,14 +5,14 @@ const QuestionListMain = () => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    async function get() {
+    async function fetchData() {
       const result = await axios.get(
         `${process.env.REACT_APP_API_URL}/questions`
       );
       setQuestions(result.data);
       console.log(result.data);
     }
-    get();
+    fetchData();
   }, []);
 
   return (
