@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+<<<<<<< HEAD
 import { useDispatch, useSelector } from 'react-redux';
 import { getByQuestions } from '../../redux/api/question/getByQuestions';
 import { reset } from '../../redux/feature/question/allQuestionsSlice';
 
+=======
+import QuestionListContent from './QustionListContent.jsx';
+import QuestionPageNation from './QuestionPageNation.jsx';
+>>>>>>> e828e0a690aff293cc69e0d8bf8d3d17def467e2
 const QuestionListMain = () => {
   const [questions, setQuestions] = useState([]);
+  const [isFetch, setisFetch] = useState(false);
 
   // useEffect(async () => {
   //   const result = await axios
@@ -24,12 +30,29 @@ const QuestionListMain = () => {
   // const questionsData = useSelector((state) => state.allQuestions.questions);
 
   useEffect(() => {
+<<<<<<< HEAD
     dispatch(reset());
     dispatch(getByQuestions());
+=======
+    async function fetchData() {
+      try {
+        const result = await axios.get(
+          `${process.env.REACT_APP_API_URL}/questions`
+        );
+        setisFetch(true);
+        setQuestions(result.data);
+        console.log(result.data);
+      } catch (error) {
+        console.error('데이터를 불러오는 중 오류 발생:', error);
+      }
+    }
+    fetchData();
+>>>>>>> e828e0a690aff293cc69e0d8bf8d3d17def467e2
   }, []);
 
   return (
     <QuestionListLayout>
+<<<<<<< HEAD
       <QuestionListContent>
         <QuestionLeftBox>
           <div>
@@ -57,6 +80,13 @@ const QuestionListMain = () => {
           </div>
         </QuestionRightBox>
       </QuestionListContent>
+=======
+      {isFetch &&
+        questions.map((question, index) => {
+          return <QuestionListContent key={index} question={question} />;
+        })}
+      <QuestionPageNation />
+>>>>>>> e828e0a690aff293cc69e0d8bf8d3d17def467e2
     </QuestionListLayout>
   );
 };
@@ -64,30 +94,3 @@ const QuestionListMain = () => {
 export default QuestionListMain;
 
 const QuestionListLayout = styled.div``;
-
-const QuestionListContent = styled.div`
-  display: flex;
-  padding: 16px;
-`;
-
-const QuestionLeftBox = styled.div`
-  margin-right: 16px;
-  margin-bottom: 4px;
-  div {
-    display: flex;
-  }
-  span {
-    margin-left: 0.4rem;
-  }
-`;
-
-const QuestionRightBox = styled.div`
-  flex-grow: 1;
-  h3 {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Adjusted',
-      'Segoe UI', 'Liberation Sans', sans-serif;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
-  }
-`;

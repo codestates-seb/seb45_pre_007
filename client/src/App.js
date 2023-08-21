@@ -22,15 +22,12 @@ const App = () => {
       <Header />
       <div id="pages">
         <Routes>
-          <Route path="/" element={<Main />} />
-          {/* 정의되지 않은 페이지라면 Main으로 리다이렉트 */}
-          <Route path="/*" element={<Main />} />
+          <Route path="/questions" element={<Question />} />
+          <Route path="/*" element={<Question />} />
           <Route path="/login" element={<Login />} />
           <Route path="/ask" element={<Ask />} />
           <Route path="/signup" element={<Sign />} />
           <Route path="/mypage/:userId" element={<MyPage />} />
-          {/*! 아래 컴포넌트 이름 변경해야 함! */}
-          <Route path="/questions" element={<Question />} />
           <Route path="/questions/:questionId" element={<Answer />} />
           <Route path="/questions/:questionId/edit" element={<AskEdit />} />
         </Routes>

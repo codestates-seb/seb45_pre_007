@@ -191,7 +191,7 @@ const Nav = () => {
     setQuestions(true);
   };
   const navigateFor = () => {
-    navigate('/');
+    navigate('/questions');
     setHome(true);
     setQuestions(false);
   };

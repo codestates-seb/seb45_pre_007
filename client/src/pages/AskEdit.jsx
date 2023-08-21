@@ -15,8 +15,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { resetAskEdit } from '../redux/feature/askEdit/askEditSlice.js';
 import AskComment from '../components/askEdit/AskComment.jsx';
 import AskComments from '../components/askEdit/AskComments.jsx';
-import { reset } from '../redux/feature/question/allQuestionsSlice.js';
-import { getByQuestions } from '../redux/api/question/getByQuestions.js';
 
 const AskEdit = () => {
   // 특정 질문에 대한 questionId를 받아오는 코드

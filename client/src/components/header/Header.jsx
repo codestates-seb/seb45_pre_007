@@ -56,7 +56,7 @@ export const Header = () => {
             </div>
           ) : null}
 
-          <HeaderLogoBox to="/">
+          <HeaderLogoBox to="/questions">
             <HeaderLogoItem successedUser={successedUser}>
               <HeaderLogo1 />
               <HeaderLogo2 />

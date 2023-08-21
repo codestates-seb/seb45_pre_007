@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getByQuestion } from '../../api/question/getByQuestion';
+import { getByUser } from '../../api/users/getUser';
 
 export const usersSlice = createSlice({
   name: 'users',
@@ -29,13 +29,13 @@ export const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getByQuestion.pending, (state, action) => {
+      .addCase(getByUser.pending, (state, action) => {
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(getByQuestion.fulfilled, (state, action) => {
+      .addCase(getByUser.fulfilled, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -53,7 +53,7 @@ export const usersSlice = createSlice({
           state.currentRequestId = undefined;
         }
       })
-      .addCase(getByQuestion.rejected, (state, action) => {
+      .addCase(getByUser.rejected, (state, action) => {
         const { requestId } = action.meta;
 
         if (
