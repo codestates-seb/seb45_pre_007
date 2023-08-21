@@ -7,10 +7,12 @@ const Products = () => {
   const { handleOnPress, isSelected, ref } = useDetectClose(false);
   const productsList = [
     {
+      pathname: '/questions',
       title: <div>Stack Overflow</div>,
       cotent: <p>Public questions & answers</p>,
     },
     {
+      pathname: '',
       title: <div>Stack Overflow for Teams</div>,
       cotent: (
         <>
@@ -21,10 +23,12 @@ const Products = () => {
       ),
     },
     {
+      pathname: '',
       title: <div>Talent</div>,
       cotent: <p>Build your employer brand</p>,
     },
     {
+      pathname: '',
       title: <div>Advertising</div>,
       cotent: (
         <>
@@ -34,6 +38,7 @@ const Products = () => {
       ),
     },
     {
+      pathname: '',
       title: <div>Labs</div>,
       cotent: (
         <>
@@ -58,10 +63,12 @@ const Products = () => {
           <Ul>
             {productsList.map((current, index) => (
               <Li key={index}>
-                <ListItem>
-                  {current.title}
-                  {current.cotent}
-                </ListItem>
+                <Link to={current.pathname}>
+                  <ListItem>
+                    {current.title}
+                    {current.cotent}
+                  </ListItem>
+                </Link>
               </Li>
             ))}
             <Li>About the company</Li>

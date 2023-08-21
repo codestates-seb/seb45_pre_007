@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { styled } from 'styled-components';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import AskEditAside from './askEditAside/AskEditAside.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { setEditContent } from '../../redux/feature/askEdit/askEditSlice.js';
 
 const AskEditBody = ({ modules, isFocus, setIsFocus }) => {
-  const dummyText =
-    'Lorem ipsum dolor sit amet consectetur. Facilisi nunc vestibulum laoreet facilisis amet sapien. Turpis eleifend facilisis sed porttitor dui pharetra eget morbi erat. Eget sagittis amet suspendisse porttitor. Sem venenatis id dignissim elementum amet elementum nullam. Nullam egestas amet sit ac suspendisse eget justo. Pretium adipiscing id dignissim lorem lectus cras pellentesque. Condimentum vitae proin bibendum dignissim. Tortor amet aliquam eu tortor lacus eget a turpis fermentum. Consectetur luctus egestas viverra eget amet dui.';
-  const [content, setContent] = useState(dummyText);
+  const questionContent = useSelector((state) => state.question.content);
+  const renderContent = useSelector((state) => state.askEdit.content);
+  const dispatch = useDispatch();
+
+  //! react-quill 커서 이슈 => 의존성 배열 문제...
+  useEffect(() => {
+    dispatch(setEditContent(questionContent));
+  }, [questionContent]);
+
+  const handleChangeContent = (content) => {
+    dispatch(setEditContent(content));
+  };
 
   return (
     <AskEditBodyLayout>
@@ -17,15 +28,15 @@ const AskEditBody = ({ modules, isFocus, setIsFocus }) => {
           <AskEditBodyLists onClick={() => setIsFocus(1)}>
             <ReactQuill
               modules={modules}
-              value={content}
-              onChange={(content) => setContent(content)}
+              value={renderContent}
+              onChange={(content) => handleChangeContent(content)}
             />
           </AskEditBodyLists>
         </AskEditBodyBox>
         <AskEditBodyPreviewBox>
           <AskEditBodyPreview
             // className="ql-editor"
-            dangerouslySetInnerHTML={{ __html: content }}
+            dangerouslySetInnerHTML={{ __html: renderContent }}
           />
         </AskEditBodyPreviewBox>
       </AskEditBodyEditor>

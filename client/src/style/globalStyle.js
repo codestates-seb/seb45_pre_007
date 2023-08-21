@@ -15,6 +15,14 @@ export const GlobalStyle = createGlobalStyle`
 
     a {
         text-decoration: none;
+        color: black;
+
+        &:visited,
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+            }
     }
 
     button {

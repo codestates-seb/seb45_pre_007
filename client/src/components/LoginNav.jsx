@@ -86,6 +86,7 @@ export const FontAwesomeDiv = styled.div`
     }
   }
 `;
+
 export const HoverDiv = styled.div`
   display: flex;
   align-items: center;
