@@ -1,5 +1,6 @@
 package com.lucky7.preproject.answer.dto.responseDto;
 
+import com.lucky7.preproject.comment.entity.AnswerComment;
 import lombok.Getter;
 import lombok.Setter;
 
