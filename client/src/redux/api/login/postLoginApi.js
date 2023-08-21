@@ -13,13 +13,12 @@ export const postToLogin = createAsyncThunk(
       return;
     }
 
-    // console.log(email, password);
     const response = await axios.post(`${url}/users/login`, {
       userEmail: email,
       password,
     });
 
-    console.log(response.headers.authorization); // 토큰 출력
+    console.log(response.headers);
     return response;
   }
 );

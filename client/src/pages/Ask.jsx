@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { resetAsk } from '../redux/feature/ask/askSlice.js';
 import { postToAsk } from '../redux/api/ask/postAskApi.js';
-// import { useLocation, useNavigate } from 'react-router-dom';
 
 const Ask = () => {
   const [isOpen, setIsOpen] = useState(false);

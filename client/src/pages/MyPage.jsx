@@ -12,6 +12,8 @@ import { isPC, isMobile } from '../utils/mediaQueryUtils';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { getByUser } from '../redux/api/users/getUser';
 
 const MypageLayout = styled.section`
   display: flex;
@@ -233,18 +235,28 @@ const Mypage = () => {
   const isDesktop = isPC();
   const isMobileScreen = isMobile();
   const url = process.env.REACT_APP_API_URL;
-  const { userId } = useParams();
+  // const { userId } = useParams();
   const [user, setUser] = useState({});
-  console.log(userId);
+  // console.log(userId);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${url}/users/${userId}`)
+  //     .then((response) => {
+  //       setUser(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching answers:', error);
+  //     });
+  // }, [userId]);
+
+  const userId = useSelector((state) => state.login.id);
+  const getUser = useSelector((state) => state.users.user);
+  const dispatch = useDispatch();
+  console.log(getUser);
+
   useEffect(() => {
-    axios
-      .get(`${url}/users/${userId}`)
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching answers:', error);
-      });
+    console.log(userId);
+    dispatch(getByUser(userId));
   }, [userId]);
 
   return (
@@ -252,16 +264,21 @@ const Mypage = () => {
       <LoginNav />
       <MypageBox>
         <MypageProfile>
-          <img src={facebook} alt="test용" />
+          <img
+            src={getUser?.avatarImg ? getUser.avatarImg : facebook}
+            alt="test용"
+          />
           <div className="profileContents">
-            <h1>{user.userName ? ` ${user.userName}` : 'Lucky 7'}</h1>
+            <h1>{getUser.userName ? ` ${getUser.userName}` : 'Lucky 7'}</h1>
             <p>
               <MdCake />
               Member for 3 days
             </p>
             <p>
               <AiOutlineClockCircle />
-              {user.createdAt ? ` ${user.createdAt}` : 'Last seen this week'}
+              {getUser.createdAt
+                ? ` ${getUser.createdAt}`
+                : 'Last seen this week'}
             </p>
             <p>
               <FaRegCalendarAlt />

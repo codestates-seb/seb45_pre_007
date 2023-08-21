@@ -1,12 +1,28 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { styled } from 'styled-components';
 import QuestionListContent from './QustionListContent.jsx';
 import QuestionPageNation from './QuestionPageNation.jsx';
 import QuestionFilterBar from './QuestionFilterBar.jsx';
+import axios from 'axios';
+
 const QuestionListMain = () => {
   const [questions, setQuestions] = useState([]);
   const [isFetch, setisFetch] = useState(false);
+
+  // useEffect(async () => {
+  //   const result = await axios
+  //     .get(`${process.env.REACT_APP_API_URL}/questions`)
+  //     .then((res) => res.data);
+  //   setQuestions(result);
+  // }, []);
+
+  // const user = () => {
+  //   questions.map((cur, idx) => {
+  //     console.log(cur);
+  //   });
+  // };
+
+  // const questionsData = useSelector((state) => state.allQuestions.questions);
 
   useEffect(() => {
     async function fetchData() {
