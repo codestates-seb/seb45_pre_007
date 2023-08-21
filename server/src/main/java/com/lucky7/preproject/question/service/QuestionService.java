@@ -1,11 +1,23 @@
 package com.lucky7.preproject.question.service;
 
+<<<<<<< HEAD
+import com.lucky7.preproject.comment.entity.QuestionComment;
+import com.lucky7.preproject.comment.service.QuestionCommentService;
+import com.lucky7.preproject.question.entity.Question;
+import com.lucky7.preproject.question.repository.QuestionRepository;
+import com.lucky7.preproject.user.entity.User;
+import com.lucky7.preproject.user.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
+=======
 import com.lucky7.preproject.question.repository.QuestionRepository;
 import com.lucky7.preproject.comment.service.QuestionCommentService;
 import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.user.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
+>>>>>>> c92b562a4689b83c157a99c35994b69991a525b4
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,6 +62,12 @@ public class QuestionService {
 
         if (!existingQuestion.getUser().equals(user)) {
             throw new AccessDeniedException("You do not have permission to update this question.");
+<<<<<<< HEAD
+        }
+        if (questionToUpdate.getQuestionTitle() != null) {
+            existingQuestion.setQuestionTitle(questionToUpdate.getQuestionTitle());
+=======
+>>>>>>> c92b562a4689b83c157a99c35994b69991a525b4
         }
         if (questionToUpdate.getTitle() != null) {
             existingQuestion.setTitle(questionToUpdate.getTitle());
