@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import QuestionListContent from './QustionListContent.jsx';
 import QuestionPageNation from './QuestionPageNation.jsx';
+import QuestionFilterBar from './QuestionFilterBar.jsx';
 import axios from 'axios';
+
 const QuestionListMain = () => {
   const [questions, setQuestions] = useState([]);
   const [isFetch, setisFetch] = useState(false);
@@ -40,6 +42,7 @@ const QuestionListMain = () => {
 
   return (
     <QuestionListLayout>
+      <QuestionFilterBar questions={questions} />
       {isFetch &&
         questions.map((question, index) => {
           return <QuestionListContent key={index} question={question} />;

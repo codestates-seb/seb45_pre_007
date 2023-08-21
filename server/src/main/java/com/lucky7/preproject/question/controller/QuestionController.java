@@ -70,7 +70,10 @@ public class QuestionController {
         SingleQuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(foundQuestion);
 
         List<QuestionComment> questionComments = questionCommentService.findAllQuestionComments(questionId);
-        List<QuestionCommentDto> questionCommentDtos = mapper.questionCommentsDtos(questionComments);
+        List<QuestionCommentDto> questionCommentDtos = questionComments
+                .stream()
+                .map(mapper::questionCommentToQuestionCommentsDto)
+                .collect(Collectors.toList());
         responseDto.setQuestionComments(questionCommentDtos);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);

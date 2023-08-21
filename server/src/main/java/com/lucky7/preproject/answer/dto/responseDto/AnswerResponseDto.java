@@ -13,6 +13,7 @@ public class AnswerResponseDto {
     private Long id;
     private String content;
     private String user;
+    private String avatarImg;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
     private List<AnswerCommentDto> answerComments;

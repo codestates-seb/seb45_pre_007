@@ -37,6 +37,9 @@ public class User {
     @Column(length = 255, nullable = false)
     private String hashedPassword;
 
+    @Column
+    private String avatarImg = "https://i.ibb.co/p2JB7v6/lucky-7-min-min.png";
+
     @Column(nullable = false)
     @CreatedDate
     private LocalDateTime createdAt;
