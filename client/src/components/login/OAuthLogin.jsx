@@ -1,10 +1,10 @@
 import React from 'react';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import google from '../../assert/google.png';
 import github from '../../assert/github.png';
 import facebook from '../../assert/facebook.png';
 
-const OAuthLogin = () => {
+const OAuthLogin = ({ allCheck }) => {
   return (
     <OAuthLoginBox>
       <GoogleBox>

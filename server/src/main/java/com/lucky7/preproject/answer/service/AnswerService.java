@@ -4,7 +4,9 @@ import com.lucky7.preproject.answer.entity.Answer;
 import com.lucky7.preproject.answer.repository.AnswerRepository;
 import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.question.repository.QuestionRepository;
+import com.lucky7.preproject.user.entity.User;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,21 +33,24 @@ public class AnswerService {
         }
     }
 
-    public  Answer updateAnswer(long questionId, long answerId, Answer answerToUpdate) {
+    public  Answer updateAnswer(long questionId, long answerId, Answer answerToUpdate, User user) {
         // 수정 요청받은 questionId와 answerId로 해당 Answer를 찾습니다.
         Answer existingAnswer = answerRepository.findById(answerId).orElse(null);
 
+        if (!existingAnswer.getUser().equals(user)) {
+            throw new AccessDeniedException("You do not have permission to update this question.");
+        }
         // Answer 가 존재하지 않을 경우, 즉 존재하지 않는 answerId를 요청했을 경우
-        if (existingAnswer == null || existingAnswer.getQuestion().getQuestionId() != questionId) {
+        if (existingAnswer == null || existingAnswer.getQuestion().getId() != questionId) {
             return null;
         }
-        if (answerToUpdate.getAnswerContent() != null) {
-            existingAnswer.setAnswerContent(answerToUpdate.getAnswerContent());
+        if (answerToUpdate.getContent() != null) {
+            existingAnswer.setContent(answerToUpdate.getContent());
         }
         return answerRepository.save(existingAnswer);
     }
 
-    public List<Answer> getAllAnswers(long questionId) {
+    public List<Answer> findAllAnswers(long questionId) {
         Question question = questionRepository.findById(questionId).orElse(null);
         if (question == null) {
             return null;
@@ -55,11 +60,20 @@ public class AnswerService {
         }
     }
 
-    public Answer deleteAnswer(long questionId, long answerId) {
+    public Answer findAnswer(long answerId) {
+        Answer defaultAnswer = new Answer();
+
+        return answerRepository.findById(answerId).orElse(defaultAnswer);
+    }
+
+    public Answer deleteAnswer(long questionId, long answerId, User user) {
         Answer existingAnswer = answerRepository.findById(answerId).orElse(null);
 
-        if (existingAnswer == null || existingAnswer.getQuestion().getQuestionId() != questionId) {
+        if (existingAnswer == null || existingAnswer.getQuestion().getId() != questionId) {
             return null;
+        }
+        if (!existingAnswer.getUser().equals(user)) {
+            throw new AccessDeniedException("You do not have permission to update this answer.");
         }
 
         answerRepository.delete(existingAnswer);

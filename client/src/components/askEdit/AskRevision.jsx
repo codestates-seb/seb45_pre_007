@@ -1,7 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 
 const AskRevision = () => {
+  const author = useSelector((state) => state.question.author);
+  const username = author === null ? 'shimdokite' : author;
   return (
     <AskRevisionLayout>
       <AskRevisionLists>
@@ -10,9 +13,9 @@ const AskRevision = () => {
           <AskRevisionSelect>
             <select>
               <option selected="selected">
-                shimdokite - 46 secs ago - some typos removed
+                {username} - 46 secs ago - some typos removed
               </option>
-              <option>shimdokite - 6 mins ago</option>
+              <option>{username} - 6 mins ago</option>
             </select>
           </AskRevisionSelect>
         </AskRevisionInputBox>
@@ -31,10 +34,6 @@ const AskRevisionLists = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
-
-const AsideBox = styled.div`
-  position: relative;
 `;
 
 const AskRevisionText = styled.div`

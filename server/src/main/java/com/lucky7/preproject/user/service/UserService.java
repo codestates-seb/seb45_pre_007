@@ -13,7 +13,6 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder; //passwordEncoder 추가
-
     private final CustomAuthorityUtils authorityUtils;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
@@ -23,10 +22,10 @@ public class UserService {
     }
 
     public User createUser(User user){
-        String encryptedPassword = passwordEncoder.encode(user.getHashedUserPassword());
-        user.setHashedUserPassword(encryptedPassword);
+        String encryptedPassword = passwordEncoder.encode(user.getHashedPassword());
+        user.setHashedPassword(encryptedPassword);
 
-        List<String> roles = authorityUtils.createRoles(user.getUserEmail());
+        List<String> roles = authorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
 
         User savedUser = userRepository.save(user);
@@ -36,22 +35,38 @@ public class UserService {
     }
 
     public User updateUser(User user){
+        Optional<User> optionalUser = userRepository.findById(user.getId());
+
+        if (optionalUser.isPresent()) {
+            User foundUser = optionalUser.get();
+
+            if (user.getEmail() != null) {
+                foundUser.setEmail(user.getEmail());
+            }
+
+            if (user.getName() != null) {
+                foundUser.setName(user.getName());
+            }
+
+            userRepository.save(foundUser);
+
+            return foundUser;
+        }
 
         return null;
     }
 
     public User findUser(long userId) {
 
-        return null;
+        return userRepository.findById(userId).orElse(null);
     }
 
-    public User deleteUser(long userId){
-
-        return null;
+    public void deleteUser(long userId){
+        userRepository.deleteById(userId);
     }
 
     public User findUserByEmail(String email) {
-        Optional<User> optionalUser = userRepository.findByUserEmail(email);
+        Optional<User> optionalUser = userRepository.findByEmail(email);
 
         if (optionalUser.isPresent()) {
             return optionalUser.get();

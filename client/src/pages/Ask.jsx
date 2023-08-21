@@ -8,6 +8,11 @@ import AskDuplicate from '../components/ask/AskDuplication.jsx';
 import DiscardModal from '../components/ask/DiscardModal.jsx';
 import AskProblem from '../components/ask/AskProblem.jsx';
 import AskExpand from '../components/ask/AskExpand.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { resetAsk } from '../redux/feature/ask/askSlice.js';
+import { postToAsk } from '../redux/api/ask/postAskApi.js';
+// import { useLocation, useNavigate } from 'react-router-dom';
 
 const Ask = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +73,32 @@ const Ask = () => {
       ],
     },
   };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const askData = useSelector((state) => state.ask);
+  const token = useSelector((state) => state.login.token);
+
+  const handleAskSumbit = async () => {
+    if (askData.title && askData.content) {
+      await dispatch(
+        postToAsk({
+          title: askData.title,
+          content: askData.content,
+          token: token,
+        })
+      );
+      navigate('/questions');
+      dispatch(resetAsk());
+    }
+  };
+
+  // const { pathname } = useLocation();
+  // const navigate = useNavigate();
+
+  // const goToLogin = () => {
+  //   navigate('/login', { state: pathname });
+  // };
 
   return (
     <AskBox>
@@ -97,7 +128,9 @@ const Ask = () => {
             <AskDuplicate isFocus={isFocus} setIsFocus={setIsFocus} />
           </AskMainBox>
           <AskSubmitBox>
-            <AskSubmitButton>Post your question</AskSubmitButton>
+            <AskSubmitButton onClick={handleAskSumbit}>
+              Post your question
+            </AskSubmitButton>
             <DiscardButton onClick={() => setIsOpen(!isOpen)}>
               Discard draft
             </DiscardButton>

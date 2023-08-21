@@ -1,8 +1,9 @@
 import React from 'react';
 import { styled, css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useDetectClose from '../../hooks/useDetectClose';
-import search from '../../assert/search.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNextLevel } from '../../redux/feature/login/loginSlice';
 
 const Search = () => {
   const { handleOnPress, isSelected, ref } = useDetectClose(false);
@@ -44,21 +45,56 @@ const Search = () => {
     },
   ];
 
+  const dispatch = useDispatch();
+  const loginData = useSelector((state) => state.login);
+  const successedUser = loginData.isSuccessed;
+  const navigete = useNavigate();
+  // console.log(successedUser);
+
+  const handleGoToPage = () => {
+    if (successedUser) {
+      navigete('/ask');
+    } else {
+      dispatch(setNextLevel('/ask'));
+      navigete('/login');
+    }
+  };
+
+  // console.log(loginData.token);
+
   return (
-    <SearchBox>
+    <SearchBox successedUser={successedUser}>
       <DropdownContainer>
         <SearchInputBox>
           <SearchArea onClick={handleOnPress} ref={ref}>
-            <HeaderSearch />
+            <button
+              className="s-topbar--item s-btn s-btn__icon s-btn__muted d-none sm:d-inline-flex js-searchbar-trigger"
+              role="menuitem"
+              aria-label="Search"
+              aria-haspopup="true"
+              aria-controls="search"
+              title="Click to show search"
+            >
+              <svg
+                aria-hidden="true"
+                className="svg-icon iconSearch"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+              >
+                <path d="m18 16.5-5.14-5.18h-.35a7 7 0 1 0-1.19 1.19v.35L16.5 18l1.5-1.5ZM12 7A5 5 0 1 1 2 7a5 5 0 0 1 10 0Z"></path>
+              </svg>
+            </button>
           </SearchArea>
           <SearchInput
             placeholder="Search..."
+            successedUser={successedUser}
             isSelected={isSelected}
             onClick={handleOnPress}
             ref={ref}
           />
         </SearchInputBox>
-        <Menu isDropped={isSelected}>
+        <Menu isDropped={isSelected} successedUser={successedUser}>
           <SearchTop>
             <Ul>
               {searchHint1.map((current, index) => (
@@ -82,7 +118,7 @@ const Search = () => {
             </Ul>
           </SearchTop>
           <SearchBottom>
-            <AskQuestion to="/ask">Ask a question</AskQuestion>
+            <AskQuestion onClick={handleGoToPage}>Ask a question</AskQuestion>
             <SearchHelp>Search help</SearchHelp>
           </SearchBottom>
         </Menu>
@@ -102,6 +138,12 @@ const SearchBox = styled.div`
   @media (max-width: 640px) {
     max-width: 100%;
   }
+
+  ${({ successedUser }) =>
+    successedUser &&
+    css`
+      max-width: 100%;
+    `}
 `;
 
 const DropdownContainer = styled.div`
@@ -115,8 +157,8 @@ const Menu = styled.div`
   background: white;
   position: absolute;
   top: 55px;
-  left: 69%;
-  width: 642px;
+  left: 68.5%;
+  width: 633px;
 
   display: flex;
   flex-direction: column;
@@ -157,6 +199,13 @@ const Menu = styled.div`
     /* left: 95%; */
     width: 100%;
   }
+
+  ${({ successedUser }) =>
+    successedUser &&
+    css`
+      width: 100%;
+      left: 70%;
+    `}
 `;
 
 const Ul = styled.ul`
@@ -229,10 +278,12 @@ const SearchInputBox = styled.div`
   align-items: center;
   width: 100%;
   height: 56px;
+  padding: 0 8px;
 
   @media (max-width: 640px) {
     display: flex;
     justify-content: flex-end;
+    padding: 0;
   }
 `;
 
@@ -241,29 +292,41 @@ const SearchArea = styled.div`
   justify-content: center;
   align-items: center;
 
+  svg {
+    fill: hsl(210, 8%, 55%);
+
+    position: absolute;
+    top: 19px;
+    left: 20px;
+    cursor: pointer;
+    width: 19px;
+    height: 19px;
+
+    @media (max-width: 640px) {
+      fill: hsl(210, 8%, 35%);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 3px 0 0 0;
+      width: 19px;
+      height: 19px;
+      margin: 0;
+      position: unset;
+    }
+  }
+
   @media (max-width: 640px) {
     cursor: pointer;
-    padding: 15px;
+    display: flex;
+    align-items: center;
+    width: 20%;
     height: 52px;
+    margin: 0;
+    position: unset;
 
     &:hover {
       background-color: #e4e6e8;
     }
-  }
-`;
-
-const HeaderSearch = styled.img.attrs({
-  src: `${search}`,
-})`
-  position: absolute;
-  margin-left: 40px;
-  cursor: pointer;
-  width: 19px;
-  height: 19px;
-
-  @media (max-width: 640px) {
-    margin: 0;
-    position: unset;
   }
 `;
 
@@ -284,6 +347,12 @@ const SearchInput = styled.input.attrs((props) => ({
     border: 1.3px solid #6cbbf7;
     box-shadow: 0px 0px 0px 3px #dcebf8;
   }
+
+  ${({ successedUser }) =>
+    successedUser &&
+    css`
+      margin: 0;
+    `}
 
   @media (max-width: 640px) {
     display: none;
@@ -311,7 +380,7 @@ const SearchBottom = styled.div`
 `;
 
 // ask question button
-const AskQuestion = styled(Link)`
+const AskQuestion = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

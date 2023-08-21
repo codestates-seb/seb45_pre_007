@@ -9,10 +9,10 @@ import java.util.List;
 @Getter
 @Setter
 public class AnswerResponseDto {
-    private Long answerId;
-    private String answerContent;
-    private String answerUser;
+    private Long id;
+    private String content;
+    private String user;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
-    private List<CommentDto> answerComments;
+    private List<AnswerCommentDto> answerComments;
 }

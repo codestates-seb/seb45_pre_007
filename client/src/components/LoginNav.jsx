@@ -10,23 +10,21 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export const DivBox = styled.div`
-  position: absolute;
   z-index: 999;
   top: 52px;
-  left: -2px;
+  left: 0;
+  //left: 50px;
 
-  width: 240px;
+  position: sticky;
   border-right: 1px solid #e1e2e5;
   background-color: #ffffff;
-  box-shadow:
-    0 1px 2px hsla(0, 0%, 0%, 0.05),
-    0 1px 4px hsla(0, 0%, 0%, 0.05),
-    0 2px 8px hsla(0, 0%, 0%, 0.05);
   li {
     list-style: none;
   }
   > div {
+    width: 164px;
     padding: 24px 0 0 0;
+    height: 398px;
   }
 `;
 
@@ -88,6 +86,7 @@ export const FontAwesomeDiv = styled.div`
     }
   }
 `;
+
 export const HoverDiv = styled.div`
   display: flex;
   align-items: center;
@@ -151,7 +150,7 @@ export const NavOl = styled.ol`
   }
   // Looking for your Teams?
   button {
-    font-size: 13px;
+    font-size: 12px;
     margin: 8px 8px 0 0;
     padding: 8px;
     border: none;

@@ -3,8 +3,13 @@ import { styled } from 'styled-components';
 import AskAside from '../ask/askAside/AskAside.jsx';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setContent } from '../../redux/feature/ask/askSlice.js';
 
 const AskProblem = ({ isFocus, setIsFocus, modules }) => {
+  const content = useSelector((state) => state.ask.content);
+  const dispatch = useDispatch();
+
   return (
     <ProblemLayout>
       <AskProblemLayout>
@@ -21,7 +26,14 @@ const AskProblem = ({ isFocus, setIsFocus, modules }) => {
                 </AskProblemDescription>
               </AskProblemTextBox>
               <AskProblemInputBox onClick={() => setIsFocus(1)}>
-                <ReactQuill modules={modules} style={{ height: 210 }} />
+                <ReactQuill
+                  modules={modules}
+                  style={{ height: 210 }}
+                  onChange={(content) => dispatch(setContent(content))}
+                  value={content}
+                />
+                {/* <div dangerouslySetInnerHTML={{ __html: test }} />
+                <div>{test}</div> */}
               </AskProblemInputBox>
             </AskProblemItem>
           </AskProblemList>

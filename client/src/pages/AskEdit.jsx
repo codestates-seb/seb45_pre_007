@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 
 import AskEditTItle from '../components/askEdit/AskEditTItle.jsx';
@@ -7,8 +7,22 @@ import AskEditTag from '../components/askEdit/AskEditTag.jsx';
 import AskEditSummary from '../components/askEdit/AskEditSummary.jsx';
 import AskRevision from '../components/askEdit/AskRevision.jsx';
 
+import LoginNav from '../components/LoginNav.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { getByQuestion } from '../redux/api/question/getByQuestion.js';
+import { patchToAskEdit } from '../redux/api/askEdit/patchAskEditApi.js';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { resetAskEdit } from '../redux/feature/askEdit/askEditSlice.js';
+import AskComment from '../components/askEdit/AskComment.jsx';
+import AskComments from '../components/askEdit/AskComments.jsx';
+
 const AskEdit = () => {
+  // 특정 질문에 대한 questionId를 받아오는 코드
+  const { questionId } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isFocus, setIsFocus] = useState(0);
+  const [comment, setComment] = useState(false);
   const modules = {
     toolbar: {
       container: [
@@ -65,11 +79,40 @@ const AskEdit = () => {
     },
   };
 
+  const token = useSelector((state) => state.login.token);
+  const editData = useSelector((state) => state.askEdit);
+
+  //! 질문 상세 페이지가 구현이 완료되면 지우기
+  useEffect(() => {
+    dispatch(getByQuestion(questionId));
+  }, [questionId]);
+
+  const handleAskEditSumbit = async () => {
+    if (editData.title && editData.content) {
+      const action = await dispatch(
+        patchToAskEdit({
+          id: questionId,
+          title: editData.title,
+          content: editData.content,
+          token: token,
+        })
+      );
+
+      if (patchToAskEdit.fulfilled.match(action)) {
+        if (action.payload && action.payload.status === 200) {
+          navigate(`/questions/${questionId}`);
+        } else {
+          alert('제목과 내용을 다시 확인해 주세요.');
+        }
+      }
+      dispatch(resetAskEdit());
+    }
+  };
+
   return (
     <AskEditLayout>
-      <NavBox>
-        <Nav>Nav</Nav>
-      </NavBox>
+      {/* Nav ver.2 */}
+      <LoginNav />
       <AskEditBox>
         <AskEditItems>
           <AskEditFormBox>
@@ -85,11 +128,22 @@ const AskEdit = () => {
               <AskEditSummary />
             </AskEditFormItem>
             <AskSubmitBox>
-              <AskSubmitButton>Save edits</AskSubmitButton>
-              <CancelButton>Cancel</CancelButton>
+              <AskSubmitButton onClick={handleAskEditSumbit}>
+                Save edits
+              </AskSubmitButton>
+              <CancelButton to={`/questions/${questionId}`}>
+                Cancel
+              </CancelButton>
             </AskSubmitBox>
-            <AddComment>Add a comment</AddComment>
           </AskEditFormBox>
+          <AddCommentBox>
+            {/*Todo: 생성한 Comment가 쌓이고 보일 수 있게 구현하기 */}
+            <AskComments />
+            <AddCommentText onClick={() => setComment(true)} comment={comment}>
+              Add a comment
+            </AddCommentText>
+            {comment && <AskComment setComment={setComment} />}
+          </AddCommentBox>
         </AskEditItems>
       </AskEditBox>
     </AskEditLayout>
@@ -116,7 +170,7 @@ const AskEditBox = styled.div`
 
   background-color: hsl(0, 0, 100%);
   border-radius: 0;
-  border: 1px solid hsl(210, 8%, 85%);
+  /* border: 1px solid hsl(210, 8%, 85%); */
 
   border-top-width: 0;
   border-bottom-width: 0;
@@ -129,29 +183,6 @@ const AskEditItems = styled.div`
   width: calc(100% - 365px - 24px);
   margin: 0;
   padding: 0;
-`;
-
-// Nav
-const NavBox = styled.div`
-  position: relative;
-  z-index: 1000;
-  width: 164px;
-  box-shadow: 0 0 0 hsla(210, 8%, 5%, 0.05);
-  transition:
-    box-shadow ease-in-out 0.1s,
-    transform ease-in-out 0.1s;
-  transform: translateZ(0);
-`;
-
-const Nav = styled.div`
-  position: sticky;
-  top: 56px;
-
-  width: auto;
-  max-height: calc(100vh -56px);
-
-  margin: 0 0 8px 0;
-  padding: 24px 0 0 0;
 `;
 
 const AskEditFormBox = styled.div`
@@ -189,7 +220,7 @@ const AskSubmitButton = styled.div`
   }
 `;
 
-const CancelButton = styled.div`
+const CancelButton = styled(Link)`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -208,7 +239,10 @@ const CancelButton = styled.div`
   }
 `;
 
-const AddComment = styled.div`
+const AddCommentBox = styled.div``;
+
+const AddCommentText = styled.div`
+  display: ${({ comment }) => (comment ? 'none' : 'block')};
   cursor: pointer;
   font-size: 13px;
   color: #0174cd;

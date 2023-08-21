@@ -1,31 +1,28 @@
-import React, { useEffect } from 'react';
-import { styled } from 'styled-components';
+import React, { useState } from 'react';
+import { css, styled } from 'styled-components';
 import OAuthLogin from '../components/login/OAuthLogin.jsx';
 import LoginForm from '../components/login/LoginForm.jsx';
 import LoginDown from '../components/login/LoginDown.jsx';
 import { Link } from 'react-router-dom';
 import logo1 from '../assert/logo1.png';
-import axios from 'axios';
+import LoginVaild from '../components/login/LoginVaild.jsx';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Login = () => {
-  const url = process.env.REACT_APP_API_URL;
-
-  //! http 요청 테스트
-  useEffect(() => {
-    axios.get(`${url}/designer`).then((res) => console.log(res.data));
-  }, []);
+  const [allCheck, setAllCheck] = useState(true);
+  const loginData = useSelector((state) => state.login);
 
   return (
-    <LoginBox>
+    <LoginBox ask={loginData.nextLevel}>
+      {loginData.nextLevel === '/ask' && <LoginVaild />}
       <Logo to="/">
         <img src={logo1} alt="logo" />
       </Logo>
-
       {/* OAuth Login */}
       <OAuthLogin />
 
       {/* Login Form */}
-      <LoginForm />
+      <LoginForm allCheck={allCheck} setAllCheck={setAllCheck} />
 
       {/* Login footer */}
       <LoginDown />
@@ -49,9 +46,15 @@ const LoginBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  height: 100%;
+  ${({ ask }) =>
+    ask !== '/ask' &&
+    css`
+      height: 100%;
+    `}
+
   padding: 24px;
+
   background-color: #f2f2f3;
 `;
 
-// depth: html, body, #root, App.js, Login
+// depth: html, body, #root, App.js

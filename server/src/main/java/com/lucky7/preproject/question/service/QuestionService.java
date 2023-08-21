@@ -1,19 +1,21 @@
 package com.lucky7.preproject.question.service;
 
-import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.question.repository.QuestionRepository;
-import com.lucky7.preproject.user.repository.UserRepository;
+import com.lucky7.preproject.comment.service.QuestionCommentService;
+import com.lucky7.preproject.question.entity.Question;
+import com.lucky7.preproject.user.entity.User;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
+    // 추후 트랜잭션 구현을 위해 레포지토리가 아닌 서비스에서 DI를 받습니다.
+    private final QuestionCommentService questionCommentService;
 
     /**
      *     서비스에서의 목적은 비즈니스 로직을 처리하는 것 입니다.
@@ -30,38 +32,44 @@ public class QuestionService {
         return questionRepository.save(question); // 트랜잭션 구현하면 save 안해도 됨
     }
 
-    public List<Question> getAllQuestions() {
+    public List<Question> findAllQuestions() {
         return questionRepository.findAll();
     }
-    public Question getQuestion(long questionId) {
+    public Question findQuestion(long questionId) {
 //        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         // 예외처리 로직 추가 필요 (존재하지 않는 질문을 조회할 경우)
         // ex) EntityNotFoundException (orElseThrow 사용 등의 방법이 있습니다.)
         Question defaultQuestion = new Question();
+
         return questionRepository.findById(questionId).orElse(defaultQuestion);
     }
 
-
-    @PreAuthorize("hasRole('USER') and #question.userId == principal.id")
-    public Question updateQuestion(long questionId, Question questionToUpdate) {
+    public Question updateQuestion(long questionId, Question questionToUpdate, User user) {
         //todo : 수정할 권한이 있는지 확인
-        Question existingQuestion = getQuestion(questionId);
+        Question existingQuestion = findQuestion(questionId);
 
-        if (questionToUpdate.getQuestionTitle() != null) {
-            existingQuestion.setQuestionTitle(questionToUpdate.getQuestionTitle());
+        if (!existingQuestion.getUser().equals(user)) {
+            throw new AccessDeniedException("You do not have permission to update this question.");
         }
-        if (questionToUpdate.getQuestionContent() != null) {
-            existingQuestion.setQuestionContent(questionToUpdate.getQuestionContent());
+        if (questionToUpdate.getTitle() != null) {
+            existingQuestion.setTitle(questionToUpdate.getTitle());
+        }
+        if (questionToUpdate.getContent() != null) {
+            existingQuestion.setContent(questionToUpdate.getContent());
         }
 
 //        return existingQuestion; 트랜잭션을 구현하면 이걸로 사용
         return questionRepository.save(existingQuestion);
     }
 
-    @PreAuthorize("hasRole('USER') and #question.userId == principal.id")
-    public void deleteQuestion(long questionId) {
+    public void deleteQuestion(long questionId, User user) {
         //todo : 삭제할 권한이 있는지 확인, 해당 Question 이 있는지 확인
-        Question question = getQuestion(questionId);
+        Question question = findQuestion(questionId);
+
+        if (!question.getUser().equals(user)) {
+            throw new AccessDeniedException("You do not have permission to update this question.");
+        }
+
         questionRepository.delete(question);
     }
 }
