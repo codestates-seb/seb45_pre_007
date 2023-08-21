@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { styled } from 'styled-components';
-import { logout } from '../../redux/feature/loginSlice';
-import { useNavigate } from 'react-router-dom';
+import { logout } from '../../redux/feature/login/loginSlice';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HeaderNav = () => {
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const HeaderNav = () => {
   return (
     <HeaderNavLayout>
       <HeaderNavLists>
-        <UserImgBox>
+        <UserImgBox to="/mypage/:userId">
           {/* userImg로 수정하기 */}
           <img
             src="https://lh3.googleusercontent.com/a/AAcHTtfSJECs_nw15TFo4pPL2oyjYNUbwGvR1uTIInqkY_Iyxw=k-s48"
@@ -130,7 +130,7 @@ const HeaderNavBox = styled.div`
   }
 `;
 
-const UserImgBox = styled.div`
+const UserImgBox = styled(Link)`
   cursor: pointer;
   display: flex;
   align-items: center;

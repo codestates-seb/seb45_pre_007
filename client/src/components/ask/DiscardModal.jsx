@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
-import { resetAsk } from '../../redux/feature/askSlice.js';
+import { resetAsk } from '../../redux/feature/ask/askSlice.js';
 import { useDispatch } from 'react-redux';
 
 const DiscardModal = ({ setIsOpen, isOpen }) => {

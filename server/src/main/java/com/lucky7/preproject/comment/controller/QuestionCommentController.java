@@ -47,7 +47,7 @@ public class QuestionCommentController {
         User user = userService.findUserByEmail(auth.getPrincipal().toString());
 
         QuestionComment questionComment = commentMapper.commentRequestDtoToQuestionComment(commentRequestDto);
-        questionComment.setQuestion(questionService.getQuestion(questionId));
+        questionComment.setQuestion(questionService.findQuestion(questionId));
         //questionComment.setUser(new User());
         questionComment.setUser(user); // 값을 할당하기위해 추가
 

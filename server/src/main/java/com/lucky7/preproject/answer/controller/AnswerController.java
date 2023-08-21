@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -51,12 +52,18 @@ public class AnswerController {
 
     @GetMapping
     public ResponseEntity<List<AnswerResponseDto>> getAllAnswers(@PathVariable long questionId) {
-        List<Answer> foundAnswers = answerService.getAllAnswers(questionId);
-        List<AnswerResponseDto> responseDtos = answerMapper.answersToAnswerDtos(foundAnswers);
+        List<Answer> foundAnswers = answerService.findAllAnswers(questionId);
+        List<AnswerResponseDto> responseDtos = foundAnswers
+                .stream()
+                .map(answerMapper::answerToAnswerDto)
+                .collect(Collectors.toList());
 
         for(AnswerResponseDto answerResponseDto : responseDtos) {
-            List<AnswerComment> answerComments = answerCommentService.findAnswerComments(answerResponseDto.getId());
-            List<AnswerCommentDto> answerCommentDtos = answerMapper.answerCommentsToAnswerCommentDtos(answerComments);
+            List<AnswerComment> answerComments = answerCommentService.findAllAnswerComments(answerResponseDto.getId());
+            List<AnswerCommentDto> answerCommentDtos = answerComments
+                    .stream()
+                    .map(answerMapper::answerCommentToAnswerCommentDto)
+                    .collect(Collectors.toList());
             answerResponseDto.setAnswerComments(answerCommentDtos);
         }
 

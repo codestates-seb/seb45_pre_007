@@ -35,10 +35,13 @@ public class UserService {
     }
 
     public User updateUser(User user){
+
         Optional<User> optionalUser = userRepository.findById(user.getId());
+
 
         if (optionalUser.isPresent()) {
             User foundUser = optionalUser.get();
+
 
             if (user.getEmail() != null) {
                 foundUser.setEmail(user.getEmail());

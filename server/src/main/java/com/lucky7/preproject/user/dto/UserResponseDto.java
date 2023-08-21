@@ -12,6 +12,7 @@ public class UserResponseDto { //LocalDateTime 추가
     private long id;
     private String name;
     private String email;
+    private String avatarImg;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 }

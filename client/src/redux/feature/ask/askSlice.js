@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { postToAsk } from '../api/askApi';
+import { postToAsk } from '../../api/ask/postAskApi';
 
 export const askSlice = createSlice({
   name: 'ask',
   initialState: {
+    id: 0,
     title: '',
     content: '',
     loading: 'idle',
@@ -39,6 +40,7 @@ export const askSlice = createSlice({
           state.loading === 'pending' &&
           state.currentRequestId === requestId
         ) {
+          state.id = action.payload.questionId;
           state.loading = 'idle';
           state.currentRequestId = undefined;
         }

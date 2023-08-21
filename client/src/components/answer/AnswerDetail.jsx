@@ -3,7 +3,8 @@ import { styled } from 'styled-components';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AnswerFormLayout = styled.form`
   width: 727px;
@@ -54,7 +55,6 @@ const AnswerBtnbox = styled.form`
   height: 62.78px;
   margin: 0 -2px;
   padding: 10px 0 15px;
-  }
 `;
 
 const AnswerBtn = styled.div`
@@ -66,44 +66,19 @@ const AnswerBtn = styled.div`
   color: white;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: rgba(255,255,255,0.4);
+  box-shadow: rgba(255, 255, 255, 0.4);
   line-height: 0.938rem;
   white-space: nowrap;
   border-radius: 0.188rem;
 
   &:hover {
-    background-color:  #0174cd;
-`;
-
-const AnswerCheckVote = styled.div`
-  width: 56.78px;
-  padding: 0 16px 0 0;
-  color: #232629
-  font-size: 13px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap
-  
-  button {
-    cursor: pointer;
-  }
-`;
-
-const AnswerCheckFormBox = styled.form`
-  width: 727px;
-  height: 424.47px;
-  font-size: 13px;
-
-  h2 {
-    width: 727px;
-    height: 44.69px;
-    font-size: 19px;
-    margin: 0 0 19px;
-    padding: 20px 0 0;
+    background-color: #0174cd;
   }
 `;
 
 const AnswerDetail = () => {
+  const loginData = useSelector((state) => state.login);
+  console.log(loginData.token);
   const quillRef = useRef();
   const [content, setContent] = useState('');
   const navigate = useNavigate();
@@ -123,22 +98,24 @@ const AnswerDetail = () => {
   }, []);
 
   const PostAnswer = () => {
+    const { questionId } = useParams();
     const quill = quillRef.current.getEditor();
     const text = quill.getText();
     const data = {
-      answerId: '',
+      answerId: 0,
       answerContent: text,
       createdAt: new Date().toISOString(),
     };
     const url = process.env.REACT_APP_API_URL;
     const headers = {
-      Authorization: 'Bearer AuthorizationToken', // Replace with your authentication token
+      Authorization: loginData.token,
     };
     axios
-      .post(`${url}/questions/{questionId}/answers`, data, { headers })
+      .post(`${url}/questions/${questionId}/answers`, data, { headers })
       .then((response) => {
-        if (response.data.success) {
-          navigate('/answer');
+        console.log(response.status);
+        if (response.status === 201) {
+          navigate('/questions');
         } else {
           alert('답변이 등록되지 않았습니다.');
         }

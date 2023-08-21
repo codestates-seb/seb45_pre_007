@@ -1,7 +1,10 @@
 package com.lucky7.preproject.question.controller;
 
+import com.lucky7.preproject.comment.entity.QuestionComment;
+import com.lucky7.preproject.comment.service.QuestionCommentService;
 import com.lucky7.preproject.question.dto.requestDto.QuestionDto;
 import com.lucky7.preproject.question.dto.responseDto.AllQuestionsResponseDto;
+import com.lucky7.preproject.question.dto.responseDto.QuestionCommentDto;
 import com.lucky7.preproject.question.dto.responseDto.SingleQuestionResponseDto;
 import com.lucky7.preproject.comment.entity.QuestionComment;
 import com.lucky7.preproject.comment.service.QuestionCommentService;
@@ -51,8 +54,8 @@ public class QuestionController {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
     @GetMapping
-    public ResponseEntity<List<AllQuestionsResponseDto>> getQuestions() {
-        List<Question> foundQuestions = questionService.getAllQuestions();
+    public ResponseEntity<List<AllQuestionsResponseDto>> getAllQuestions() {
+        List<Question> foundQuestions = questionService.findAllQuestions();
 
         List<AllQuestionsResponseDto> responseDtos = foundQuestions.stream()
                 .map(mapper::questionToAllQuestionResponseDto)
@@ -63,11 +66,14 @@ public class QuestionController {
     @GetMapping("/{questionId}")
     public ResponseEntity<SingleQuestionResponseDto> getQuestion(@PathVariable long questionId) {
 
-        Question foundQuestion = questionService.getQuestion(questionId);
+        Question foundQuestion = questionService.findQuestion(questionId);
         SingleQuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(foundQuestion);
 
-        List<QuestionComment> questionComments = questionCommentService.findQuestionComments(questionId);
-        List<QuestionCommentDto> questionCommentDtos = mapper.questionCommentsDtos(questionComments);
+        List<QuestionComment> questionComments = questionCommentService.findAllQuestionComments(questionId);
+        List<QuestionCommentDto> questionCommentDtos = questionComments
+                .stream()
+                .map(mapper::questionCommentToQuestionCommentsDto)
+                .collect(Collectors.toList());
         responseDto.setQuestionComments(questionCommentDtos);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);

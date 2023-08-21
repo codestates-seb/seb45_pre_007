@@ -21,7 +21,9 @@ public class AnswerCommentService {
     }
 
     public AnswerComment updateAnswerComment(AnswerComment answerComment, User user) {
+
         AnswerComment foundAnswerComment = answerCommentRepository.findById(answerComment.getId()).orElse(null);
+
         if (foundAnswerComment == null) {
             return null;
         }
@@ -29,6 +31,7 @@ public class AnswerCommentService {
         if (!foundAnswerComment.getUser().equals(user)) {
             throw new AccessDeniedException("You do not have permission to update this comment.");
         }
+
         foundAnswerComment.setContent(answerComment.getContent());
         return answerCommentRepository.save(foundAnswerComment);
     }
@@ -42,6 +45,7 @@ public class AnswerCommentService {
         }
 
         if (existingAnswerComment == null || existingAnswerComment.getAnswer().getId() != answerCommentId) {
+
             return null;
         }
 
@@ -49,7 +53,7 @@ public class AnswerCommentService {
         return existingAnswerComment;
     }
 
-    public List<AnswerComment> findAnswerComments(long answerId) {
+    public List<AnswerComment> findAllAnswerComments(long answerId) {
         return answerCommentRepository.findAllByAnswerId(answerId);
     }
 }

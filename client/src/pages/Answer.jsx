@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import LoginNav from '../components/LoginNav.jsx';
 import Aside from '../components/Aside.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Google from '../assert/google.png';
 import { AiOutlineUpCircle, AiOutlineDownCircle } from 'react-icons/ai';
 import axios from 'axios';
@@ -175,27 +175,44 @@ const AnswerBtn = styled.div`
 
 const Answer = () => {
   const navigate = useNavigate();
+  const [questionData, setQuestionData] = useState({});
   const count = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
+  const url = process.env.REACT_APP_API_URL;
+  const { questionId } = useParams();
 
   const AskBtn = () => {
     navigate('/ask');
   };
 
   const EditBtn = () => {
-    navigate('/ask/edit');
+    const editRoute = `/questions/${questionId}/edit`;
+    navigate(editRoute);
   };
+
+  useEffect(() => {
+    const fetchQuestionData = async () => {
+      try {
+        const response = await axios.get(`${url}/questions/${questionId}`);
+        setQuestionData(response.data);
+      } catch (error) {
+        console.error('Error fetching question data:', error);
+      }
+    };
+
+    fetchQuestionData();
+  }, [questionId]);
 
   return (
     <AnswerLayout>
       <LoginNav />
       <AnswerBox>
         <AnswerTitle>
-          <h1> Lucky 7 test ~ing </h1>
+          <h1>{questionData.questionTitle}test ~ing </h1>
           <AnswerBtn onClick={AskBtn}>Ask Question</AnswerBtn>
         </AnswerTitle>
         <AnswerSubTitle>
-          <span>Asked&nbsp; </span>
+          <span>Asked&nbsp;{questionData.createdAt} </span>
           <span>&nbsp;&nbsp;&nbsp;Modified&nbsp;</span>
           <span>&nbsp;&nbsp;&nbsp;Viewed&nbsp;</span>
         </AnswerSubTitle>
@@ -204,7 +221,7 @@ const Answer = () => {
             <button>
               <AiOutlineUpCircle
                 size={40.78}
-                stroke-width={1}
+                strokeWidth={1}
                 onClick={() => dispatch(increment())}
               />
             </button>
@@ -212,13 +229,13 @@ const Answer = () => {
             <button>
               <AiOutlineDownCircle
                 size={40.78}
-                stroke-width={1}
+                strokeWidth={1}
                 onClick={() => dispatch(decrement())}
               />
             </button>
           </AnswerVote>
           <AnswerContent>
-            <p>content</p>
+            <p>{questionData.questionContent}content</p>
             <AnswerSubContent>
               <AnswerContentCategory>
                 <button>Share</button>
@@ -228,9 +245,9 @@ const Answer = () => {
                 <button>Follow</button>
               </AnswerContentCategory>
               <AnswerContentUserInfo>
-                <div>asked: time</div>
+                <div>asked: {questionData.createdAt}</div>
                 <img src={Google} alt="test"></img>
-                <p>User id</p>
+                <p>{questionData.questionUser}user</p>
               </AnswerContentUserInfo>
             </AnswerSubContent>
           </AnswerContent>
@@ -239,7 +256,7 @@ const Answer = () => {
         <AnswerContentComment>
           <button>Add a comment</button>
         </AnswerContentComment>
-        {/* <AnswerGet /> */}
+        <AnswerGet />
         <AnswerDetail />
       </AnswerBox>
     </AnswerLayout>
