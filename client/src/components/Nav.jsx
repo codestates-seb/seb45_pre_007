@@ -185,9 +185,8 @@ export const ActiveHomeStyleDiv = styled.div`
 const Nav = () => {
   const navigate = useNavigate();
 
-  // question 페이지 생성 후 경로 변경 예정입니다.
   const navigateTo = () => {
-    navigate('/login');
+    navigate('/questions');
     setHome(false);
     setQuestions(true);
   };
