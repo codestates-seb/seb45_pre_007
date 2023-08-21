@@ -64,7 +64,7 @@ public class QuestionCommentController {
         User user = userService.findUserByEmail(auth.getPrincipal().toString());
 
         QuestionComment questionComment = commentMapper.commentRequestDtoToQuestionComment(commentRequestDto);
-        questionComment.setQuestionCommentId(commentId);
+        questionComment.setId(commentId);
 
         try {
             // CommentService를 사용해서 업데이트된 Comment Entity를 new Entity에 저장

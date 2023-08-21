@@ -41,11 +41,11 @@ public class AnswerService {
             throw new AccessDeniedException("You do not have permission to update this question.");
         }
         // Answer 가 존재하지 않을 경우, 즉 존재하지 않는 answerId를 요청했을 경우
-        if (existingAnswer == null || existingAnswer.getQuestion().getQuestionId() != questionId) {
+        if (existingAnswer == null || existingAnswer.getQuestion().getId() != questionId) {
             return null;
         }
-        if (answerToUpdate.getAnswerContent() != null) {
-            existingAnswer.setAnswerContent(answerToUpdate.getAnswerContent());
+        if (answerToUpdate.getContent() != null) {
+            existingAnswer.setContent(answerToUpdate.getContent());
         }
         return answerRepository.save(existingAnswer);
     }
@@ -69,7 +69,7 @@ public class AnswerService {
     public Answer deleteAnswer(long questionId, long answerId, User user) {
         Answer existingAnswer = answerRepository.findById(answerId).orElse(null);
 
-        if (existingAnswer == null || existingAnswer.getQuestion().getQuestionId() != questionId) {
+        if (existingAnswer == null || existingAnswer.getQuestion().getId() != questionId) {
             return null;
         }
         if (!existingAnswer.getUser().equals(user)) {

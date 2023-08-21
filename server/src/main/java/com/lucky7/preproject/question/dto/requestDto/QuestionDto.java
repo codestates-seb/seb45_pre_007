@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionDto {
-    private String questionTitle;
-    private String questionContent;
+    private String title;
+    private String content;
 }
