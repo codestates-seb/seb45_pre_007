@@ -59,7 +59,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("UserId", user.getUserId().toString()); // FE 요청으로 로그인 유저 정보를 식별하기 위해 추가
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
-        response.setHeader("Access-Control-Expose-Headers", "Authorization, UserId");
+        response.setHeader("Access-Control-Expose-Headers", "Authorization");
+        response.addHeader("Access-Control-Expose-Headers", "UserId");
 
         log.info("# successfulAuthentication");
 
