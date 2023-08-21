@@ -15,7 +15,7 @@ export const Login = () => {
   return (
     <LoginBox ask={loginData.nextLevel}>
       {loginData.nextLevel === '/ask' && <LoginVaild />}
-      <Logo to="/">
+      <Logo to="/questions">
         <img src={logo1} alt="logo" />
       </Logo>
       {/* OAuth Login */}
