@@ -3,22 +3,23 @@ import axios from 'axios';
 
 const url = process.env.REACT_APP_API_URL;
 
-export const postToAskComment = createAsyncThunk(
-  'ask/postAskComment',
-  async ({ id, content, token }, { getState, requestId }) => {
-    const { currentRequestId, loading } = getState().askComment;
+export const patchToEditComment = createAsyncThunk(
+  'ask/postEditComment',
+  async (
+    { content, token, questionId, commentId },
+    { getState, requestId }
+  ) => {
+    const { currentRequestId, loading } = getState().patchComment;
 
     if (loading !== 'pending' || requestId !== currentRequestId) {
       // pending 상태가 아니거나 요청한 id가 갖지않다면 바로 return
       return;
     }
-    let questionId = id;
-    console.log(questionId);
 
-    const response = await axios.post(
-      `${url}/questions/${questionId}/comments`,
+    const response = await axios.patch(
+      `${url}/questions/${questionId}/comments/${commentId}`,
       {
-        content: content,
+        questionCommentContent: content,
       },
       {
         headers: {
@@ -27,6 +28,7 @@ export const postToAskComment = createAsyncThunk(
       }
     );
 
+    console.log(response);
     return response;
   }
 );

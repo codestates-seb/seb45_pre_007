@@ -14,14 +14,17 @@ export const questionSlice = createSlice({
     error: null,
   },
   reducers: {
-    resetQuestion: (state, action) => {
-      state.id = 0;
-      state.title = '';
-      state.content = '';
-      state.comments = [];
-      state.loading = 'idle';
-      state.currentRequestId = undefined;
+    setComments: (state, action) => {
+      state.comments = action.payload;
     },
+    // resetQuestion: (state, action) => {
+    //   state.id = 0;
+    //   state.title = '';
+    //   state.content = '';
+    //   state.comments = [];
+    //   state.loading = 'idle';
+    //   state.currentRequestId = undefined;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -63,6 +66,6 @@ export const questionSlice = createSlice({
   },
 });
 
-export const { resetQuestion } = questionSlice.actions;
+export const { setComments } = questionSlice.actions;
 
 export default questionSlice.reducer;

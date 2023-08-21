@@ -6,24 +6,47 @@ import {
   setAskComment,
 } from '../../redux/feature/askEdit/askCommentSlice';
 import { postToAskComment } from '../../redux/api/askEdit/postAskCommentApi';
+import { useParams } from 'react-router-dom';
+import { setComments } from '../../redux/feature/question/questionSlice';
 
 const AskComment = ({ setComment }) => {
   const dispatch = useDispatch();
+  const { questionId } = useParams();
 
   const token = useSelector((state) => state.login.token);
-  const askId = useSelector((state) => state.ask.id);
-  console.log(askId);
-
+  const questionComment = useSelector((state) => state.question.comments);
+  // 댓글을 추가했을 때 새로고침 없이 렌더가 될 수 있도록, 새로고침 후에 결국 추가한 댓글이 덧붙일 수 있도록 하기 위함
   const commentData = useSelector((state) => state.askComment.content);
 
   const handleAskComment = async () => {
-    await dispatch(
+    const action = await dispatch(
       postToAskComment({
-        id: askId,
+        id: questionId,
         content: commentData,
         token,
       })
     );
+
+    if (postToAskComment.fulfilled.match(action)) {
+      if (action.payload && action.payload.status === 200) {
+        const commentData = action.payload.data;
+        dispatch(
+          setComments([
+            // 원본을 그대로 두고,
+            ...questionComment,
+            // 새롭게 작성한 댓글을 추가해준다
+            {
+              commentUser: commentData.questionCommentUser,
+              commentContent: commentData.questionCommentContent,
+              // 나머지는 똑같은 key로 들어오기 때문에 스프레드 문법으로 작성한다
+              ...commentData,
+            },
+          ])
+        );
+      } else {
+        alert('댓글을 다시 입력해 주세요.');
+      }
+    }
 
     dispatch(resetAskComment());
   };

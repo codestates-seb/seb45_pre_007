@@ -10,14 +10,15 @@ import AskRevision from '../components/askEdit/AskRevision.jsx';
 import LoginNav from '../components/LoginNav.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getByQuestion } from '../redux/api/question/getByQuestion.js';
-import { resetQuestion } from '../redux/feature/question/questionSlice.js';
-import { postToAskEdit } from '../redux/api/askEdit/postAskEditApi.js';
-import { Link, useNavigate } from 'react-router-dom';
+import { patchToAskEdit } from '../redux/api/askEdit/patchAskEditApi.js';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { resetAskEdit } from '../redux/feature/askEdit/askEditSlice.js';
 import AskComment from '../components/askEdit/AskComment.jsx';
 import AskComments from '../components/askEdit/AskComments.jsx';
 
 const AskEdit = () => {
+  // 특정 질문에 대한 questionId를 받아오는 코드
+  const { questionId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isFocus, setIsFocus] = useState(0);
@@ -79,29 +80,31 @@ const AskEdit = () => {
   };
 
   const token = useSelector((state) => state.login.token);
-  const askId = useSelector((state) => state.ask.id);
   const editData = useSelector((state) => state.askEdit);
 
-  console.log(askId);
-
+  //! 질문 상세 페이지가 구현이 완료되면 지우기
   useEffect(() => {
-    // 가져오기 전에 초기화를 먼저 해주어야 함
-    dispatch(resetQuestion());
-    dispatch(getByQuestion(askId));
-  }, [askId, dispatch]);
+    dispatch(getByQuestion(questionId));
+  }, [questionId]);
 
   const handleAskEditSumbit = async () => {
     if (editData.title && editData.content) {
-      await dispatch(
-        postToAskEdit({
-          id: askId,
+      const action = await dispatch(
+        patchToAskEdit({
+          id: questionId,
           title: editData.title,
           content: editData.content,
           token: token,
         })
       );
 
-      navigate('/answer');
+      if (patchToAskEdit.fulfilled.match(action)) {
+        if (action.payload && action.payload.status === 200) {
+          navigate(`/questions/${questionId}`);
+        } else {
+          alert('제목과 내용을 다시 확인해 주세요.');
+        }
+      }
       dispatch(resetAskEdit());
     }
   };
@@ -128,7 +131,9 @@ const AskEdit = () => {
               <AskSubmitButton onClick={handleAskEditSumbit}>
                 Save edits
               </AskSubmitButton>
-              <CancelButton to="/answer">Cancel</CancelButton>
+              <CancelButton to={`/questions/${questionId}`}>
+                Cancel
+              </CancelButton>
             </AskSubmitBox>
           </AskEditFormBox>
           <AddCommentBox>

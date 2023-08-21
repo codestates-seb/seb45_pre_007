@@ -1,51 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from 'styled-components';
-import { resetQuestion } from '../../redux/feature/question/questionSlice';
-import { getByQuestion } from '../../redux/api/question/getByQuestion';
+import dateFommated from '../../utils/dateFomatted';
 
 const AskComments = () => {
-  const questionComment = useSelector((state) => state.question.comments);
-  console.log(questionComment);
   const dispatch = useDispatch();
+  const questionComment = useSelector((state) => state.question.comments);
+  //Todo: user 조회 후 정보를 redux에 저장
+  const username = 'doyeon';
 
-  const askId = useSelector((state) => state.ask.id);
-  console.log(askId);
+  // 회원가입 시 같은 이름이 있다면 막아야 한다(일단 생략...)
 
-  useEffect(() => {
-    // 가져오기 전에 초기화를 먼저 해주어야 함
-    dispatch(resetQuestion());
-    dispatch(getByQuestion(askId));
-    console.log(questionComment);
-  }, [askId, dispatch]);
-
-  const dummyComments = [
-    {
-      commentUser: 'shimdokite',
-      commentContent:
-        'Lorem ipsum dolor sit amet consectetur. Facilisi nunc vestibulum laoreet facilisis amet sapien. Turpis eleifend facilisis sed porttitor dui pharetra eget morbi erat.',
-      createdAt: 'Aug 20, 2023 at 3:01',
-      lastModifiedAt: 'Aug 20, 2023 at 3:01',
-    },
-    {
-      commentUser: 'bbosong',
-      commentContent:
-        'Lorem ipsum dolor sit amet consectetur. Facilisi nunc vestibulum laoreet facilisis amet sapien. Turpis eleifend facilisis sed porttitor dui pharetra eget morbi erat.',
-      createdAt: 'Aug 20, 2023 at 3:01',
-      lastModifiedAt: 'Aug 20, 2023 at 3:01',
-    },
-    {
-      commentUser: 'namsoon',
-      commentContent:
-        'Lorem ipsum dolor sit amet consectetur. Facilisi nunc vestibulum laoreet facilisis amet sapien. Turpis eleifend facilisis sed porttitor dui pharetra eget morbi erat.',
-      createdAt: 'Aug 20, 2023 at 3:01',
-      lastModifiedAt: 'Aug 20, 2023 at 3:01',
-    },
-  ];
+  // const handleChangeComment = (comment) => {
+  //   if (username === comment.commentUser) {
+  //   }
+  // };
 
   return (
     <AskCommentsLayout>
-      {dummyComments.map((comment, index) => (
+      {questionComment.map((comment, index) => (
         <div key={index}>
           <ul>
             <li>
@@ -55,9 +28,39 @@ const AskComments = () => {
                     {comment.commentContent}
                   </span>
                   <span className="commentUser">
-                    &nbsp;–&nbsp;{comment.commentUser}&nbsp;
+                    <span className="commentUserDash">&nbsp;–</span>&nbsp;
+                    {comment.commentUser}&nbsp;
                   </span>
-                  <span className="createdAt">{comment.createdAt}</span>
+                  <span className="lastModifiedAt">
+                    {dateFommated(comment.lastModifiedAt)}
+                    {comment.lastModifiedAt !== comment.createdAt ? (
+                      <span className="updateIcon">
+                        &nbsp;
+                        <svg
+                          aria-hidden="true"
+                          className="va-text-bottom o50 svg-icon iconPencilSm"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 14 14"
+                        >
+                          <path
+                            fill="#9199a1"
+                            d="m2 10.12 6.37-6.43 1.88 1.88L3.88 12H2v-1.88Z"
+                          ></path>
+                          <path
+                            fill="#9199a1"
+                            d="m11.1 1.71 1.13 1.12c.2.2.2.51 0 .71L11.1 4.7 9.21 2.86l1.17-1.15c.2-.2.51-.2.71 0Z"
+                          ></path>
+                        </svg>
+                      </span>
+                    ) : null}
+                  </span>
+                  {username === comment.commentUser && (
+                    <>
+                      <span className="editIcon">&nbsp;edit&nbsp;</span>
+                      <span className="deleteIcon">delete</span>
+                    </>
+                  )}
                 </div>
               </div>
             </li>
@@ -83,6 +86,8 @@ const AskCommentsLayout = styled.div`
   }
 
   .commentLists {
+    display: flex;
+    align-items: center;
     line-height: 1.4;
   }
 
@@ -90,14 +95,35 @@ const AskCommentsLayout = styled.div`
   }
 
   .commentUser {
+    cursor: pointer;
     color: hsl(206, 100%, 40%);
+
+    .commentUserDash {
+      color: #232629;
+    }
 
     &:hover {
       color: hsl(206, 100%, 52%);
     }
   }
 
-  .createdAt {
+  .lastModifiedAt {
+    display: flex;
+    align-items: center;
     color: #9199a1;
+  }
+
+  .updateIcon {
+    display: flex;
+    align-items: center;
+  }
+
+  .editIcon {
+    cursor: pointer;
+    color: #9199a1;
+  }
+
+  .deleteIcon {
+    cursor: pointer;
   }
 `;

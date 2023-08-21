@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { styled } from 'styled-components';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -8,17 +8,16 @@ import { setEditContent } from '../../redux/feature/askEdit/askEditSlice.js';
 
 const AskEditBody = ({ modules, isFocus, setIsFocus }) => {
   const questionContent = useSelector((state) => state.question.content);
+  const renderContent = useSelector((state) => state.askEdit.content);
   const dispatch = useDispatch();
-  const [content, setContent] = useState('');
 
-  //! react-quill 커서 이슈
+  //! react-quill 커서 이슈 => 의존성 배열 문제...
   useEffect(() => {
-    setContent(questionContent);
-  }, []);
+    dispatch(setEditContent(questionContent));
+  }, [questionContent]);
 
   const handleChangeContent = (content) => {
     dispatch(setEditContent(content));
-    setContent(content);
   };
 
   return (
@@ -29,7 +28,7 @@ const AskEditBody = ({ modules, isFocus, setIsFocus }) => {
           <AskEditBodyLists onClick={() => setIsFocus(1)}>
             <ReactQuill
               modules={modules}
-              value={content}
+              value={renderContent}
               onChange={(content) => handleChangeContent(content)}
             />
           </AskEditBodyLists>
@@ -37,7 +36,7 @@ const AskEditBody = ({ modules, isFocus, setIsFocus }) => {
         <AskEditBodyPreviewBox>
           <AskEditBodyPreview
             // className="ql-editor"
-            dangerouslySetInnerHTML={{ __html: content }}
+            dangerouslySetInnerHTML={{ __html: renderContent }}
           />
         </AskEditBodyPreviewBox>
       </AskEditBodyEditor>

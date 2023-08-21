@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const url = process.env.REACT_APP_API_URL;
 
-export const postToAskEdit = createAsyncThunk(
+export const patchToAskEdit = createAsyncThunk(
   'ask/postAskEdit',
   async ({ title, content, token, id }, { getState, requestId }) => {
     const { currentRequestId, loading } = getState().askEdit;
@@ -28,7 +28,7 @@ export const postToAskEdit = createAsyncThunk(
       }
     );
 
-    console.log(response.data);
-    return response.data;
+    console.log(response);
+    return response;
   }
 );

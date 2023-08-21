@@ -1,52 +1,44 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { patchToAskEdit } from '../../api/askEdit/patchAskEditApi';
+import { patchToEditComment } from '../../api/askEdit/patchAskComment';
 
-export const askEditSlice = createSlice({
-  name: 'askEdit',
+export const patchCommentSlice = createSlice({
+  name: 'patchComment',
   initialState: {
-    id: 0,
-    title: '',
     content: '',
     loading: 'idle',
     currentRequestId: undefined,
     error: null,
   },
   reducers: {
-    setEditTitle: (state, action) => {
-      state.title = action.payload;
-    },
-    setEditContent: (state, action) => {
+    setEditComment: (state, action) => {
       state.content = action.payload;
     },
-    resetAskEdit: (state, action) => {
-      state.title = '';
+    resetEditComment: (state, action) => {
       state.content = '';
       state.loading = 'idle';
-      state.error = null;
       state.currentRequestId = undefined;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(patchToAskEdit.pending, (state, action) => {
+      .addCase(patchToEditComment.pending, (state, action) => {
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(patchToAskEdit.fulfilled, (state, action) => {
+      .addCase(patchToEditComment.fulfilled, (state, action) => {
         const { requestId } = action.meta;
 
         if (
           state.loading === 'pending' &&
           state.currentRequestId === requestId
         ) {
-          state.id = action.payload.questionId;
           state.loading = 'idle';
           state.currentRequestId = undefined;
         }
       })
-      .addCase(patchToAskEdit.rejected, (state, action) => {
+      .addCase(patchToEditComment.rejected, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -61,7 +53,6 @@ export const askEditSlice = createSlice({
   },
 });
 
-export const { setEditContent, setEditTitle, resetAskEdit } =
-  askEditSlice.actions;
+export const { setEditComment, resetEditComment } = patchCommentSlice.actions;
 
-export default askEditSlice.reducer;
+export default patchCommentSlice.reducer;
