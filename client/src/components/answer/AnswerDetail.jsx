@@ -76,34 +76,6 @@ const AnswerBtn = styled.div`
   }
 `;
 
-const AnswerCheckVote = styled.div`
-  width: 56.78px;
-  padding: 0 16px 0 0;
-  color: #232629;
-  font-size: 13px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-
-  button {
-    cursor: pointer;
-  }
-`;
-
-const AnswerCheckFormBox = styled.form`
-  width: 727px;
-  height: 424.47px;
-  font-size: 13px;
-
-  h2 {
-    width: 727px;
-    height: 44.69px;
-    font-size: 19px;
-    margin: 0 0 19px;
-    padding: 20px 0 0;
-  }
-`;
-
 const AnswerDetail = () => {
   const loginData = useSelector((state) => state.login);
   console.log(loginData.token);
@@ -126,6 +98,7 @@ const AnswerDetail = () => {
   }, []);
 
   const PostAnswer = () => {
+    const { questionId } = useParams();
     const quill = quillRef.current.getEditor();
     const text = quill.getText();
     const data = {
@@ -138,7 +111,7 @@ const AnswerDetail = () => {
       Authorization: loginData.token,
     };
     axios
-      .post(`${url}/questions/${1}/answers`, data, { headers })
+      .post(`${url}/questions/${questionId}/answers`, data, { headers })
       .then((response) => {
         console.log(response.status);
         if (response.status === 201) {
