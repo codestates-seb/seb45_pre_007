@@ -9,9 +9,10 @@ import DiscardModal from '../components/ask/DiscardModal.jsx';
 import AskProblem from '../components/ask/AskProblem.jsx';
 import AskExpand from '../components/ask/AskExpand.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetAsk } from '../redux/feature/askSlice.js';
-import { postToAsk } from '../redux/api/askApi.js';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { resetAsk } from '../redux/feature/ask/askSlice.js';
+import { postToAsk } from '../redux/api/ask/postAskApi.js';
+// import { useLocation, useNavigate } from 'react-router-dom';
 
 const Ask = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,12 +74,23 @@ const Ask = () => {
     },
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const askData = useSelector((state) => state.ask);
+  const token = useSelector((state) => state.login.token);
 
-  const handleAskSumbit = () => {
-    dispatch(postToAsk({ title: askData.title, content: askData.content }));
-    dispatch(resetAsk());
+  const handleAskSumbit = async () => {
+    if (askData.title && askData.content) {
+      await dispatch(
+        postToAsk({
+          title: askData.title,
+          content: askData.content,
+          token: token,
+        })
+      );
+      navigate('/questions');
+      dispatch(resetAsk());
+    }
   };
 
   // const { pathname } = useLocation();

@@ -47,7 +47,7 @@ public class QuestionCommentController {
         User user = userService.findUserByEmail(auth.getPrincipal().toString());
 
         QuestionComment questionComment = commentMapper.commentRequestDtoToQuestionComment(commentRequestDto);
-        questionComment.setQuestion(questionService.getQuestion(questionId));
+        questionComment.setQuestion(questionService.findQuestion(questionId));
         //questionComment.setUser(new User());
         questionComment.setUser(user); // 값을 할당하기위해 추가
 
@@ -64,7 +64,7 @@ public class QuestionCommentController {
         User user = userService.findUserByEmail(auth.getPrincipal().toString());
 
         QuestionComment questionComment = commentMapper.commentRequestDtoToQuestionComment(commentRequestDto);
-        questionComment.setQuestionCommentId(commentId);
+        questionComment.setId(commentId);
 
         try {
             // CommentService를 사용해서 업데이트된 Comment Entity를 new Entity에 저장

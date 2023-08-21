@@ -26,10 +26,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long answerId;
+    private Long id;
 
     @Column(length = 255, nullable = false)
-    private String answerContent;
+    private String content;
 
     @JoinColumn(name = "USER_ID")
     @ManyToOne(fetch = FetchType.LAZY)

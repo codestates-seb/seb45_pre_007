@@ -10,10 +10,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
-    @Mapping(source = "content", target = "answerCommentContent")
     AnswerComment commentRequestDtoToAnswerComment(CommentRequestDto commentRequestDto);
-    @Mapping(source = "content", target = "questionCommentContent")
     QuestionComment commentRequestDtoToQuestionComment(CommentRequestDto commentRequestDto);
+    @Mapping(source = "user.name", target = "user")
     AnswerCommentResponseDto answerCommentToAnswerCommentResponseDto(AnswerComment answerComment);
+    @Mapping(source = "user.name", target = "user")
     QuestionCommentResponseDto questionCommentToQuestionCommentResponseDto(QuestionComment questionComment);
 }

@@ -8,9 +8,11 @@ import com.lucky7.preproject.comment.entity.AnswerComment;
 import org.mapstruct.Mapper;
 
 import java.util.List;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {
+    @Mapping(source = "user.name", target = "user")
     AnswerResponseDto answerToAnswerDto(Answer answer);
     Answer answerDtoToAnswer(AnswerDto answerDto);
     List<AnswerResponseDto> answersToAnswerDtos(List<Answer> answers);

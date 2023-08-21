@@ -51,11 +51,11 @@ public class AnswerController {
 
     @GetMapping
     public ResponseEntity<List<AnswerResponseDto>> getAllAnswers(@PathVariable long questionId) {
-        List<Answer> foundAnswers = answerService.getAllAnswers(questionId);
+        List<Answer> foundAnswers = answerService.findAllAnswers(questionId);
         List<AnswerResponseDto> responseDtos = answerMapper.answersToAnswerDtos(foundAnswers);
 
         for(AnswerResponseDto answerResponseDto : responseDtos) {
-            List<AnswerComment> answerComments = answerCommentService.findAnswerComments(answerResponseDto.getAnswerId());
+            List<AnswerComment> answerComments = answerCommentService.findAllAnswerComments(answerResponseDto.getId());
             List<AnswerCommentDto> answerCommentDtos = answerMapper.answerCommentsToAnswerCommentDtos(answerComments);
             answerResponseDto.setAnswerComments(answerCommentDtos);
         }

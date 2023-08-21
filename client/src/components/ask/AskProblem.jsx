@@ -4,7 +4,7 @@ import AskAside from '../ask/askAside/AskAside.jsx';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { setContent } from '../../redux/feature/askSlice.js';
+import { setContent } from '../../redux/feature/ask/askSlice.js';
 
 const AskProblem = ({ isFocus, setIsFocus, modules }) => {
   const content = useSelector((state) => state.ask.content);

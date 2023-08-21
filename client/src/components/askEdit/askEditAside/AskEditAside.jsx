@@ -118,7 +118,7 @@ const AskEditAside = ({ isFocus, index }) => {
     setScrollHeight(height);
   };
 
-  console.log(scrollHeight);
+  // console.log(isFocus === index);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -148,7 +148,7 @@ const AskEditAside = ({ isFocus, index }) => {
 export default AskEditAside;
 
 const AskEditAsideLayout = styled.div`
-  position: absolute;
+  /* position: absolute; */
 
   /* right: 230px; */
   /* left: 66vw; */
@@ -165,11 +165,15 @@ const AskEditAsideLayout = styled.div`
     `}
 
   ${({ scrollHeight }) =>
-    scrollHeight > 1 &&
-    css`
-      position: fixed;
-      top: 65px;
-    `}
+    scrollHeight >= 1
+      ? css`
+          position: fixed;
+          top: 65px;
+        `
+      : css`
+          position: absolute;
+          /* top: 100px; */
+        `}
 `;
 
 const AskEditAsideBox = styled.div``;

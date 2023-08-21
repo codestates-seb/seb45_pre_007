@@ -25,13 +25,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // strategy 공부
     @Id //springframework.data.id와 @Document는 비관계형 데이터베이스를 사용할 때 쓰인다.
-    private Long questionId;
+    private Long id;
 
     @Column(length = 20, nullable = false)
-    private String questionTitle;
+    private String title;
 
     @Column(length = 255, nullable = false)
-    private String questionContent;
+    private String content;
 
     @JoinColumn(name = "USER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
