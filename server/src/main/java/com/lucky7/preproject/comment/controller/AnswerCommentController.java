@@ -68,7 +68,7 @@ public class AnswerCommentController {
         answerComment.setId(commentId);
 
         try {
-            // CommentService를 사용해서 업데이트된 Comment Entity를 new Entity에 저장
+            //CommentService를 사용해서 업데이트된 Comment Entity를 new Entity에 저장
             AnswerComment updatedAnswerComment = answerCommentService.updateAnswerComment(answerComment, user);
             AnswerCommentResponseDto responseDto = commentMapper.answerCommentToAnswerCommentResponseDto(updatedAnswerComment);
 
