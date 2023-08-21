@@ -9,6 +9,9 @@ import LoginNav from '../components/LoginNav.jsx';
 import facebook from '../assert/facebook.png';
 // facebook 사진 테스트용
 import { isPC, isMobile } from '../utils/mediaQueryUtils';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const MypageLayout = styled.section`
   display: flex;
@@ -229,6 +232,20 @@ const PostWrap = styled.div`
 const Mypage = () => {
   const isDesktop = isPC();
   const isMobileScreen = isMobile();
+  const url = process.env.REACT_APP_API_URL;
+  const { userId } = useParams();
+  const [user, setUser] = useState({});
+  console.log(userId);
+  useEffect(() => {
+    axios
+      .get(`${url}/users/${userId}`)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching answers:', error);
+      });
+  }, [userId]);
 
   return (
     <MypageLayout>
@@ -237,14 +254,14 @@ const Mypage = () => {
         <MypageProfile>
           <img src={facebook} alt="test용" />
           <div className="profileContents">
-            <h1>Lucky 7</h1>
+            <h1>{user.userName ? ` ${user.userName}` : 'Lucky 7'}</h1>
             <p>
               <MdCake />
               Member for 3 days
             </p>
             <p>
               <AiOutlineClockCircle />
-              Last seen this week
+              {user.createdAt ? ` ${user.createdAt}` : 'Last seen this week'}
             </p>
             <p>
               <FaRegCalendarAlt />

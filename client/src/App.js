@@ -28,7 +28,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/ask" element={<Ask />} />
           <Route path="/signup" element={<Sign />} />
-          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/:userId" element={<MyPage />} />
           {/*! 아래 컴포넌트 이름 변경해야 함! */}
           <Route path="/questions" element={<Question />} />
           <Route path="/questions/:questionId" element={<Answer />} />

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import LoginNav from '../components/LoginNav.jsx';
 import Aside from '../components/Aside.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Google from '../assert/google.png';
 import { AiOutlineUpCircle, AiOutlineDownCircle } from 'react-icons/ai';
 import axios from 'axios';
@@ -57,12 +57,12 @@ const AnswerContentBox = styled.div`
 const AnswerVote = styled.div`
   width: 56.78px;
   padding: 0 16px 0 0;
-  color: #232629;
+  color: #232629
   font-size: 13px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-
+  flex-wrap: wrap
+  
   button {
     cursor: pointer;
   }
@@ -71,7 +71,7 @@ const AnswerCount = styled.div`
   font-size: 19px;
   margin: 2px;
   padding: 4px 0;
-  width: 44.78px;
+  witdh: 44.78px;
   //width: 32.84px;
   text-align: center;
 `;
@@ -79,7 +79,7 @@ const AnswerCount = styled.div`
 const AnswerContent = styled.div`
   width: 670.22px;
   padding: 0 16px 0 0;
-  color: #232629;
+  color: #232629
   font-size: 13px;
   display: flex;
   justify-content: flex-start;
@@ -164,39 +164,55 @@ const AnswerBtn = styled.div`
   color: white;
   text-align: center;
   box-sizing: border-box;
-  box-shadow: rgba(255, 255, 255, 0.4);
+  box-shadow: rgba(255,255,255,0.4);
   line-height: 0.938rem;
   white-space: nowrap;
   border-radius: 0.188rem;
 
   &:hover {
-    background-color: #0174cd;
-  }
+    background-color:  #0174cd;
 `;
 
 const Answer = () => {
   const navigate = useNavigate();
+  const [questionData, setQuestionData] = useState({});
   const count = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
+  const url = process.env.REACT_APP_API_URL;
+  const { questionId } = useParams();
 
   const AskBtn = () => {
     navigate('/ask');
   };
 
   const EditBtn = () => {
-    navigate('/ask/edit');
+    const editRoute = `/questions/${questionId}/edit`;
+    navigate(editRoute);
   };
+
+  useEffect(() => {
+    const fetchQuestionData = async () => {
+      try {
+        const response = await axios.get(`${url}/questions/${questionId}`);
+        setQuestionData(response.data);
+      } catch (error) {
+        console.error('Error fetching question data:', error);
+      }
+    };
+
+    fetchQuestionData();
+  }, [questionId]);
 
   return (
     <AnswerLayout>
       <LoginNav />
       <AnswerBox>
         <AnswerTitle>
-          <h1> Lucky 7 test ~ing </h1>
+          <h1>{questionData.questionTitle}test ~ing </h1>
           <AnswerBtn onClick={AskBtn}>Ask Question</AnswerBtn>
         </AnswerTitle>
         <AnswerSubTitle>
-          <span>Asked&nbsp; </span>
+          <span>Asked&nbsp;{questionData.createdAt} </span>
           <span>&nbsp;&nbsp;&nbsp;Modified&nbsp;</span>
           <span>&nbsp;&nbsp;&nbsp;Viewed&nbsp;</span>
         </AnswerSubTitle>
@@ -205,7 +221,7 @@ const Answer = () => {
             <button>
               <AiOutlineUpCircle
                 size={40.78}
-                stroke-width={1}
+                strokeWidth={1}
                 onClick={() => dispatch(increment())}
               />
             </button>
@@ -213,13 +229,13 @@ const Answer = () => {
             <button>
               <AiOutlineDownCircle
                 size={40.78}
-                stroke-width={1}
+                strokeWidth={1}
                 onClick={() => dispatch(decrement())}
               />
             </button>
           </AnswerVote>
           <AnswerContent>
-            <p>content</p>
+            <p>{questionData.questionContent}content</p>
             <AnswerSubContent>
               <AnswerContentCategory>
                 <button>Share</button>
@@ -229,9 +245,9 @@ const Answer = () => {
                 <button>Follow</button>
               </AnswerContentCategory>
               <AnswerContentUserInfo>
-                <div>asked: time</div>
+                <div>asked: {questionData.createdAt}</div>
                 <img src={Google} alt="test"></img>
-                <p>User id</p>
+                <p>{questionData.questionUser}user</p>
               </AnswerContentUserInfo>
             </AnswerSubContent>
           </AnswerContent>
@@ -240,7 +256,7 @@ const Answer = () => {
         <AnswerContentComment>
           <button>Add a comment</button>
         </AnswerContentComment>
-        {/* <AnswerGet /> */}
+        <AnswerGet />
         <AnswerDetail />
       </AnswerBox>
     </AnswerLayout>
