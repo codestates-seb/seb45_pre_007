@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import LoginNav from '../components/LoginNav.jsx';
 import Aside from '../components/Aside.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Google from '../assert/google.png';
 import { AiOutlineUpCircle, AiOutlineDownCircle } from 'react-icons/ai';
 import axios from 'axios';
@@ -186,7 +186,8 @@ const Answer = () => {
   };
 
   const EditBtn = () => {
-    navigate('/ask/edit');
+    const editRoute = `/questions/${questionId}/edit`;
+    navigate(editRoute);
   };
 
   useEffect(() => {
