@@ -7,6 +7,9 @@ import logo from '../assert/logo1.png';
 import logo2 from '../assert/posts.jpg';
 import LoginNav from '../components/LoginNav.jsx';
 import lucky7 from '../assert/lucky-7-min-min.png';
+// facebook 사진 테스트용
+import { isPC, isMobile } from '../utils/mediaQueryUtils';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const MypageLayout = styled.section`
@@ -226,6 +229,12 @@ const PostWrap = styled.div`
 `;
 
 const Mypage = () => {
+  const isDesktop = isPC();
+  const isMobileScreen = isMobile();
+  const url = process.env.REACT_APP_API_URL;
+  const [user, setUser] = useState({});
+
+  const userId = useSelector((state) => state.login.id);
   const getUser = useSelector((state) => state.users.user);
 
   return (
