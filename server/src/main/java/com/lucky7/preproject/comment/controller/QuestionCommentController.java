@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,10 +36,8 @@ public class QuestionCommentController {
     public ResponseEntity<?> postQuestionComment(@PathVariable long questionId,
                                                  @RequestBody CommentRequestDto commentRequestDto) {
         User user = getCurrentUser();
-
         QuestionComment questionComment = commentMapper.commentRequestDtoToQuestionComment(commentRequestDto);
         questionComment.setQuestion(questionService.findQuestion(questionId));
-        //questionComment.setUser(new User());
         questionComment.setUser(user); // 값을 할당하기위해 추가
 
         QuestionComment createdQuestionComment = questionCommentService.createQuestionComment(questionComment);
@@ -53,35 +50,23 @@ public class QuestionCommentController {
                                                   @PathVariable long commentId,
                                                   @RequestBody CommentRequestDto commentRequestDto) {
         User user = getCurrentUser();
-
         QuestionComment questionComment = commentMapper.commentRequestDtoToQuestionComment(commentRequestDto);
         questionComment.setId(commentId);
 
-        try {
-            // CommentService를 사용해서 업데이트된 Comment Entity를 new Entity에 저장
-            QuestionComment updatedQuestionComment = questionCommentService.updateQuestionComment(questionComment, user);
-            CommentResponseDto responseDto = commentMapper.questionCommentToCommentResponseDto(updatedQuestionComment);
+        // CommentService를 사용해서 업데이트된 Comment Entity를 new Entity에 저장
+        QuestionComment updatedQuestionComment = questionCommentService.updateQuestionComment(questionComment, user);
+        CommentResponseDto responseDto = commentMapper.questionCommentToCommentResponseDto(updatedQuestionComment);
 
-            return new ResponseEntity<>(responseDto, HttpStatus.OK);
-        } catch (AccessDeniedException e) {
-            log.error("댓글을 작성한 User가 아닙니다");
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity<?> deleteQuestionComment(@PathVariable long questionId,
                                                    @PathVariable long commentId) {
         User user = getCurrentUser();
+        questionCommentService.deleteQuestionComment(questionId, commentId, user);
 
-        try {
-            questionCommentService.deleteQuestionComment(questionId, commentId, user);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (AccessDeniedException e) {
-            log.error("댓글을 작성한 User가 아닙니다");
-
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private User getCurrentUser() {

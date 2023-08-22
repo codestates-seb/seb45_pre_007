@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,11 +37,10 @@ public class AnswerCommentController {
                                                @PathVariable long answerId,
                                                @RequestBody CommentRequestDto commentRequestDto) {
         User user = getCurrentUser();
-
         AnswerComment answerComment = commentMapper.commentRequestDtoToAnswerComment(commentRequestDto);
         answerComment.setAnswer(answerService.findAnswer(answerId));
-        answerComment.setUser(user); // 값을 할당하기위해 추가
-        //answerComment.setUser()
+        answerComment.setUser(user);
+
         AnswerComment createdAnswerComment = answerCommentService.createAnswerComment(answerComment);
         CommentResponseDto responseDto = commentMapper.answerCommentToCommentResponseDto(createdAnswerComment);
 
@@ -55,20 +53,14 @@ public class AnswerCommentController {
                                                 @PathVariable long commentId,
                                                 @RequestBody CommentRequestDto commentRequestDto) {
         User user = getCurrentUser();
-
         AnswerComment answerComment = commentMapper.commentRequestDtoToAnswerComment(commentRequestDto);
         answerComment.setId(commentId);
 
-        try {
-            //CommentService를 사용해서 업데이트된 Comment Entity를 new Entity에 저장
-            AnswerComment updatedAnswerComment = answerCommentService.updateAnswerComment(answerComment, user);
-            CommentResponseDto responseDto = commentMapper.answerCommentToCommentResponseDto(updatedAnswerComment);
+        //CommentService를 사용해서 업데이트된 Comment Entity를 new Entity에 저장
+        AnswerComment updatedAnswerComment = answerCommentService.updateAnswerComment(answerComment, user);
+        CommentResponseDto responseDto = commentMapper.answerCommentToCommentResponseDto(updatedAnswerComment);
 
-            return new ResponseEntity<>(responseDto, HttpStatus.OK);
-        } catch (AccessDeniedException e) {
-            log.error("댓글을 작성한 User가 아닙니다");
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{commentId}")
@@ -77,16 +69,9 @@ public class AnswerCommentController {
                                                  @PathVariable long commentId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByEmail(auth.getPrincipal().toString());
+        answerCommentService.deleteAnswerComment(answerId, commentId, user);
 
-        try {
-            answerCommentService.deleteAnswerComment(answerId, commentId, user);
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (AccessDeniedException e) {
-            log.error("댓글을 작성한 User가 아닙니다");
-
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private User getCurrentUser() {

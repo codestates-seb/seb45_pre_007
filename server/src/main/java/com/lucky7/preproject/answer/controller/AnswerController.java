@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +37,6 @@ public class AnswerController {
                                                         @RequestBody AnswerRequestDto requestDto) {
         User user = getCurrentUser();
         Answer answerToCreate = answerMapper.answerDtoToAnswer(requestDto);
-
         answerToCreate.setUser(user); // 값을 할당하기위해 추가
 
         Answer createdAnswer = answerService.createAnswer(questionId, answerToCreate);
@@ -74,34 +72,21 @@ public class AnswerController {
         User user = getCurrentUser();
         Answer answerToUpdate = answerMapper.answerDtoToAnswer(requestDto);
 
-        try {
-            // AnswerService를 사용해서 업데이트된 Entity를 new Entity에 저장
-            Answer updatedAnswer = answerService.updateAnswer(questionId, answerId, answerToUpdate, user);
+        // AnswerService를 사용해서 업데이트된 Entity를 new Entity에 저장
+        Answer updatedAnswer = answerService.updateAnswer(questionId, answerId, answerToUpdate, user);
 
-            // 업데이트된 Entity를 다시 DTO로 변환
-            AnswerResponseDto responseDto = answerMapper.answerToAnswerDto(updatedAnswer);
+        // 업데이트된 Entity를 다시 DTO로 변환
+        AnswerResponseDto responseDto = answerMapper.answerToAnswerDto(updatedAnswer);
 
-            return new ResponseEntity<>(responseDto, HttpStatus.OK);
-        } catch (AccessDeniedException e) {
-            log.error("답변을 작성한 User가 아닙니다");
-
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
     @DeleteMapping("/{answerId}")
     public ResponseEntity<Map<String, Object>> deleteAnswer(@PathVariable long questionId,
                                                             @PathVariable long answerId) {
         User user = getCurrentUser();
+        answerService.deleteAnswer(questionId, answerId, user);
 
-        try {
-            answerService.deleteAnswer(questionId, answerId, user);
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (AccessDeniedException e) {
-            log.error("게시물을 작성한 User가 아닙니다");
-
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private User getCurrentUser() {
