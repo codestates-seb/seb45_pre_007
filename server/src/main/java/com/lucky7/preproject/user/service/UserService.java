@@ -3,6 +3,8 @@ package com.lucky7.preproject.user.service;
 import com.lucky7.preproject.auth.utils.CustomAuthorityUtils;
 import com.lucky7.preproject.user.entity.User;
 import com.lucky7.preproject.user.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import org.mapstruct.control.MappingControl.Use;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder; //passwordEncoder 추가
     private final CustomAuthorityUtils authorityUtils;
-
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authorityUtils = authorityUtils;
-    }
 
     public User createUser(User user){
         String encryptedPassword = passwordEncoder.encode(user.getHashedPassword());

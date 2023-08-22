@@ -20,7 +20,6 @@ public class UserController {
     @PostMapping
     public ResponseEntity postUser(@RequestBody UserPostDto userPostDto){
         User user = mapper.userPostToUser(userPostDto);
-
         User response = userService.createUser(user);
 
         return new ResponseEntity<>(mapper.userToUserResponseDto(response),
@@ -30,7 +29,6 @@ public class UserController {
     @PatchMapping("{userId}")
     private ResponseEntity patchUser(@PathVariable long userId, @RequestBody UserPatchDto userPatchDto){
         userPatchDto.setId(userId);
-
         User response = userService.updateUser(mapper.userPatchToUser(userPatchDto));
 
         return new ResponseEntity<>(mapper.userToUserResponseDto(response),

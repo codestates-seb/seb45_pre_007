@@ -5,9 +5,7 @@ import com.lucky7.preproject.user.dto.UserPostDto;
 import com.lucky7.preproject.user.dto.UserResponseDto;
 import com.lucky7.preproject.user.entity.User;
 import org.mapstruct.Mapper;
-
 import org.mapstruct.Mapping;
-
 
 @Mapper(componentModel = "spring") // 수정 사항 없음
 public interface UserMapper {
