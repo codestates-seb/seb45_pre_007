@@ -4,18 +4,16 @@ import QuestionListContent from './QustionListContent.jsx';
 import QuestionPageNation from './QuestionPageNation.jsx';
 import QuestionFilterBar from './QuestionFilterBar.jsx';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { getByQuestions } from '../../redux/api/question/getByQuestions.js';
 
 const QuestionListMain = () => {
   const [questions, setQuestions] = useState([]);
   const [isFetch, setisFetch] = useState(false);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(async () => {
-    dispatch(getByQuestions());
-  }, []);
+  // useEffect(async () => {
+  //   dispatch(getByQuestions());
+  // }, []);
 
   // const user = () => {
   //   questions.map((cur, idx) => {
