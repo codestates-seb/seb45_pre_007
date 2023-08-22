@@ -9,8 +9,10 @@ import LoginNav from '../components/LoginNav.jsx';
 import lucky7 from '../assert/lucky-7-min-min.png';
 // facebook 사진 테스트용
 import { isPC, isMobile } from '../utils/mediaQueryUtils';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getByUser } from '../redux/api/users/getUser';
 
 const MypageLayout = styled.section`
   display: flex;
@@ -232,7 +234,21 @@ const Mypage = () => {
   const isDesktop = isPC();
   const isMobileScreen = isMobile();
   const url = process.env.REACT_APP_API_URL;
+  // const { userId } = useParams();
   const [user, setUser] = useState({});
+  // console.log(userId);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${url}/users/${userId}`)
+  //     .then((response) => {
+  //       setUser(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching answers:', error);
+  //     });
+  // }, [userId]);
+
+  const userId = useSelector((state) => state.login.id);
   const getUser = useSelector((state) => state.users.user);
 
   return (

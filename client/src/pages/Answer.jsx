@@ -3,7 +3,6 @@ import { styled } from 'styled-components';
 import LoginNav from '../components/LoginNav.jsx';
 import Aside from '../components/Aside.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
-import Google from '../assert/google.png';
 import { AiOutlineUpCircle, AiOutlineDownCircle } from 'react-icons/ai';
 import axios from 'axios';
 import AnswerDetail from '../components/answer/AnswerDetail.jsx';
@@ -11,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { decrement, increment } from '../redux/feature/counterSlice.js';
 import AnswerGet from '../components/answer/AnswerGet.jsx';
 import { setNextLevel } from '../redux/feature/login/loginSlice.js';
+import { deleteByAsk } from '../redux/api/ask/deleteAsk.js';
 
 const AnswerLayout = styled.section`
   display: flex;
@@ -63,7 +63,8 @@ const AnswerVote = styled.div`
   font-size: 13px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap button {
+  flex-wrap: wrap;
+  button {
     cursor: pointer;
   }
 `;
@@ -183,6 +184,15 @@ const Answer = () => {
   const { questionId } = useParams();
   const loginData = useSelector((state) => state.login);
   const successedUser = loginData.isSuccessed;
+  const { loading } = useSelector((state) => state.askDelete);
+  const token = useSelector((state) => state.login.token);
+  const loggedInUser = useSelector((state) => state.users.user);
+  const getUser = useSelector((state) => state.users.user);
+  const questionUser = useSelector((state) => state.question.author);
+  const isQuestionAuthor = getUser.userName === questionUser;
+
+  console.log('loginData.userName:', questionUser);
+  console.log('questionData.questionUser:', questionData.questionUser);
 
   const AskBtn = () => {
     if (successedUser) {
@@ -196,6 +206,13 @@ const Answer = () => {
   const EditBtn = () => {
     const editRoute = `/questions/${questionId}/edit`;
     navigate(editRoute);
+  };
+
+  const handleDeleteAsk = () => {
+    if (window.confirm('정말로 삭제하시겠습니까?')) {
+      dispatch(deleteByAsk({ id: +questionId, token }));
+      navigate('/');
+    }
   };
 
   useEffect(() => {
@@ -254,6 +271,14 @@ const Answer = () => {
                 <button type="submit" onClick={EditBtn}>
                   Edit
                 </button>
+                {isQuestionAuthor && (
+                  <button
+                    onClick={handleDeleteAsk}
+                    disabled={loading === 'pending'}
+                  >
+                    {loading === 'pending' ? 'Deleting...' : 'Delete'}
+                  </button>
+                )}
                 <button>Follow</button>
               </AnswerContentCategory>
               <AnswerContentUserInfo>
