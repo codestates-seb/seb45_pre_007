@@ -15,10 +15,10 @@ export const getByQuestion = createAsyncThunk(
     //! 특정 question이 수정할 question이 맞는지 확인해서 id를 넣어야 함
     //! 질문 등록 시 나온 questionId랑 질문 조회 시 나온 questionId가 같은지...
     let questionId = id;
-    console.log(questionId);
+    // console.log(questionId);
 
     const response = await axios.get(`${url}/questions/${questionId}`);
-    console.log(...response.data.questionComments);
+    // console.log(...response.data.questionComments);
     return response.data;
   }
 );
