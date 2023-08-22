@@ -6,7 +6,7 @@ import { AiOutlineClockCircle } from 'react-icons/ai';
 import logo from '../assert/logo1.png';
 import logo2 from '../assert/posts.jpg';
 import LoginNav from '../components/LoginNav.jsx';
-import facebook from '../assert/facebook.png';
+import lucky7 from '../assert/lucky-7-min-min.png';
 // facebook 사진 테스트용
 import { isPC, isMobile } from '../utils/mediaQueryUtils';
 import { useParams } from 'react-router-dom';
@@ -265,7 +265,7 @@ const Mypage = () => {
       <MypageBox>
         <MypageProfile>
           <img
-            src={getUser?.avatarImg ? getUser.avatarImg : facebook}
+            src={getUser?.avatarImg ? getUser.avatarImg : lucky7}
             alt="test용"
           />
           <div className="profileContents">
