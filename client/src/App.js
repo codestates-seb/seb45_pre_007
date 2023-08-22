@@ -17,15 +17,6 @@ const App = () => {
   // footer가 없는 페이지 경로
   const hideFooterPaths = ['/signup', '/login'];
   const shouldHideFooter = hideFooterPaths.includes(location.pathname);
-  const getUser = useSelector((state) => state.users.user);
-  const userId = useSelector((state) => state.login.id);
-  const dispatch = useDispatch();
-  console.log(getUser);
-
-  useEffect(() => {
-    console.log(userId);
-    dispatch(getByUser(userId));
-  }, [userId]);
 
   const userId = useSelector((state) => state.login.id);
   const getUser = useSelector((state) => state.users.user);
