@@ -5,16 +5,19 @@ import dateFommated from '../../utils/dateFomatted';
 import { deleteByAskComment } from '../../redux/api/askEdit/deleteAskComment';
 import { useParams } from 'react-router-dom';
 import { setComments } from '../../redux/feature/question/questionSlice';
-import { patchToEditComment } from '../../redux/api/askEdit/patchAskComment';
+import axios from 'axios';
 
 const AskComments = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [editContent, setEditContent] = useState('');
   const dispatch = useDispatch();
+  const commentData = useSelector((state) => state.askComment.content);
   const questionComment = useSelector((state) => state?.question?.comments);
   const getUser = useSelector((state) => state.users.user);
   const token = useSelector((state) => state.login.token);
   const successedStatus = useSelector((state) => state.deleteComment.status);
   const { questionId } = useParams();
+  const url = process.env.REACT_APP_API_URL;
   let userQuestionId = +questionId;
 
   // 댓글 수정 => 해당 객체안에 있는 값을 바꾸어야 하므로 특정 id를 조회해서 변경해주어야 함
@@ -23,9 +26,11 @@ const AskComments = () => {
       setComments(
         questionComment.map((cur) => {
           if (cur.questionCommentId === comment.questionCommentId) {
+            setIsOpen(true);
             return { ...cur, isEdit: true };
           } else {
             // 해당 객체가 아니라면 isEdit를 false로 해준다
+            setIsOpen(false);
             return { ...cur, isEdit: false };
           }
         })
@@ -33,23 +38,47 @@ const AskComments = () => {
     );
   };
 
-  const handleCommentChange = (comment) => {
-    let userCommentId = comment.questionCommentId;
-    // console.log(comment);
+  const handleCommentChange = async (comment) => {
+    let commentId = comment.questionCommentId;
+    try {
+      const response = await axios.patch(
+        `${url}/questions/${questionId}/comments/${commentId}`,
+        {
+          content: editContent,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
 
-    dispatch(
-      patchToEditComment({
-        content: editContent,
-        userQuestionId,
-        userCommentId,
-        token,
-      })
-    );
+      const updatedComment = {
+        ...comment,
+        commentContent: response.data.questionCommentContent,
+        lastModifiedAt: response.data.lastModifiedAt,
+        isEdit: false,
+      };
+
+      // 업데이트한 댓글을 원래 comments에서 대체
+      dispatch(
+        setComments(
+          questionComment.map((cur) =>
+            cur.questionCommentId === commentId ? updatedComment : cur
+          )
+        )
+      );
+
+      setIsOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleKeyDown = (e, comment) => {
     if (e.key === 'Enter' && editContent !== '') {
       handleCommentChange(comment);
+      setIsOpen(false);
     }
   };
 
@@ -70,14 +99,17 @@ const AskComments = () => {
     }
   };
 
+  console.log(getUser.userName);
+
   return (
     <AskCommentsLayout>
       {questionComment.length > 0 &&
         questionComment.map((comment, index) => (
           <>
-            {comment.isEdit ? (
+            {comment?.isEdit && isOpen ? (
               <AskCommentInputBox>
                 <AskCommentInput
+                  placeholder={comment?.commentContent}
                   // 매개변수로 넘겨줄 때 조심하기!
                   onKeyDown={(e) => handleKeyDown(e, comment)}
                   onChange={(e) => setEditContent(e.target.value)}
@@ -90,15 +122,15 @@ const AskComments = () => {
                     <div className="commentBox">
                       <div className="commentLists">
                         <span className="commentContent">
-                          {comment.commentContent}
+                          {comment?.commentContent}
                         </span>
                         <span className="commentUser">
                           <span className="commentUserDash">&nbsp;–</span>&nbsp;
-                          {comment.commentUser}&nbsp;
+                          {comment?.commentUser}&nbsp;
                         </span>
                         <span className="lastModifiedAt">
-                          {dateFommated(comment.lastModifiedAt)}
-                          {comment.lastModifiedAt !== comment.createdAt ? (
+                          {dateFommated(comment?.lastModifiedAt)}
+                          {comment?.lastModifiedAt !== comment?.createdAt ? (
                             <span className="updateIcon">
                               &nbsp;
                               <svg
@@ -120,11 +152,14 @@ const AskComments = () => {
                             </span>
                           ) : null}
                         </span>
-                        {getUser.userName === comment.commentUser && (
+                        {getUser.userName === comment?.commentUser && (
                           <>
                             <span
                               className="editIcon"
-                              onClick={() => isEditChange(comment)}
+                              onClick={() => {
+                                isEditChange(comment);
+                                setIsOpen(true);
+                              }}
                             >
                               &nbsp;edit&nbsp;
                             </span>

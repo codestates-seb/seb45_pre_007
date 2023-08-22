@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Header } from './components/header/Header.jsx';
 import { Login } from './pages/Login.jsx';
@@ -9,12 +9,24 @@ import AskEdit from './pages/AskEdit.jsx';
 import MyPage from './pages/MyPage.jsx';
 import Answer from './pages/Answer.jsx';
 import Question from './pages/Question.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { getByUser } from './redux/api/users/getUser.js';
 
 const App = () => {
   const location = useLocation();
   // footer가 없는 페이지 경로
   const hideFooterPaths = ['/signup', '/login'];
   const shouldHideFooter = hideFooterPaths.includes(location.pathname);
+
+  const userId = useSelector((state) => state.login.id);
+  const getUser = useSelector((state) => state.users.user);
+  const dispatch = useDispatch();
+  console.log(getUser);
+
+  useEffect(() => {
+    console.log(userId);
+    dispatch(getByUser(userId));
+  }, [userId]);
 
   return (
     <>

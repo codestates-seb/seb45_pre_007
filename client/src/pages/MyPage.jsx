@@ -249,15 +249,15 @@ const Mypage = () => {
   //     });
   // }, [userId]);
 
-  const userId = useSelector((state) => state.login.id);
+  // const userId = useSelector((state) => state.login.id);
   const getUser = useSelector((state) => state.users.user);
-  const dispatch = useDispatch();
-  console.log(getUser);
+  // const dispatch = useDispatch();
+  // console.log(getUser);
 
-  useEffect(() => {
-    console.log(userId);
-    dispatch(getByUser(userId));
-  }, [userId]);
+  // useEffect(() => {
+  //   console.log(userId);
+  //   dispatch(getByUser(userId));
+  // }, [userId]);
 
   return (
     <MypageLayout>
