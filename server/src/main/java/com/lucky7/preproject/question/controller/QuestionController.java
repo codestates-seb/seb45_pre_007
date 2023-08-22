@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +34,7 @@ public class QuestionController {
 
     @PostMapping
     public ResponseEntity<QuestionResponseDto> postQuestion(@RequestBody QuestionRequestDto questionRequestDto) {
-        // 현재 인증된 사용자 정보 가져오기
-        User user = getCurrentUser();
+        User user = getCurrentUser(); // 현재 인증된 사용자 정보 가져오기
 
         Question questionToCreate = mapper.questionPostDtoToQuestion(questionRequestDto); // DTO에서 Entity로 변환
         questionToCreate.setUser(user); // 사용자 정보 설정
@@ -73,37 +71,20 @@ public class QuestionController {
     @PatchMapping("/{questionId}")
     public ResponseEntity<QuestionResponseDto> patchQuestion(@PathVariable long questionId,
                                                              @RequestBody QuestionRequestDto questionRequestDto) {
-       User user = getCurrentUser();
+        User user = getCurrentUser();
+        Question questionToUpdate = mapper.questionPatchDtoToQuestion(questionRequestDto); // 업데이트할 데이터를 DTO 에서 new Entity 로 변환
+        Question updatedQuestion = questionService.updateQuestion(questionId, questionToUpdate, user); // QuestionService 를 사용해서 업데이트된 Entity 를 new Entity 에 저장
+        QuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(updatedQuestion); // 업데이트된 Entity 를 다시 DTO 로 변환
 
-        // 업데이트할 데이터를 DTO 에서 new Entity 로 변환
-       Question questionToUpdate = mapper.questionPatchDtoToQuestion(questionRequestDto);
-
-       try {
-            // QuestionService 를 사용해서 업데이트된 Entity 를 new Entity 에 저장
-            Question updatedQuestion = questionService.updateQuestion(questionId, questionToUpdate, user);
-
-            // 업데이트된 Entity 를 다시 DTO 로 변환
-            QuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(updatedQuestion);
-
-            return new ResponseEntity<>(responseDto, HttpStatus.OK);
-        } catch (AccessDeniedException e) {
-            log.error("게시물을 작성한 User가 아닙니다");
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
+
     @DeleteMapping("/{questionId}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable long questionId) {
         User user = getCurrentUser();
+        questionService.deleteQuestion(questionId, user);
 
-        try {
-            questionService.deleteQuestion(questionId, user);
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (AccessDeniedException e) {
-            log.error("게시물을 작성한 User가 아닙니다");
-
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private User getCurrentUser() {
