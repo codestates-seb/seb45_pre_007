@@ -10,9 +10,11 @@ import AnswerDetail from '../components/answer/AnswerDetail.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { decrement, increment } from '../redux/feature/counterSlice.js';
 import AnswerGet from '../components/answer/AnswerGet.jsx';
+import { setNextLevel } from '../redux/feature/login/loginSlice.js';
 
 const AnswerLayout = styled.section`
   display: flex;
+  justify-content: center;
 `;
 
 const AnswerBox = styled.section`
@@ -78,7 +80,7 @@ const AnswerContent = styled.div`
   width: 670.22px;
   padding: 0 16px 0 0;
   color: #232629;
-  font-size: 13px;
+  font-size: 15px;
   display: flex;
   justify-content: flex-start;
   align-content: space-between;
@@ -121,7 +123,7 @@ const AnswerContentUserInfo = styled.div`
   background-color: #d0e3f1;
 
   div {
-    font-size: 12px;
+    font-size: 11px;
     color: #6a737c;
     margin: 1px 0 4px;
     width: 187px;
@@ -179,9 +181,16 @@ const Answer = () => {
   const dispatch = useDispatch();
   const url = process.env.REACT_APP_API_URL;
   const { questionId } = useParams();
+  const loginData = useSelector((state) => state.login);
+  const successedUser = loginData.isSuccessed;
 
   const AskBtn = () => {
-    navigate('/ask');
+    if (successedUser) {
+      navigate('/ask');
+    } else {
+      dispatch(setNextLevel('/ask'));
+      navigate('/login');
+    }
   };
 
   const EditBtn = () => {
@@ -207,12 +216,14 @@ const Answer = () => {
       <LoginNav />
       <AnswerBox>
         <AnswerTitle>
-          <h1>{questionData.questionTitle}test ~ing </h1>
+          <h1>{questionData.questionTitle}</h1>
           <AnswerBtn onClick={AskBtn}>Ask Question</AnswerBtn>
         </AnswerTitle>
         <AnswerSubTitle>
           <span>Asked&nbsp;{questionData.createdAt} </span>
-          <span>&nbsp;&nbsp;&nbsp;Modified&nbsp;</span>
+          <span>
+            &nbsp;&nbsp;&nbsp;Modified&nbsp;{questionData.lastModifiedAt}
+          </span>
           <span>&nbsp;&nbsp;&nbsp;Viewed&nbsp;</span>
         </AnswerSubTitle>
         <AnswerContentBox>
@@ -234,7 +245,9 @@ const Answer = () => {
             </button>
           </AnswerVote>
           <AnswerContent>
-            <p>{questionData.questionContent}content</p>
+            <p
+              dangerouslySetInnerHTML={{ __html: questionData.questionContent }}
+            />
             <AnswerSubContent>
               <AnswerContentCategory>
                 <button>Share</button>
@@ -245,8 +258,8 @@ const Answer = () => {
               </AnswerContentCategory>
               <AnswerContentUserInfo>
                 <div>asked: {questionData.createdAt}</div>
-                <img src={Google} alt="test"></img>
-                <p>{questionData.questionUser}user</p>
+                <img src={questionData.avatarImg} alt="test"></img>
+                <p>{questionData.questionUser}</p>
               </AnswerContentUserInfo>
             </AnswerSubContent>
           </AnswerContent>
