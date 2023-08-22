@@ -12,25 +12,27 @@
 
 ### 👫 Team
 ***
-| 김성현 <br> (BE 팀장) | 이강욱 <br> (BE) | 김하민 <br> (BE) | 김종호 <br> (FE 팀) | 심도연 <br> (FE) | 정진용 <br> (FE) |
-|---------------|---------------|---------------|-----------------|------|---------------|
-| 사진            | 사진            | 사진            | 사진              | 사진   | 사진            |
-| @tsulocalize  | @rkddnr05     | @kimhaming    | @JongHoSke      | @shimdokite | @jinyong1015  |
+| 김성현 <br> (BE 팀장)                              | 이강욱 <br> (BE) | 김하민 <br> (BE) | 김종호 <br> (FE 팀장) | 심도연 <br> (FE) | 정진용 <br> (FE)  |
+|-----------------------------------------------|------------|---------------|------------------|---------------|----------------|
+| 사진                                            | 사진         | 사진            | 사진               | 사진            | 사진             |
+| [@tsulocalize](https://github.com/tsulocalize)| [@rkddnr05]| [@kimhaming]  | [@JongHoSke]     | [@shimdokite] | [@jinyong1015] |
 
 
 ### ⚙️ Tools
 ***
 
 
-## 🖥 Front-end
+### 🖥 Front-end
 ***
-<img src="https://img.shields.io/badge/JS-색상코드?style=flat-square&logo=javascript&logoColor=로고색"/>
-
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+| Typescript | React | Axios | Redux-toolkit | Styled-components | Eslint | Prettier | React-quill | Vite | React-query |   React hook form   | Firebase |   React router dom   |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--: | :---: | :---: | :----------------------------------------------------------: | :---: | :----------------------------------------------------------: |
+| <div style="display: flex; align-items: flex-start;"><img src="https://static.codenary.co.kr/framework_logo/typescript.png" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://axios-http.com/assets/logo.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://repository-images.githubusercontent.com/347723622/92065800-865a-11eb-9626-dff3cb7fef55" alt="icon" width="65" height="65" /></div> | <img alt="styled-components logo" src="https://www.styled-components.com/atom.png" width="65" height="65" ></div> | <img alt="eslint logo" src="https://techstack-generator.vercel.app/eslint-icon.svg" height="50" width="50"></div> | <div style="display: flex; align-items: flex-start;"><img alt="prettier logo" src="https://techstack-generator.vercel.app/prettier-icon.svg" width="65" height="65" ></div> | <div style="display: flex; align-items: flex-start;"><img src="https://user-images.githubusercontent.com/97720335/234840864-390cd0c3-151e-4143-8748-2fb03e26efe4.png" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://ko.vitejs.dev/logo.svg" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://static.codenary.co.kr/framework_logo/reactquery.png" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://cdn.discordapp.com/attachments/1121326294962012240/1122702369864564797/image.png" width="75" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/firebase_logo_icon_171157.png" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://images.velog.io/images/cjy0029/post/1037984e-a895-4dfd-8ce5-0f3381b98845/reactrouter.jpeg" width="75" height="65" /></div> |
 
 ### 🔒 Back-end
 ***
-
+|   Java   |   Spring   |                                                  Spring Boot JPA                                                   |   Spring Security   |   MySQL   |   AWS   |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |:------------------------------------------------------------------------------------------------------------------:| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/java-icon.svg" alt="icon" width="65" height="65" /></div> | <img alt="spring logo" src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" height="50" width="50" > | <img alt="spring-boot logo" src="https://t1.daumcdn.net/cfile/tistory/27034D4F58E660F616" width="65" height="65" > |  <img alt="spring-security logo" width="60px" src="https://camo.githubusercontent.com/923e99a57f8a456fdade5f65b35ada254be277612ddc991afb702d8dfd880d4f/68747470733a2f2f63646e2e73696d706c6569636f6e732e6f72672f737072696e677365637572697479" width="85" height=auto > | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/aws-icon.svg" alt="icon" width="65" height="65" /></div> |
 
 ### 🌟 Pages & Features
 ***
