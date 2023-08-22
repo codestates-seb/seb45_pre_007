@@ -8,8 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class UserResponseDto { //LocalDateTime 추가
-
-    private long id;
+    private Long id;
     private String name;
     private String email;
     private String avatarImg;

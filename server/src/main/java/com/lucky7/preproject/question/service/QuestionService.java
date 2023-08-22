@@ -20,24 +20,19 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/**
+ *     서비스에서의 목적은 비즈니스 로직을 처리하는 것 입니다.
+ *     엔티티만 다루는 레이어기 때문에 매개변수로 엔티티를 받습니다. (DTO를 받지 않습니다.)
+ *     컨트롤러에서 변수를 사용해 결과를 반환하기 위해 서비스에서는 바로 결과를 반환하도록 구현하지 않았습니다.
+ *     매퍼는 컨트롤러에서 사용할 예정입니다.
+ *     서비스에서는 엔티티를 반환하도록 구현되고 있습니다.
+ *     이렇게 설계한 이유는 각각의 역할을 분리하기 위함입니다.
+ */
 @Service
 @AllArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
-    // 추후 트랜잭션 구현을 위해 레포지토리가 아닌 서비스에서 DI를 받습니다.
-    private final QuestionCommentService questionCommentService;
-
-    /**
-     *     서비스에서의 목적은 비즈니스 로직을 처리하는 것 입니다.
-     *     엔티티만 다루는 레이어기 때문에 매개변수로 엔티티를 받습니다. (DTO를 받지 않습니다.)
-     *     컨트롤러에서 변수를 사용해 결과를 반환하기 위해 서비스에서는 바로 결과를 반환하도록 구현하지 않았습니다.
-     *     매퍼는 컨트롤러에서 사용할 예정입니다.
-     *     서비스에서는 엔티티를 반환하도록 구현되고 있습니다.
-     *     이렇게 설계한 이유는 각각의 역할을 분리하기 위함입니다.
-     */
-
-
+    private final QuestionCommentService questionCommentService; // 추후 트랜잭션 구현을 위해 레포지토리가 아닌 서비스에서 DI를 받습니다.
     public Question createQuestion(Question question) {
 
         return questionRepository.save(question); // 트랜잭션 구현하면 save 안해도 됨
@@ -47,40 +42,37 @@ public class QuestionService {
         return questionRepository.findAll();
     }
     public Question findQuestion(long questionId) {
-//        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+        // Optional<Question> optionalQuestion = questionRepository.findById(questionId);
         // 예외처리 로직 추가 필요 (존재하지 않는 질문을 조회할 경우)
         // ex) EntityNotFoundException (orElseThrow 사용 등의 방법이 있습니다.)
-        Question defaultQuestion = new Question();
 
-        return questionRepository.findById(questionId).orElse(defaultQuestion);
+        return questionRepository.findById(questionId).orElse(null);
     }
 
     public Question updateQuestion(long questionId, Question questionToUpdate, User user) {
         //todo : 수정할 권한이 있는지 확인
-        Question existingQuestion = findQuestion(questionId);
+        Question question = findQuestion(questionId);
 
-        if (!existingQuestion.getUser().equals(user)) {
-            throw new AccessDeniedException("You do not have permission to update this question.");
-        }
+        validateAuthor(question, user);
         if (questionToUpdate.getTitle() != null) {
-            existingQuestion.setTitle(questionToUpdate.getTitle());
+            question.setTitle(questionToUpdate.getTitle());
         }
         if (questionToUpdate.getContent() != null) {
-            existingQuestion.setContent(questionToUpdate.getContent());
+            question.setContent(questionToUpdate.getContent());
         }
 
-//        return existingQuestion; 트랜잭션을 구현하면 이걸로 사용
-        return questionRepository.save(existingQuestion);
+        return questionRepository.save(question); // return existingQuestion; 트랜잭션을 구현하면 이걸로 사용
     }
 
     public void deleteQuestion(long questionId, User user) {
-        //todo : 삭제할 권한이 있는지 확인, 해당 Question 이 있는지 확인
         Question question = findQuestion(questionId);
+        validateAuthor(question, user);
+        questionRepository.delete(question);
+    }
 
+    private void validateAuthor(Question question, User user) {
         if (!question.getUser().equals(user)) {
             throw new AccessDeniedException("You do not have permission to update this question.");
         }
-
-        questionRepository.delete(question);
     }
 }

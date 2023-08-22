@@ -36,10 +36,7 @@ public class AnswerService {
     public  Answer updateAnswer(long questionId, long answerId, Answer answerToUpdate, User user) {
         // 수정 요청받은 questionId와 answerId로 해당 Answer를 찾습니다.
         Answer existingAnswer = answerRepository.findById(answerId).orElse(null);
-
-        if (!existingAnswer.getUser().equals(user)) {
-            throw new AccessDeniedException("You do not have permission to update this question.");
-        }
+        validateAuthor(existingAnswer,user);
         // Answer 가 존재하지 않을 경우, 즉 존재하지 않는 answerId를 요청했을 경우
         if (existingAnswer == null || existingAnswer.getQuestion().getId() != questionId) {
             return null;
@@ -72,11 +69,15 @@ public class AnswerService {
         if (existingAnswer == null || existingAnswer.getQuestion().getId() != questionId) {
             return null;
         }
-        if (!existingAnswer.getUser().equals(user)) {
-            throw new AccessDeniedException("You do not have permission to update this answer.");
-        }
+        validateAuthor(existingAnswer,user);
 
         answerRepository.delete(existingAnswer);
         return existingAnswer;
+    }
+
+    private void validateAuthor(Answer answer, User user) {
+        if (!answer.getUser().equals(user)) {
+            throw new AccessDeniedException("You do not have permission to update this question.");
+        }
     }
 }
