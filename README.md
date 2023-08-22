@@ -12,15 +12,19 @@
 
 ### 👫 Team
 ***
-| 김성현 <br> (BE 팀장) | 이강욱 <br> (BE) | 김하민 <br> (BE) | 김종호 <br> (FE 팀) | 심도연 <br> (FE) | 정진용 <br> (FE) |
-|---------------|---------------|---------------|-----------------|------|---------------|
-| 사진            | 사진            | 사진            | 사진              | 사진   | 사진            |
-| @tsulocalize  | @rkddnr05     | @kimhaming    | @JongHoSke      | @shimdokite | @jinyong1015  |
+| 김성현 <br> (BE 팀장)                               | 이강욱 <br> (BE) | 김하민 <br> (BE)  | 김종호 <br> (FE)  | 심도연 <br> (FE)   | 정진용 <br> (FE)    |
+|------------------------------------------------|---------------|----------------|----------------|-----------------|------------------|
+| 사진                                             | 사진            | 사진             | 사진             | 사진              | 사진               |
+| [@tsulocalize](https://github.com/tsulocalize) | [@rkddnr05](https://github.com/rkddnr05) | [@kimhaming](https://github.com/kimhaming) | [@JongHoSke](https://github.com/JongHoSke) | [@shimdokite](https://github.com/shimdokite) | [@jinyong1015](https://github.com/jinyong1015) |
 
 
 ### ⚙️ Tools
 ***
+<img src="https://img.shields.io/badge/Discord-FFFFFF?style=flat-square&logo=Discord&logoColor=로고색" width="150" height="60" alt="Discord Logo">
 
+<img src="https://img.shields.io/badge/Github-FFFFFF?style=flat-square&logo=Github&logoColor=100000" width="150" height="60" alt="Github Logo">
+
+<img src="https://img.shields.io/badge/Notion-FFFFFF?style=flat-square&logo=Notion&logoColor=100000" width="150" height="60" alt="Notion Logo">
 
 ## 🖥 Front-end
 ***
@@ -40,10 +44,6 @@
 ***
 [사용자요구사항정의서_Lucky7.pdf](..%2FDownloads%2F%EC%82%AC%EC%9A%A9%EC%9E%90%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EC%A0%95%EC%9D%98%EC%84%9C%28Lucky7%29.pdf)
 
-### 🍀 화면 정의서
-***
-
-
 ### 🍀 개발자 테스트 체크리스트
 ***
 
@@ -62,7 +62,7 @@
 
 ### Git
 ***
-
+https://github.com/codestates-seb/seb45_pre_007
 
 ### 🔗 Commit Convention
 ***
