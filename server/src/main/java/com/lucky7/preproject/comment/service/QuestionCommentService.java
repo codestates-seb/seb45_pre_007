@@ -30,11 +30,11 @@ public class QuestionCommentService {
         return questionCommentRepository.save(foundQuestionComment);
     }
 
-    public QuestionComment deleteQuestionComment(long questionCommentId, User user) {
+    public QuestionComment deleteQuestionComment(long questionId, long questionCommentId, User user) {
         QuestionComment existingQuestionComment = questionCommentRepository.findById(questionCommentId).orElse(null);
         validateAuthor(existingQuestionComment, user);
 
-        if(existingQuestionComment==null || existingQuestionComment.getQuestion().getId() != questionCommentId) {
+        if(existingQuestionComment==null || existingQuestionComment.getQuestion().getId() != questionId) {
             return null;
         }
         questionCommentRepository.delete(existingQuestionComment);

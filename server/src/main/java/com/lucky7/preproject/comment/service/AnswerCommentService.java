@@ -30,11 +30,11 @@ public class AnswerCommentService {
         return answerCommentRepository.save(foundAnswerComment);
     }
 
-    public AnswerComment deleteAnswerComment(long answerCommentId, User user) {
+    public AnswerComment deleteAnswerComment(long answerId, long answerCommentId, User user) {
         AnswerComment existingAnswerComment = answerCommentRepository.findById(answerCommentId).orElse(null);
         validateAuthor(existingAnswerComment, user);
 
-        if (existingAnswerComment == null || existingAnswerComment.getAnswer().getId() != answerCommentId) {
+        if (existingAnswerComment == null || existingAnswerComment.getAnswer().getId() != answerId) {
             return null;
         }
 
