@@ -40,6 +40,7 @@ public class Answer {
 
     @JoinColumn(name = "QUESTION_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Question question;
 
     @Column(nullable = false)
