@@ -85,7 +85,7 @@ public class QuestionCommentController {
         User user = userService.findUserByEmail(auth.getPrincipal().toString());
 
         try {
-            questionCommentService.deleteQuestionComment(commentId, user);
+            questionCommentService.deleteQuestionComment(questionId, commentId, user);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (AccessDeniedException e) {
             log.error("댓글을 작성한 User가 아닙니다");

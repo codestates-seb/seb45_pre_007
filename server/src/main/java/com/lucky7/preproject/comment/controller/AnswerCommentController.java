@@ -87,7 +87,7 @@ public class AnswerCommentController {
         User user = userService.findUserByEmail(auth.getPrincipal().toString());
 
         try {
-            answerCommentService.deleteAnswerComment(commentId, user);
+            answerCommentService.deleteAnswerComment(answerId, commentId, user);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (AccessDeniedException e) {
