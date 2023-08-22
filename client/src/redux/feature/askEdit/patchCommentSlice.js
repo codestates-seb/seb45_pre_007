@@ -25,11 +25,11 @@ export const patchCommentSlice = createSlice({
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
+          console.log(state.currentRequestId);
         }
       })
       .addCase(patchToEditComment.fulfilled, (state, action) => {
         const { requestId } = action.meta;
-
         if (
           state.loading === 'pending' &&
           state.currentRequestId === requestId
@@ -40,7 +40,6 @@ export const patchCommentSlice = createSlice({
       })
       .addCase(patchToEditComment.rejected, (state, action) => {
         const { requestId } = action.meta;
-
         if (
           state.loading === 'pending' &&
           state.currentRequestId === requestId
