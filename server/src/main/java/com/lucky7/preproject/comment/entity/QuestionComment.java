@@ -35,6 +35,7 @@ public class QuestionComment {
 
     @JoinColumn(name = "USER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @JoinColumn(name = "QUESTION_ID")
