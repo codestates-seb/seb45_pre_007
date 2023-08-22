@@ -72,7 +72,7 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // 모든 요청에 대한 Http 통신 허용
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://lucky7bucket.s3-website.ap-northeast-2.amazonaws.com")); // 모든 요청에 대한 Http 통신 허용
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));// 지정한 요청에 대한 Http Method에 대한 통신 허용
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
