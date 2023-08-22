@@ -7,23 +7,23 @@
 - `프로젝트 명` : Stackoverflow
 - `프로젝트 기간` : 2023.08.07 ~ 2023.08.23
 - `한줄 소개` : 개발자 커뮤니티 Stackoverflow를 클론코딩한 프로젝트입니다.
-- `배포 링크` :
+- `배포 링크` : http://lucky7bucket.s3-website.ap-northeast-2.amazonaws.com/
 
 
 ### 👫 Team
 ***
-| 김성현 <br> (BE 팀장)                               | 이강욱 <br> (BE) | 김하민 <br> (BE)  | 김종호 <br> (FE)  | 심도연 <br> (FE)   | 정진용 <br> (FE)    |
-|------------------------------------------------|---------------|----------------|----------------|-----------------|------------------|
-| 사진                                             | 사진            | 사진             | 사진             | 사진              | 사진               |
+| 김성현 <br> (BE 팀장)                             | 이강욱 <br> (BE) | 김하민 <br> (BE)                            | 김종호 <br> (FE 부팀장)                         | 심도연 <br> (FE)   | 정진용 <br> (FE)    |
+|----------------------------------------------|-----------|------------------------------------------|-------------------------------------------|-----------------|------------------|
+| ![성현님 이모지](https://github.com/codestates-seb/seb45_pre_007/assets/121594060/35f451fc-bd57-4789-a3b0-503754b87ecc) | ![강욱님 이모지](https://github.com/codestates-seb/seb45_pre_007/assets/121594060/a29504f3-3db4-4174-ba53-e7a1241f42f2) | ![김하민 이모지](https://github.com/codestates-seb/seb45_pre_007/assets/121594060/bb92fdb0-8649-4233-b148-f56eb8a9e94d) |  ![종호님 이모지](https://github.com/codestates-seb/seb45_pre_007/assets/121594060/0d480dc3-017e-4598-aa6e-b16cdc4c9c71) | ![도연님 이모지](https://github.com/codestates-seb/seb45_pre_007/assets/121594060/2aa07081-37b2-4abd-bb9d-108c4e855af3) | ![진용님 이모지](https://github.com/codestates-seb/seb45_pre_007/assets/121594060/20318dd0-780d-4848-bf18-c3ae2d087142)  |
 | [@tsulocalize](https://github.com/tsulocalize) | [@rkddnr05](https://github.com/rkddnr05) | [@kimhaming](https://github.com/kimhaming) | [@JongHoSke](https://github.com/JongHoSke) | [@shimdokite](https://github.com/shimdokite) | [@jinyong1015](https://github.com/jinyong1015) |
 
 ### ⚙️ Tools
 ***
-<img src="https://img.shields.io/badge/Discord-FFFFFF?style=flat-square&logo=Discord&logoColor=#5865F2" width="150" height="60" alt="Discord Logo">
+<img src="https://img.shields.io/badge/Discord-FFFFFF?style=flat-square&logo=Discord&logoColor=#5865F2" width="150" height="50" alt="Discord Logo">
 
-<img src="https://img.shields.io/badge/Github-FFFFFF?style=flat-square&logo=Github&logoColor=100000" width="150" height="60" alt="Github Logo">
+<img src="https://img.shields.io/badge/Github-FFFFFF?style=flat-square&logo=Github&logoColor=100000" width="150" height="50" alt="Github Logo">
 
-<img src="https://img.shields.io/badge/Notion-FFFFFF?style=flat-square&logo=Notion&logoColor=100000" width="150" height="60" alt="Notion Logo">
+<img src="https://img.shields.io/badge/Notion-FFFFFF?style=flat-square&logo=Notion&logoColor=100000" width="150" height="50" alt="Notion Logo">
 
 ### 🖥 Front-end
 ***
@@ -61,7 +61,7 @@
 ***
 [API 주소 명세서_Lucky7.pdf](..%2FDownloads%2FAPI%20%EC%A3%BC%EC%86%8C%20%EB%AA%85%EC%84%B8%EC%84%9C_Lucky7.pdf)
 
-### Git
+### 😺 Git
 ***
 https://github.com/codestates-seb/seb45_pre_007
 
