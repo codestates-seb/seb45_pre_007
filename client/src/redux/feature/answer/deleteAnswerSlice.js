@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deleteByAsk } from '../../api/ask/deleteAsk';
+import { deleteByAnswer } from '../../api/answer/deleteAnswer';
 
-export const askDeleteSlice = createSlice({
-  name: 'askDelete',
+export const deleteAnswerSlice = createSlice({
+  name: 'Answer',
   initialState: {
     loading: 'idle',
     currentRequestId: undefined,
@@ -11,13 +11,13 @@ export const askDeleteSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(deleteByAsk.pending, (state, action) => {
+      .addCase(deleteByAnswer.pending, (state, action) => {
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(deleteByAsk.fulfilled, (state, action) => {
+      .addCase(deleteByAnswer.fulfilled, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -28,7 +28,7 @@ export const askDeleteSlice = createSlice({
           state.currentRequestId = undefined;
         }
       })
-      .addCase(deleteByAsk.rejected, (state, action) => {
+      .addCase(deleteByAnswer.rejected, (state, action) => {
         const { requestId } = action.meta;
 
         if (
@@ -43,4 +43,4 @@ export const askDeleteSlice = createSlice({
   },
 });
 
-export default askDeleteSlice.reducer;
+export default deleteAnswerSlice.reducer;

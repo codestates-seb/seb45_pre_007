@@ -1,8 +1,7 @@
 package com.lucky7.preproject.comment.mapper;
 
-import com.lucky7.preproject.comment.dto.AnswerCommentResponseDto;
+import com.lucky7.preproject.comment.dto.CommentResponseDto;
 import com.lucky7.preproject.comment.dto.CommentRequestDto;
-import com.lucky7.preproject.comment.dto.QuestionCommentResponseDto;
 import com.lucky7.preproject.comment.entity.AnswerComment;
 import com.lucky7.preproject.comment.entity.QuestionComment;
 import org.mapstruct.Mapper;
@@ -13,7 +12,7 @@ public interface CommentMapper {
     AnswerComment commentRequestDtoToAnswerComment(CommentRequestDto commentRequestDto);
     QuestionComment commentRequestDtoToQuestionComment(CommentRequestDto commentRequestDto);
     @Mapping(source = "user.name", target = "user")
-    AnswerCommentResponseDto answerCommentToAnswerCommentResponseDto(AnswerComment answerComment);
+    CommentResponseDto answerCommentToCommentResponseDto(AnswerComment answerComment);
     @Mapping(source = "user.name", target = "user")
-    QuestionCommentResponseDto questionCommentToQuestionCommentResponseDto(QuestionComment questionComment);
+    CommentResponseDto questionCommentToCommentResponseDto(QuestionComment questionComment);
 }

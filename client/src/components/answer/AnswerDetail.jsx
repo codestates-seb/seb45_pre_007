@@ -102,22 +102,9 @@ const AnswerDetail = () => {
 
   const quillRef = useRef();
   const navigate = useNavigate();
-  const modules = useMemo(() => {
-    return {
-      toolbar: {
-        container: [
-          [{ header: [1, 2, 3, false] }],
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote'],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          [{ color: [] }, { background: [] }],
-          [{ align: [] }, 'link', 'image'],
-        ],
-      },
-    };
-  }, []);
 
   // const PostAnswer = () => {
+  //   const { questionId } = useParams();
   //   const quill = quillRef.current.getEditor();
   //   const text = quill.getText();
   //   const data = {
@@ -144,6 +131,21 @@ const AnswerDetail = () => {
   //       alert('An error occurred while posting the answer.');
   //     });
   // };
+
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ color: [] }, { background: [] }],
+          [{ align: [] }, 'link', 'image'],
+        ],
+      },
+    };
+  }, []);
 
   return (
     <AnswerFormLayout>

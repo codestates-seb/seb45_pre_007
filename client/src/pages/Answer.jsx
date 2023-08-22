@@ -3,16 +3,18 @@ import { styled } from 'styled-components';
 import LoginNav from '../components/LoginNav.jsx';
 import Aside from '../components/Aside.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
-import Google from '../assert/google.png';
 import { AiOutlineUpCircle, AiOutlineDownCircle } from 'react-icons/ai';
 import axios from 'axios';
 import AnswerDetail from '../components/answer/AnswerDetail.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { decrement, increment } from '../redux/feature/counterSlice.js';
 import AnswerGet from '../components/answer/AnswerGet.jsx';
+import { setNextLevel } from '../redux/feature/login/loginSlice.js';
+import { deleteByAsk } from '../redux/api/ask/deleteAsk.js';
 
 const AnswerLayout = styled.section`
   display: flex;
+  justify-content: center;
 `;
 
 const AnswerBox = styled.section`
@@ -61,7 +63,8 @@ const AnswerVote = styled.div`
   font-size: 13px;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap button {
+  flex-wrap: wrap;
+  button {
     cursor: pointer;
   }
 `;
@@ -78,7 +81,7 @@ const AnswerContent = styled.div`
   width: 670.22px;
   padding: 0 16px 0 0;
   color: #232629;
-  font-size: 13px;
+  font-size: 15px;
   display: flex;
   justify-content: flex-start;
   align-content: space-between;
@@ -121,7 +124,7 @@ const AnswerContentUserInfo = styled.div`
   background-color: #d0e3f1;
 
   div {
-    font-size: 12px;
+    font-size: 11px;
     color: #6a737c;
     margin: 1px 0 4px;
     width: 187px;
@@ -179,14 +182,37 @@ const Answer = () => {
   const dispatch = useDispatch();
   const url = process.env.REACT_APP_API_URL;
   const { questionId } = useParams();
+  const loginData = useSelector((state) => state.login);
+  const successedUser = loginData.isSuccessed;
+  const { loading } = useSelector((state) => state.askDelete);
+  const token = useSelector((state) => state.login.token);
+  const loggedInUser = useSelector((state) => state.users.user);
+  const getUser = useSelector((state) => state.users.user);
+  const questionUser = useSelector((state) => state.question.author);
+  const isQuestionAuthor = getUser.userName === questionUser;
+
+  console.log('loginData.userName:', questionUser);
+  console.log('questionData.questionUser:', questionData.questionUser);
 
   const AskBtn = () => {
-    navigate('/ask');
+    if (successedUser) {
+      navigate('/ask');
+    } else {
+      dispatch(setNextLevel('/ask'));
+      navigate('/login');
+    }
   };
 
   const EditBtn = () => {
     const editRoute = `/questions/${questionId}/edit`;
     navigate(editRoute);
+  };
+
+  const handleDeleteAsk = () => {
+    if (window.confirm('정말로 삭제하시겠습니까?')) {
+      dispatch(deleteByAsk({ id: +questionId, token }));
+      navigate('/');
+    }
   };
 
   useEffect(() => {
@@ -207,12 +233,14 @@ const Answer = () => {
       <LoginNav />
       <AnswerBox>
         <AnswerTitle>
-          <h1>{questionData.questionTitle}test ~ing </h1>
+          <h1>{questionData.questionTitle}</h1>
           <AnswerBtn onClick={AskBtn}>Ask Question</AnswerBtn>
         </AnswerTitle>
         <AnswerSubTitle>
           <span>Asked&nbsp;{questionData.createdAt} </span>
-          <span>&nbsp;&nbsp;&nbsp;Modified&nbsp;</span>
+          <span>
+            &nbsp;&nbsp;&nbsp;Modified&nbsp;{questionData.lastModifiedAt}
+          </span>
           <span>&nbsp;&nbsp;&nbsp;Viewed&nbsp;</span>
         </AnswerSubTitle>
         <AnswerContentBox>
@@ -234,19 +262,29 @@ const Answer = () => {
             </button>
           </AnswerVote>
           <AnswerContent>
-            <p>{questionData.questionContent}content</p>
+            <p
+              dangerouslySetInnerHTML={{ __html: questionData.questionContent }}
+            />
             <AnswerSubContent>
               <AnswerContentCategory>
                 <button>Share</button>
                 <button type="submit" onClick={EditBtn}>
                   Edit
                 </button>
+                {isQuestionAuthor && (
+                  <button
+                    onClick={handleDeleteAsk}
+                    disabled={loading === 'pending'}
+                  >
+                    {loading === 'pending' ? 'Deleting...' : 'Delete'}
+                  </button>
+                )}
                 <button>Follow</button>
               </AnswerContentCategory>
               <AnswerContentUserInfo>
                 <div>asked: {questionData.createdAt}</div>
-                <img src={Google} alt="test"></img>
-                <p>{questionData.questionUser}user</p>
+                <img src={questionData.avatarImg} alt="test"></img>
+                <p>{questionData.questionUser}</p>
               </AnswerContentUserInfo>
             </AnswerSubContent>
           </AnswerContent>

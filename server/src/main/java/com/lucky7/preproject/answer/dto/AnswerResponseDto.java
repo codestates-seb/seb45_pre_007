@@ -1,6 +1,6 @@
-package com.lucky7.preproject.answer.dto.responseDto;
+package com.lucky7.preproject.answer.dto;
 
-import com.lucky7.preproject.comment.entity.AnswerComment;
+import com.lucky7.preproject.comment.dto.CommentResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +16,5 @@ public class AnswerResponseDto {
     private String avatarImg;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
-    private List<AnswerCommentDto> answerComments;
+    private List<CommentResponseDto> answerComments;
 }

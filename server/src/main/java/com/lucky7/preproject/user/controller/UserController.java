@@ -5,25 +5,21 @@ import com.lucky7.preproject.user.dto.UserPostDto;
 import com.lucky7.preproject.user.entity.User;
 import com.lucky7.preproject.user.mapper.UserMapper;
 import com.lucky7.preproject.user.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
     private final UserMapper mapper;
 
-    public UserController(UserService userService, UserMapper mapper) {
-        this.userService = userService;
-        this.mapper = mapper;
-    }
-
     @PostMapping
     public ResponseEntity postUser(@RequestBody UserPostDto userPostDto){
         User user = mapper.userPostToUser(userPostDto);
-
         User response = userService.createUser(user);
 
         return new ResponseEntity<>(mapper.userToUserResponseDto(response),
@@ -33,7 +29,6 @@ public class UserController {
     @PatchMapping("{userId}")
     private ResponseEntity patchUser(@PathVariable long userId, @RequestBody UserPatchDto userPatchDto){
         userPatchDto.setId(userId);
-
         User response = userService.updateUser(mapper.userPatchToUser(userPatchDto));
 
         return new ResponseEntity<>(mapper.userToUserResponseDto(response),

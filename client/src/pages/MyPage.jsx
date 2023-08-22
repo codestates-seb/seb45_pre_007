@@ -6,14 +6,8 @@ import { AiOutlineClockCircle } from 'react-icons/ai';
 import logo from '../assert/logo1.png';
 import logo2 from '../assert/posts.jpg';
 import LoginNav from '../components/LoginNav.jsx';
-import facebook from '../assert/facebook.png';
-// facebook 사진 테스트용
-import { isPC, isMobile } from '../utils/mediaQueryUtils';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { getByUser } from '../redux/api/users/getUser';
+import lucky7 from '../assert/lucky-7-min-min.png';
+import { useSelector } from 'react-redux';
 
 const MypageLayout = styled.section`
   display: flex;
@@ -232,32 +226,7 @@ const PostWrap = styled.div`
 `;
 
 const Mypage = () => {
-  const isDesktop = isPC();
-  const isMobileScreen = isMobile();
-  const url = process.env.REACT_APP_API_URL;
-  // const { userId } = useParams();
-  const [user, setUser] = useState({});
-  // console.log(userId);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${url}/users/${userId}`)
-  //     .then((response) => {
-  //       setUser(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching answers:', error);
-  //     });
-  // }, [userId]);
-
-  const userId = useSelector((state) => state.login.id);
   const getUser = useSelector((state) => state.users.user);
-  const dispatch = useDispatch();
-  console.log(getUser);
-
-  useEffect(() => {
-    console.log(userId);
-    dispatch(getByUser(userId));
-  }, [userId]);
 
   return (
     <MypageLayout>
@@ -265,7 +234,7 @@ const Mypage = () => {
       <MypageBox>
         <MypageProfile>
           <img
-            src={getUser?.avatarImg ? getUser.avatarImg : facebook}
+            src={getUser?.avatarImg ? getUser.avatarImg : lucky7}
             alt="test용"
           />
           <div className="profileContents">

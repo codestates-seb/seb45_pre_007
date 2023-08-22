@@ -1,14 +1,11 @@
 package com.lucky7.preproject.question.controller;
 
+import com.lucky7.preproject.comment.dto.CommentResponseDto;
 import com.lucky7.preproject.comment.entity.QuestionComment;
 import com.lucky7.preproject.comment.service.QuestionCommentService;
-import com.lucky7.preproject.question.dto.requestDto.QuestionDto;
-import com.lucky7.preproject.question.dto.responseDto.AllQuestionsResponseDto;
-import com.lucky7.preproject.question.dto.responseDto.QuestionCommentDto;
-import com.lucky7.preproject.question.dto.responseDto.SingleQuestionResponseDto;
-import com.lucky7.preproject.comment.entity.QuestionComment;
-import com.lucky7.preproject.comment.service.QuestionCommentService;
-import com.lucky7.preproject.question.dto.responseDto.QuestionCommentDto;
+import com.lucky7.preproject.question.dto.QuestionRequestDto;
+import com.lucky7.preproject.question.dto.responseDto.NoCommentQuestionResponseDto;
+import com.lucky7.preproject.question.dto.responseDto.QuestionResponseDto;
 import com.lucky7.preproject.question.entity.Question;
 import com.lucky7.preproject.question.mapper.QuestionMapper;
 import com.lucky7.preproject.question.service.QuestionService;
@@ -18,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -37,82 +33,63 @@ public class QuestionController {
     private final QuestionCommentService questionCommentService;
 
     @PostMapping
-    public ResponseEntity<SingleQuestionResponseDto> postQuestion(@RequestBody QuestionDto questionDto) {
-        // 현재 인증된 사용자 정보 가져오기
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getPrincipal().toString());
+    public ResponseEntity<QuestionResponseDto> postQuestion(@RequestBody QuestionRequestDto questionRequestDto) {
+        User user = getCurrentUser(); // 현재 인증된 사용자 정보 가져오기
 
-        // DTO에서 Entity로 변환
-        Question questionToCreate = mapper.questionPostDtoToQuestion(questionDto);
+        Question questionToCreate = mapper.questionPostDtoToQuestion(questionRequestDto); // DTO에서 Entity로 변환
+        questionToCreate.setUser(user); // 사용자 정보 설정
 
-        // 사용자 정보 설정
-        questionToCreate.setUser(currentUser);
+        Question createdQuestion = questionService.createQuestion(questionToCreate); // 서비스에서 엔티티 생성 및 저장
+        QuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(createdQuestion);
 
-        // 서비스에서 엔티티 생성 및 저장
-        Question createdQuestion = questionService.createQuestion(questionToCreate);
-        SingleQuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(createdQuestion);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
     @GetMapping
-    public ResponseEntity<List<AllQuestionsResponseDto>> getAllQuestions() {
+    public ResponseEntity<List<NoCommentQuestionResponseDto>> getAllQuestions() {
         List<Question> foundQuestions = questionService.findAllQuestions();
 
-        List<AllQuestionsResponseDto> responseDtos = foundQuestions.stream()
+        List<NoCommentQuestionResponseDto> responseDtos = foundQuestions.stream()
                 .map(mapper::questionToAllQuestionResponseDto)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(responseDtos, HttpStatus.OK);
     }
     @GetMapping("/{questionId}")
-    public ResponseEntity<SingleQuestionResponseDto> getQuestion(@PathVariable long questionId) {
-
+    public ResponseEntity<QuestionResponseDto> getQuestion(@PathVariable long questionId) {
         Question foundQuestion = questionService.findQuestion(questionId);
-        SingleQuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(foundQuestion);
+        QuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(foundQuestion);
 
         List<QuestionComment> questionComments = questionCommentService.findAllQuestionComments(questionId);
-        List<QuestionCommentDto> questionCommentDtos = questionComments
+        List<CommentResponseDto> commentResponseDtos = questionComments
                 .stream()
-                .map(mapper::questionCommentToQuestionCommentsDto)
+                .map(mapper::questionCommentToCommentResponseDto)
                 .collect(Collectors.toList());
-        responseDto.setQuestionComments(questionCommentDtos);
+        responseDto.setQuestionComments(commentResponseDtos);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
     @PatchMapping("/{questionId}")
-    public ResponseEntity<SingleQuestionResponseDto> patchQuestion(@PathVariable long questionId,
-                                @RequestBody QuestionDto questionDto) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
+    public ResponseEntity<QuestionResponseDto> patchQuestion(@PathVariable long questionId,
+                                                             @RequestBody QuestionRequestDto questionRequestDto) {
+        User user = getCurrentUser();
+        Question questionToUpdate = mapper.questionPatchDtoToQuestion(questionRequestDto); // 업데이트할 데이터를 DTO 에서 new Entity 로 변환
+        Question updatedQuestion = questionService.updateQuestion(questionId, questionToUpdate, user); // QuestionService 를 사용해서 업데이트된 Entity 를 new Entity 에 저장
+        QuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(updatedQuestion); // 업데이트된 Entity 를 다시 DTO 로 변환
 
-        // 업데이트할 데이터를 DTO 에서 new Entity 로 변환
-       Question questionToUpdate = mapper.questionPatchDtoToQuestion(questionDto);
-
-       try {
-            // QuestionService 를 사용해서 업데이트된 Entity 를 new Entity 에 저장
-            Question updatedQuestion = questionService.updateQuestion(questionId, questionToUpdate, user);
-
-            // 업데이트된 Entity 를 다시 DTO 로 변환
-            SingleQuestionResponseDto responseDto = mapper.questionToSingleQuestionResponseDto(updatedQuestion);
-
-            return new ResponseEntity<>(responseDto, HttpStatus.OK);
-        } catch (AccessDeniedException e) {
-            log.error("게시물을 작성한 User가 아닙니다");
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
+
     @DeleteMapping("/{questionId}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable long questionId) {
+        User user = getCurrentUser();
+        questionService.deleteQuestion(questionId, user);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getPrincipal().toString());
 
-        try {
-            questionService.deleteQuestion(questionId, user);
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (AccessDeniedException e) {
-            log.error("게시물을 작성한 User가 아닙니다");
-
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        return userService.findByEmail(auth.getPrincipal().toString());
     }
 }
