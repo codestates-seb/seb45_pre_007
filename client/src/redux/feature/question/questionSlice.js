@@ -17,14 +17,6 @@ export const questionSlice = createSlice({
     setComments: (state, action) => {
       state.comments = action.payload;
     },
-    // resetQuestion: (state, action) => {
-    //   state.id = 0;
-    //   state.title = '';
-    //   state.content = '';
-    //   state.comments = [];
-    //   state.loading = 'idle';
-    //   state.currentRequestId = undefined;
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -45,7 +37,9 @@ export const questionSlice = createSlice({
           state.title = action.payload.questionTitle;
           state.content = action.payload.questionContent;
           state.author = action.payload.questionUser;
-          state.comments = action.payload.questionComments;
+          state.comments = action.payload.questionComments.map((cur) => {
+            return { ...cur, isEdit: false };
+          });
 
           state.loading = 'idle';
           state.currentRequestId = undefined;

@@ -188,11 +188,8 @@ const Answer = () => {
   const token = useSelector((state) => state.login.token);
   const loggedInUser = useSelector((state) => state.users.user);
   const getUser = useSelector((state) => state.users.user);
-  const questionUser = useSelector((state) => state.question.author);
-  const isQuestionAuthor = getUser.userName === questionUser;
 
-  console.log('loginData.userName:', questionUser);
-  console.log('questionData.questionUser:', questionData.questionUser);
+  console.log('loginData.userName:', getUser.userName);
 
   const AskBtn = () => {
     if (successedUser) {
@@ -271,13 +268,8 @@ const Answer = () => {
                 <button type="submit" onClick={EditBtn}>
                   Edit
                 </button>
-                {isQuestionAuthor && (
-                  <button
-                    onClick={handleDeleteAsk}
-                    disabled={loading === 'pending'}
-                  >
-                    {loading === 'pending' ? 'Deleting...' : 'Delete'}
-                  </button>
+                {getUser.userName === questionData.questionUser && (
+                  <button onClick={handleDeleteAsk}>Delete</button>
                 )}
                 <button>Follow</button>
               </AnswerContentCategory>

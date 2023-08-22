@@ -26,6 +26,7 @@ const AskComment = ({ setComment }) => {
         token,
       })
     );
+    console.log(action);
 
     if (postToAskComment.fulfilled.match(action)) {
       if (action.payload && action.payload.status === 200) {

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import { logout } from '../../redux/feature/login/loginSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import { getByUser } from '../../redux/api/users/getUser';
 
 const HeaderNav = () => {
   const dispatch = useDispatch();
@@ -66,9 +65,7 @@ const HeaderNav = () => {
     },
   ];
 
-  const userId = useSelector((state) => state.login.id);
   const getUser = useSelector((state) => state.users.user);
-  console.log(getUser);
 
   return (
     <HeaderNavLayout>
@@ -82,8 +79,8 @@ const HeaderNav = () => {
                 : 'https://lh3.googleusercontent.com/a/AAcHTtfSJECs_nw15TFo4pPL2oyjYNUbwGvR1uTIInqkY_Iyxw=k-s48'
             }
             alt={`${getUser.username} user avatar`}
-            width="24"
-            height="24"
+            width="30"
+            height="30"
             className="bar-sm s-avatar--image js-avatar-me"
           />
         </UserImgBox>

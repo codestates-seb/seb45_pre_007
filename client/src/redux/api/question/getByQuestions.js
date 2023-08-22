@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const url = process.env.REACT_APP_API_URL;
 
+// 궁금하군...
 export const getByQuestions = createAsyncThunk(
   'ask/getQuestions',
   async (_, { getState, requestId }) => {
@@ -15,6 +16,6 @@ export const getByQuestions = createAsyncThunk(
 
     const response = await axios.get(`${url}/questions`);
     console.log(response);
-    return response.data;
+    return response;
   }
 );

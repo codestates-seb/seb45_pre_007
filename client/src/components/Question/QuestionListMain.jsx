@@ -9,11 +9,10 @@ const QuestionListMain = () => {
   const [questions, setQuestions] = useState([]);
   const [isFetch, setisFetch] = useState(false);
 
+  // const dispatch = useDispatch();
+
   // useEffect(async () => {
-  //   const result = await axios
-  //     .get(`${process.env.REACT_APP_API_URL}/questions`)
-  //     .then((res) => res.data);
-  //   setQuestions(result);
+  //   dispatch(getByQuestions());
   // }, []);
 
   // const user = () => {
