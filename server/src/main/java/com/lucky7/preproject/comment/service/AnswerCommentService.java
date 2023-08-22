@@ -33,7 +33,7 @@ public class AnswerCommentService {
         return answerCommentRepository.save(foundAnswerComment);
     }
 
-    public AnswerComment deleteAnswerComment(long answerCommentId, User user) {
+    public AnswerComment deleteAnswerComment(long answerId, long answerCommentId, User user) {
         AnswerComment existingAnswerComment = answerCommentRepository.findById(answerCommentId).orElse(null);
 
 
@@ -41,7 +41,7 @@ public class AnswerCommentService {
             throw new AccessDeniedException("You do not have permission to delete this comment.");
         }
 
-        if (existingAnswerComment == null || existingAnswerComment.getAnswer().getAnswerId() != answerCommentId) {
+        if (existingAnswerComment == null || existingAnswerComment.getAnswer().getAnswerId() != answerId) {
             return null;
         }
 
