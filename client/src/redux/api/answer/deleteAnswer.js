@@ -18,10 +18,6 @@ export const deleteByAnswer = createAsyncThunk(
     const response = await axios.delete(
       `${url}/questions/${questionId}/answers/${answerId}`,
       {
-        id: '',
-        answerId: '',
-      },
-      {
         headers: {
           Authorization: token,
         },
