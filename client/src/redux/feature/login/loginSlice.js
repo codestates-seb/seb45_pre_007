@@ -14,6 +14,7 @@ export const loginSlice = createSlice({
     error: null,
     status: null,
     nextLevel: '',
+    userName: 'test123',
   },
   reducers: {
     setEmail: (state, action) => {

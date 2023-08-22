@@ -43,8 +43,9 @@ const AnswerGet = () => {
   const [answers, setAnswers] = useState([]);
   const { questionId } = useParams();
   const { loading } = useSelector((state) => state.deleteAnswer);
-
+  const token = useSelector((state) => state.login.token);
   const dispatch = useDispatch();
+  let id = +questionId;
 
   useEffect(() => {
     axios
@@ -58,7 +59,7 @@ const AnswerGet = () => {
   }, []);
 
   const handleDelete = (answerId) => {
-    dispatch(deleteByAnswer({ questionId, answerId }));
+    dispatch(deleteByAnswer({ id, answerId, token }));
   };
 
   return (
@@ -68,7 +69,6 @@ const AnswerGet = () => {
         {answers.map((answer) => (
           <AnswerContents key={answer.answerId}>
             <div dangerouslySetInnerHTML={{ __html: answer.answerContent }} />
-
             <button
               onClick={() => handleDelete(answer.answerId)}
               disabled={loading === 'pending'}
