@@ -20,7 +20,7 @@
 
 ### ⚙️ Tools
 ***
-<img src="https://img.shields.io/badge/Discord-FFFFFF?style=flat-square&logo=Discord&logoColor=100000" width="150" height="60" alt="Discord Logo">
+<img src="https://img.shields.io/badge/Discord-FFFFFF?style=flat-square&logo=Discord&logoColor=#5865F2" width="150" height="60" alt="Discord Logo">
 
 <img src="https://img.shields.io/badge/Github-FFFFFF?style=flat-square&logo=Github&logoColor=100000" width="150" height="60" alt="Github Logo">
 
