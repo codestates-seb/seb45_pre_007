@@ -6,12 +6,16 @@ spring:
       settings:
         web-allow-others: true
   datasource:
-    url: jdbc:h2:mem:test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${RDS_ENDPOINT}:3306/lucky7database?createDatabaseIfNotExist=true
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
+    #url: jdbc:h2:mem:test # h2 사용 시
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create #운영 시에 변경 필요!
     show-sql: true
 jwt:
-  #key: ${JWT_SECRET_KEY}
-  access-token-expiration-minutes: 40
+  #key: ${JWT_SECRET_KEY}               # 민감한 정보는 시스템 환경 변수에서 로드한다.
+  access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
