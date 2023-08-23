@@ -8,9 +8,9 @@
 - `프로젝트 기간` : 2023.08.07 ~ 2023.08.23
 - `한줄 소개` : 개발자 커뮤니티 Stackoverflow를 클론코딩한 프로젝트입니다.
 - `배포 링크` : http://lucky7bucket.s3-website.ap-northeast-2.amazonaws.com/
-- `사용자 요구사항 정의서` : [사용자요구사항정의서_Lucky7.pdf](..%2FDownloads%2F%EC%82%AC%EC%9A%A9%EC%9E%90%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EC%A0%95%EC%9D%98%EC%84%9C%28Lucky7%29.pdf)
-- `테이블 명세서` : [테이블 명세서_Lucky7.pdf](..%2FDownloads%2F%ED%85%8C%EC%9D%B4%EB%B8%94%20%EB%AA%85%EC%84%B8%EC%84%9C_Lucky7.pdf)
-- `API 명세서` : [API 주소 명세서_Lucky7.pdf](..%2FDownloads%2FAPI%20%EC%A3%BC%EC%86%8C%20%EB%AA%85%EC%84%B8%EC%84%9C_Lucky7.pdf)
+- `사용자 요구사항 정의서` : [사용자요구사항정의서(Lucky7).pdf](https://github.com/codestates-seb/seb45_pre_007/files/12414554/Lucky7.pdf)
+- `테이블 명세서` : [테이블 명세서_Lucky7.pdf](https://github.com/codestates-seb/seb45_pre_007/files/12414555/_Lucky7.pdf)
+- `API 명세서` : [API 주소 명세서_Lucky7.pdf](https://github.com/codestates-seb/seb45_pre_007/files/12414556/API._Lucky7.pdf)
 
 
 ### 👫 Team
@@ -49,7 +49,7 @@
 |                                                                                                                       |                                                                                                                      |
 |:---------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------:|
 |                                                 **메인 페이지/ 질문 전체 조회**                                                  |                                                       **회원가입**                                                       |
-|                        <img width="100%" src="https://ezgif.com/save/ezgif-5-5e1141375f.gif"/>                        |                       <img width="100%" src="https://ezgif.com/save/ezgif-5-4b1e931dda.gif"/>                        |
+|                        <img width="100%" src="https://ezgif.com/save/ezgif-4-12ef2a9e37.gif"/>                        |                       <img width="100%" src="https://ezgif.com/save/ezgif-5-4b1e931dda.gif"/>                        |
 |                                                 **질문 생성/ 조회/ 수정/ 삭제**                                                 |                                                      **마이페이지**                                                       |
 |                        <img width="100%" src="https://ezgif.com/save/ezgif-5-f63d840d5f.gif"/>                        |                       <img width="100%" src="https://ezgif.com/save/ezgif-5-eab41cbefb.gif"/>                        |
 |                                                        **로그인**                                                        |                                                       **로그아웃**                                                       |
@@ -60,12 +60,13 @@
 
 ### ‍📝 개발자 테스트
 ***
-[개발자 테스트 체크리스트_Lucky7.pdf](..%2FDownloads%2F%EA%B0%9C%EB%B0%9C%EC%9E%90%20%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%B2%B4%ED%81%AC%EB%A6%AC%EC%8A%A4%ED%8A%B8_Lucky7.pdf)
+[개발자 테스트 체크리스트_Lucky7.pdf](https://github.com/codestates-seb/seb45_pre_007/files/12414534/_Lucky7.pdf)
 
 
 ### 📚 ERD 설계
 ***
-[erd_Lucky7.pdf](..%2FDownloads%2FERD%EC%84%A4%EA%B3%84%EC%84%9C.pdf)
+[erd_Lucky7.pdf](https://github.com/codestates-seb/seb45_pre_007/files/12414549/erd_Lucky7.pdf)
+
 
 
 ### 🔗 Github Rule
